@@ -1,30 +1,12 @@
 CMakeFiles/Rasterizer.dir/main.cpp.obj: \
  D:\Programming\CG\rasterizer\main.cpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/iostream \
+ D:\Programming\CG\rasterizer\geometry.h D:/GAMES101/eigen/Eigen/Eigen \
+ D:/GAMES101/eigen/Eigen/Dense D:/GAMES101/eigen/Eigen/Core \
+ D:/GAMES101/eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/new \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/os_defines.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/cpu_defines.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ostream \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ios \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/iosfwd \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stringfwd.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/memoryfwd.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/postypes.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cwchar \
- C:/mingw64/x86_64-w64-mingw32/include/wchar.h \
- C:/mingw64/x86_64-w64-mingw32/include/crtdefs.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw_mac.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw_secapi.h \
- C:/mingw64/x86_64-w64-mingw32/include/vadefs.h \
- C:/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_directx.h \
- C:/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw_print_push.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw_off_t.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw_stat64.h \
- C:/mingw64/x86_64-w64-mingw32/include/swprintf.inl \
- C:/mingw64/x86_64-w64-mingw32/include/sec_api/wchar_s.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw_print_pop.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/exception \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/exception.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/exception_ptr.h \
@@ -32,18 +14,36 @@ CMakeFiles/Rasterizer.dir/main.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/cxxabi_init_exception.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stddef.h \
  C:/mingw64/x86_64-w64-mingw32/include/stddef.h \
+ C:/mingw64/x86_64-w64-mingw32/include/crtdefs.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw_mac.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw_secapi.h \
+ C:/mingw64/x86_64-w64-mingw32/include/vadefs.h \
+ C:/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_directx.h \
+ C:/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/typeinfo \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hash_bytes.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/new \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/nested_exception.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/move.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/concept_check.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/type_traits \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/char_traits.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_algobase.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functexcept.h \
+ D:/GAMES101/eigen/Eigen/src/Core/util/Macros.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/complex \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/cpp_type_traits.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/type_traits.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cmath \
+ C:/mingw64/x86_64-w64-mingw32/include/math.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/std_abs.h \
+ C:/mingw64/x86_64-w64-mingw32/include/stdlib.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed/limits.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed/syslimits.h \
+ C:/mingw64/x86_64-w64-mingw32/include/limits.h \
+ C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/stdlib.h \
+ C:/mingw64/x86_64-w64-mingw32/include/malloc.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/specfun.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_algobase.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functexcept.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/numeric_traits.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_pair.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_iterator_base_types.h \
@@ -53,6 +53,36 @@ CMakeFiles/Rasterizer.dir/main.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/ptr_traits.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/debug/debug.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/predefined_ops.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/limits \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/gamma.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/special_function_util.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/bessel_function.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/special_function_util.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/beta_function.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/ell_integral.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/exp_integral.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/hypergeometric.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/legendre_function.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/modified_bessel_func.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/poly_hermite.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/poly_laguerre.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/riemann_zeta.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/sstream \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/istream \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ios \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/iosfwd \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stringfwd.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/memoryfwd.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/postypes.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cwchar \
+ C:/mingw64/x86_64-w64-mingw32/include/wchar.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw_print_push.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw_off_t.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw_stat64.h \
+ C:/mingw64/x86_64-w64-mingw32/include/swprintf.inl \
+ C:/mingw64/x86_64-w64-mingw32/include/sec_api/wchar_s.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw_print_pop.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/char_traits.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstdint \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdint.h \
  C:/mingw64/x86_64-w64-mingw32/include/stdint.h \
@@ -73,9 +103,6 @@ CMakeFiles/Rasterizer.dir/main.cpp.obj: \
  C:/mingw64/x86_64-w64-mingw32/include/sys/types.h \
  C:/mingw64/x86_64-w64-mingw32/include/process.h \
  C:/mingw64/x86_64-w64-mingw32/include/corecrt_startup.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed/limits.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed/syslimits.h \
- C:/mingw64/x86_64-w64-mingw32/include/limits.h \
  C:/mingw64/x86_64-w64-mingw32/include/signal.h \
  C:/mingw64/x86_64-w64-mingw32/include/pthread_signal.h \
  C:/mingw64/x86_64-w64-mingw32/include/sys/timeb.h \
@@ -98,16 +125,10 @@ CMakeFiles/Rasterizer.dir/main.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/alloc_traits.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/alloc_traits.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/string_view \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/limits \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/string_view.tcc \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/string_conversions.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstdlib \
- C:/mingw64/x86_64-w64-mingw32/include/stdlib.h \
- C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/stdlib.h \
- C:/mingw64/x86_64-w64-mingw32/include/malloc.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/std_abs.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstdio \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cerrno \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/basic_string.tcc \
@@ -126,233 +147,52 @@ CMakeFiles/Rasterizer.dir/main.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/ctype_inline.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_facets.tcc \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/basic_ios.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ostream \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/ostream.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/istream \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/istream.tcc \
- D:/GAMES101/opencv/sources/include/opencv2/opencv.hpp \
- D:/GAMES101/opencv/build/x64/mingw/opencv2/opencv_modules.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cvdef.h \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/version.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/hal/interface.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstddef \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cv_cpu_dispatch.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/sstream.tcc \
+ D:/GAMES101/eigen/Eigen/src/Core/util/MKL_support.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/mmintrin.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/emmintrin.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/xmmintrin.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/mmintrin.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/mm_malloc.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/array \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/pmmintrin.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstddef \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cassert \
+ C:/mingw64/x86_64-w64-mingw32/include/assert.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/functional \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tuple \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/utility \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_relops.h \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/base.hpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/climits \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/algorithm \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_algo.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/algorithmfwd.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_heap.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_tempbuf.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_construct.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/uniform_int_dist.h \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cvstd.hpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstring \
- C:/mingw64/x86_64-w64-mingw32/include/string.h \
- C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cmath \
- C:/mingw64/x86_64-w64-mingw32/include/math.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/specfun.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/gamma.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/special_function_util.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/bessel_function.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/special_function_util.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/beta_function.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/ell_integral.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/exp_integral.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/hypergeometric.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/legendre_function.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/modified_bessel_func.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/poly_hermite.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/poly_laguerre.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tr1/riemann_zeta.tcc \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cvstd_wrapper.hpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/memory \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_uninitialized.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_raw_storage_iter.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/concurrence.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/array \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/uses_allocator.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/unique_ptr.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/tuple \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/invoke.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/shared_ptr.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/shared_ptr_base.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/allocated_ptr.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/refwrap.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/aligned_buffer.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/shared_ptr_atomic.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/atomic_base.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/atomic_lockfree_defines.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward/auto_ptr.h \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/neon_utils.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/vsx_utils.hpp \
- C:/mingw64/x86_64-w64-mingw32/include/assert.h \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/check.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/traits.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/matx.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/saturate.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/fast_math.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/types.hpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cfloat \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/float.h \
- C:/mingw64/x86_64-w64-mingw32/include/float.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/vector \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_vector.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_bvector.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/vector.tcc \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/mat.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/bufferpool.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/mat.inl.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/persistence.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/operations.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cvstd.inl.hpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/complex \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/sstream \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/sstream.tcc \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/utility.hpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/functional \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/std_function.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/unordered_map \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/aligned_buffer.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/node_handle.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/optional \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/enable_special_members.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/unordered_map.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/mutex \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/chrono \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ratio \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ctime \
- C:/mingw64/x86_64-w64-mingw32/include/time.h \
- C:/mingw64/x86_64-w64-mingw32/include/_timeval.h \
- C:/mingw64/x86_64-w64-mingw32/include/pthread_time.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/parse_numbers.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/std_mutex.h \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/optim.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/ovx.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cvdef.h \
- D:/GAMES101/opencv/sources/modules/calib3d/include/opencv2/calib3d.hpp \
- D:/GAMES101/opencv/sources/modules/features2d/include/opencv2/features2d.hpp \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/miniflann.hpp \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/defines.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/config.h \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/affine.hpp \
- D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn.hpp \
- D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/dnn.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/async.hpp \
- D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/version.hpp \
- D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/dict.hpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/map \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_tree.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_map.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_multimap.h \
- D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/layer.hpp \
- D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/dnn.inl.hpp \
- D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/utils/inference_engine.hpp \
- D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/dnn.hpp \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann.hpp \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/flann_base.hpp \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/general.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/matrix.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/params.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/any.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/defines.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/saving.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/nn_index.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/result_set.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/set \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_set.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_multiset.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/all_indices.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/kdtree_index.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/dynamic_bitset.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/dist.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/heap.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/allocator.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/random.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/kdtree_single_index.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/kmeans_index.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/logger.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdarg.h \
- C:/mingw64/x86_64-w64-mingw32/include/stdarg.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw_stdarg.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/composite_index.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/linear_index.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/hierarchical_clustering_index.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/lsh_index.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/lsh_table.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/iomanip \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/locale \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_facets_nonio.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/time_members.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/messages_members.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/codecvt.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_facets_nonio.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_conv.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stringfwd.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/allocator.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/codecvt.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/unique_ptr.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/quoted_string.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/math.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/autotuned_index.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/ground_truth.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/index_testing.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/timer.h \
- D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/sampling.h \
- D:/GAMES101/opencv/sources/modules/highgui/include/opencv2/highgui.hpp \
- D:/GAMES101/opencv/sources/modules/imgcodecs/include/opencv2/imgcodecs.hpp \
- D:/GAMES101/opencv/sources/modules/videoio/include/opencv2/videoio.hpp \
- D:/GAMES101/opencv/sources/modules/imgproc/include/opencv2/imgproc.hpp \
- D:/GAMES101/opencv/sources/modules/imgproc/include/opencv2/imgproc/segmentation.hpp \
- D:/GAMES101/opencv/sources/modules/ml/include/opencv2/ml.hpp \
- D:/GAMES101/opencv/sources/modules/ml/include/opencv2/ml/ml.inl.hpp \
- D:/GAMES101/opencv/sources/modules/objdetect/include/opencv2/objdetect.hpp \
- D:/GAMES101/opencv/sources/modules/objdetect/include/opencv2/objdetect/detection_based_tracker.hpp \
- D:/GAMES101/opencv/sources/modules/photo/include/opencv2/photo.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/warpers.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/warpers.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cuda.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cuda_types.hpp \
- D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cuda.inl.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/warpers_inl.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/warpers.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/matchers.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/motion_estimators.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/matchers.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/util.hpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/list \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_list.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/list.tcc \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/util_inl.hpp \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/queue \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/deque \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_deque.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/deque.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_queue.h \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/camera.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/exposure_compensate.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/seam_finders.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/blenders.hpp \
- D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/camera.hpp \
- D:/GAMES101/opencv/sources/modules/video/include/opencv2/video.hpp \
- D:/GAMES101/opencv/sources/modules/video/include/opencv2/video/tracking.hpp \
- D:/GAMES101/opencv/sources/modules/video/include/opencv2/video/background_segm.hpp \
- D:/GAMES101/eigen/Eigen/Eigen D:/GAMES101/eigen/Eigen/Dense \
- D:/GAMES101/eigen/Eigen/Core \
- D:/GAMES101/eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
- D:/GAMES101/eigen/Eigen/src/Core/util/Macros.h \
- D:/GAMES101/eigen/Eigen/src/Core/util/MKL_support.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/pmmintrin.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cassert \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/vector \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_construct.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_uninitialized.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_vector.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_bvector.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/vector.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_algo.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/algorithmfwd.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_heap.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_tempbuf.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/uniform_int_dist.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstring \
+ C:/mingw64/x86_64-w64-mingw32/include/string.h \
+ C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/climits \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/algorithm \
  D:/GAMES101/eigen/Eigen/src/Core/util/Constants.h \
  D:/GAMES101/eigen/Eigen/src/Core/util/Meta.h \
  D:/GAMES101/eigen/Eigen/src/Core/util/ForwardDeclarations.h \
@@ -521,6 +361,10 @@ CMakeFiles/Rasterizer.dir/main.cpp.obj: \
  D:/GAMES101/eigen/Eigen/src/Eigenvalues/RealQZ.h \
  D:/GAMES101/eigen/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
  D:/GAMES101/eigen/Eigen/Sparse D:/GAMES101/eigen/Eigen/SparseCore \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/map \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_tree.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_map.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_multimap.h \
  D:/GAMES101/eigen/Eigen/src/SparseCore/SparseUtil.h \
  D:/GAMES101/eigen/Eigen/src/SparseCore/SparseMatrixBase.h \
  D:/GAMES101/eigen/Eigen/src/plugins/CommonCwiseUnaryOps.h \
@@ -594,14 +438,169 @@ CMakeFiles/Rasterizer.dir/main.cpp.obj: \
  D:/GAMES101/eigen/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h \
  D:/GAMES101/eigen/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h \
  D:/GAMES101/eigen/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h \
- D:\Programming\CG\rasterizer\geometry.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/list \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_list.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/allocated_ptr.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/list.tcc \
+ D:/GAMES101/opencv/sources/include/opencv2/opencv.hpp \
+ D:/GAMES101/opencv/build/x64/mingw/opencv2/opencv_modules.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cvdef.h \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/version.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/hal/interface.h \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cv_cpu_dispatch.h \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/base.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cvstd.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cvstd_wrapper.hpp \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/memory \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_raw_storage_iter.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/concurrence.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/unique_ptr.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/shared_ptr.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/shared_ptr_base.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/shared_ptr_atomic.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/atomic_base.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/atomic_lockfree_defines.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward/auto_ptr.h \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/neon_utils.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/vsx_utils.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/check.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/traits.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/matx.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/saturate.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/fast_math.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/types.hpp \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cfloat \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/float.h \
+ C:/mingw64/x86_64-w64-mingw32/include/float.h \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/mat.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/bufferpool.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/mat.inl.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/persistence.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/operations.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cvstd.inl.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/utility.hpp \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/mutex \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/chrono \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ratio \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ctime \
+ C:/mingw64/x86_64-w64-mingw32/include/time.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_timeval.h \
+ C:/mingw64/x86_64-w64-mingw32/include/pthread_time.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/parse_numbers.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/std_mutex.h \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/optim.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/ovx.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cvdef.h \
+ D:/GAMES101/opencv/sources/modules/calib3d/include/opencv2/calib3d.hpp \
+ D:/GAMES101/opencv/sources/modules/features2d/include/opencv2/features2d.hpp \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/miniflann.hpp \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/defines.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/config.h \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/affine.hpp \
+ D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn.hpp \
+ D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/dnn.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/async.hpp \
+ D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/version.hpp \
+ D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/dict.hpp \
+ D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/layer.hpp \
+ D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/dnn.inl.hpp \
+ D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/utils/inference_engine.hpp \
+ D:/GAMES101/opencv/sources/modules/dnn/include/opencv2/dnn/dnn.hpp \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann.hpp \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/flann_base.hpp \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/general.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/matrix.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/params.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/any.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/defines.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/iostream \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/saving.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/nn_index.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/result_set.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/set \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_set.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_multiset.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/all_indices.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/kdtree_index.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/dynamic_bitset.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/dist.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/heap.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/allocator.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/random.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/kdtree_single_index.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/kmeans_index.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/logger.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdarg.h \
+ C:/mingw64/x86_64-w64-mingw32/include/stdarg.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw_stdarg.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/composite_index.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/linear_index.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/hierarchical_clustering_index.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/lsh_index.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/lsh_table.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/iomanip \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/locale \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_facets_nonio.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/time_members.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/messages_members.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/codecvt.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_facets_nonio.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_conv.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stringfwd.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/allocator.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/codecvt.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/unique_ptr.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/quoted_string.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/math.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/autotuned_index.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/ground_truth.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/index_testing.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/timer.h \
+ D:/GAMES101/opencv/sources/modules/flann/include/opencv2/flann/sampling.h \
+ D:/GAMES101/opencv/sources/modules/highgui/include/opencv2/highgui.hpp \
+ D:/GAMES101/opencv/sources/modules/imgcodecs/include/opencv2/imgcodecs.hpp \
+ D:/GAMES101/opencv/sources/modules/videoio/include/opencv2/videoio.hpp \
+ D:/GAMES101/opencv/sources/modules/imgproc/include/opencv2/imgproc.hpp \
+ D:/GAMES101/opencv/sources/modules/imgproc/include/opencv2/imgproc/segmentation.hpp \
+ D:/GAMES101/opencv/sources/modules/ml/include/opencv2/ml.hpp \
+ D:/GAMES101/opencv/sources/modules/ml/include/opencv2/ml/ml.inl.hpp \
+ D:/GAMES101/opencv/sources/modules/objdetect/include/opencv2/objdetect.hpp \
+ D:/GAMES101/opencv/sources/modules/objdetect/include/opencv2/objdetect/detection_based_tracker.hpp \
+ D:/GAMES101/opencv/sources/modules/photo/include/opencv2/photo.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/warpers.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/warpers.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cuda.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cuda_types.hpp \
+ D:/GAMES101/opencv/sources/modules/core/include/opencv2/core/cuda.inl.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/warpers_inl.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/warpers.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/matchers.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/motion_estimators.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/matchers.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/util.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/util_inl.hpp \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/queue \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/deque \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_deque.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/deque.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_queue.h \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/camera.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/exposure_compensate.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/seam_finders.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/blenders.hpp \
+ D:/GAMES101/opencv/sources/modules/stitching/include/opencv2/stitching/detail/camera.hpp \
+ D:/GAMES101/opencv/sources/modules/video/include/opencv2/video.hpp \
+ D:/GAMES101/opencv/sources/modules/video/include/opencv2/video/tracking.hpp \
+ D:/GAMES101/opencv/sources/modules/video/include/opencv2/video/background_segm.hpp \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/random \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/random.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/opt_random.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/random.tcc \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/numeric \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_numeric.h \
- D:\Programming\CG\rasterizer\rasterizer.h D:/GAMES101/eigen/Eigen/Core \
+ D:\Programming\CG\rasterizer\rasterizer.h \
+ D:\Programming\CG\rasterizer\camera.h D:/GAMES101/eigen/Eigen/Core \
  D:\Programming\CG\rasterizer\math.h \
- D:\Programming\CG\rasterizer\transformation.h \
- D:\Programming\CG\rasterizer\camera.h
+ D:\Programming\CG\rasterizer\transformation.h

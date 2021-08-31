@@ -1,8 +1,7 @@
 CMakeFiles/Rasterizer.dir/rasterizer.cpp.obj: \
  D:\Programming\CG\rasterizer\rasterizer.cpp \
  D:\Programming\CG\rasterizer\rasterizer.h \
- D:\Programming\CG\rasterizer\geometry.h D:/GAMES101/eigen/Eigen/Eigen \
- D:/GAMES101/eigen/Eigen/Dense D:/GAMES101/eigen/Eigen/Core \
+ D:\Programming\CG\rasterizer\camera.h D:/GAMES101/eigen/Eigen/Core \
  D:/GAMES101/eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/new \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \
@@ -303,7 +302,11 @@ CMakeFiles/Rasterizer.dir/rasterizer.cpp.obj: \
  D:/GAMES101/eigen/Eigen/src/Core/ArrayWrapper.h \
  D:/GAMES101/eigen/Eigen/src/Core/GlobalFunctions.h \
  D:/GAMES101/eigen/Eigen/src/Core/util/ReenableStupidWarnings.h \
- D:/GAMES101/eigen/Eigen/LU D:/GAMES101/eigen/Eigen/src/misc/Kernel.h \
+ D:\Programming\CG\rasterizer\math.h \
+ D:\Programming\CG\rasterizer\transformation.h \
+ D:/GAMES101/eigen/Eigen/Eigen D:/GAMES101/eigen/Eigen/Dense \
+ D:/GAMES101/eigen/Eigen/Core D:/GAMES101/eigen/Eigen/LU \
+ D:/GAMES101/eigen/Eigen/src/misc/Kernel.h \
  D:/GAMES101/eigen/Eigen/src/misc/Image.h \
  D:/GAMES101/eigen/Eigen/src/LU/FullPivLU.h \
  D:/GAMES101/eigen/Eigen/src/LU/PartialPivLU.h \
@@ -443,6 +446,7 @@ CMakeFiles/Rasterizer.dir/rasterizer.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_list.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/allocated_ptr.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/list.tcc \
+ D:\Programming\CG\rasterizer\geometry.h \
  D:/GAMES101/opencv/sources/include/opencv2/opencv.hpp \
  D:/GAMES101/opencv/build/x64/mingw/opencv2/opencv_modules.hpp \
  D:/GAMES101/opencv/sources/modules/core/include/opencv2/core.hpp \
@@ -600,7 +604,4 @@ CMakeFiles/Rasterizer.dir/rasterizer.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/opt_random.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/random.tcc \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/numeric \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_numeric.h \
- D:/GAMES101/eigen/Eigen/Core D:\Programming\CG\rasterizer\math.h \
- D:\Programming\CG\rasterizer\transformation.h \
- D:\Programming\CG\rasterizer\camera.h
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_numeric.h

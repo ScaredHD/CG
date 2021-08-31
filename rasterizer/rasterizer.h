@@ -68,6 +68,8 @@ struct Rasterizer {
     Frame frame;
 
 private:
+    void draw(const Eigen::Vector3d& u, const Eigen::Vector3d& v);
+
     // determine if (x, y) in screen space is inside t projected on the screen
     bool insideTriangle(double x, double y, const Triangle& t) const;
     // interpolation to get depth and color of (x, y) in screen space
