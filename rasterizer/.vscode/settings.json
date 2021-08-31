@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "eigen": "cpp"
+    },
+
+    "C_Cpp.intelliSenseCachePath": "D:/GAMES101/opencv/build/include"
+}
