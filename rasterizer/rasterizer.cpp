@@ -11,29 +11,56 @@ void Rasterizer::draw(const Line& l) {
     auto u = l.u;
     auto v = l.v;
     if (u.x() > u.y()) { std::swap(u, v); }
-	auto x1 = u.x();
-	auto y1 = u.y();
-	auto x2 = v.x();
-	auto y2 = v.y();
-	auto slope = (y1 - y2) / (x1 - x2);
-	if (slope > 0) {
-		if (slope < 1) {
-			draw(u, v);
-		} else {
+    auto x1 = u.x();
+    auto y1 = u.y();
+    auto x2 = v.x();
+    auto y2 = v.y();
+    auto slope = (y1 - y2) / (x1 - x2);
+    if (slope > 0) {
+        if (slope < 1) {
+        } else {
+        }
+    } else {
+        if (slope > -1) {
 
-		}
-	} else {
-		if (slope > -1) {
-
-		} else {
-
-		}
-	}
-
+        } else {
+        }
+    }
 }
 
-void Rasterizer::draw(const Eigen::Vector3d& u, const Eigen::Vector3d& v) {
+void Rasterizer::drawInScreenSpace(double x1, double y1, double x2, double y2,
+                                   cv::Vec3b color) {
+    if (x1 > x2) {
+        std::swap(x1, x2);
+        std::swap(y1, y2);
+    }
+    double slope = (y2 - y1) / (x2 - x1);
+    if (slope > 0) {
+        if (slope < 1)
+            drawLessPositiveSlope(x1, y1, x2, y2, color);
+        else
+            drawGreaterPositiveSlope(x1, y1, x2, y2, color);
+    } else {
+        if (slope > -1)
+            drawGreaterNegativeSlope(x1, y1, x2, y2, color);
+        else
+            drawLessNegativeSlope(x1, y1, x2, y2, color);
+    }
+}
 
+void Rasterizer::drawLessPositiveSlope(double x1, double y1, double x2,
+                                       double y2, cv::Vec3b color) {
+    auto f = [=](double x, double y) {
+        return (y1 - y2) * x + (x2 - x1) * y + (x1 * y2 - x2 * y1);
+    };
+
+    size_t left = static_cast<size_t>(x1);
+    size_t right = static_cast<size_t>(x2);
+    size_t y = y1;
+    for (size_t x = left; x <= right; ++x) {
+        frame.setPixel(x, y, color);
+        if (f(x + 1, y + 0.5) < 0) { ++y; }
+    }
 }
 
 void Rasterizer::draw(const Triangle& t) {
