@@ -6,6 +6,7 @@
 #include <Eigen/Core>
 #include <opencv2/opencv.hpp>
 #include <vector>
+#include <algorithm>
 
 // screen space coordinates:
 // origin at upper-left
@@ -67,8 +68,13 @@ struct Rasterizer {
     Camera camera;
     Frame frame;
 
+    void drawInScreenSpace(double x1, double y1, double x2, double y2, cv::Vec3b color);
+    
 private:
-    void draw(const Eigen::Vector3d& u, const Eigen::Vector3d& v);
+    void drawLessPositiveSlope(double x1, double y1, double x2, double y2, cv::Vec3b color);
+    void drawGreaterPositiveSlope(double x1, double y1, double x2, double y2, cv::Vec3b color);
+    void drawGreaterNegativeSlope(double x1, double y1, double x2, double y2, cv::Vec3b color);
+    void drawLessNegativeSlope(double x1, double y1, double x2, double y2, cv::Vec3b color);
 
     // determine if (x, y) in screen space is inside t projected on the screen
     bool insideTriangle(double x, double y, const Triangle& t) const;

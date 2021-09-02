@@ -34,14 +34,14 @@ struct Camera {
 
 	// camera movement
 	// dolly/forward: camera moving forward/backward along gazing direction
-	void forward(double dist) { pos += dist * gaze.normalized(); }
-	void dolly(double dist) { forward(dist); }
+	void moveForward(double dist) { pos += dist * gaze.normalized(); }
+	void dolly(double dist) { moveForward(dist); }
 	// truck/right: camera moving left/right along cross(g, t)
-	void right(double dist) { pos += dist * cross(gaze.normalized(), top.normalized()); }
-	void truck(double dist) { right(dist); }
+	void moveRight(double dist) { pos += dist * cross(gaze.normalized(), top.normalized()); }
+	void truck(double dist) { moveRight(dist); }
 	// pedestal/up: camera moving up/down along top direction
-	void up(double dist) { pos += dist * top.normalized(); }
-	void pedestal(double dist) { up(dist); }
+	void moveUp(double dist) { pos += dist * top.normalized(); }
+	void pedestal(double dist) { moveUp(dist); }
 	// tilt/lookup: camera looking up (position fixed)
 	void lookup(double deg);
 	void tilt(double deg) { lookup(deg); }
