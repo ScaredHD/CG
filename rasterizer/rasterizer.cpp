@@ -48,6 +48,20 @@ void Rasterizer::drawInScreenSpace(double x1, double y1, double x2, double y2,
     }
 }
 
+void Rasterizer::drawGreaterPositiveSlope(double x1, double y1, double x2,
+                                          double y2, cv::Vec3b color) {
+    auto f = [=](double x, double y) {
+        return (y1 - y2) * x + (x2 - x1) * y + (x1 * y2 - x2 * y1);
+    };
+    size_t bottom = static_cast<size_t>(y1);
+    size_t top = static_cast<size_t>(y2);
+    size_t x = static_cast<size_t>(x1);
+    for (size_t y = bottom; y <= top; ++y) {
+        frame.setPixel(x, y, color);
+        if (f(x + 0.5, y + 1) > 0) { ++x; };
+    }
+}
+
 void Rasterizer::drawLessPositiveSlope(double x1, double y1, double x2,
                                        double y2, cv::Vec3b color) {
     auto f = [=](double x, double y) {
@@ -56,7 +70,7 @@ void Rasterizer::drawLessPositiveSlope(double x1, double y1, double x2,
 
     size_t left = static_cast<size_t>(x1);
     size_t right = static_cast<size_t>(x2);
-    size_t y = y1;
+    size_t y = static_cast<size_t>(y1);
     for (size_t x = left; x <= right; ++x) {
         frame.setPixel(x, y, color);
         if (f(x + 1, y + 0.5) < 0) { ++y; }

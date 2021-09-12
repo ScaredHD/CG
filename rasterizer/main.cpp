@@ -16,8 +16,9 @@ int main() {
     Camera camera;
     Frame frame(100, 100);
     Rasterizer ras(camera, frame);
-    ras.drawLessPositiveSlope(0, 0, 50, 25, {255, 255, 255});
-    ras.drawLessPositiveSlope(0, 0, 50, 50, {255, 0, 255});
+    ras.drawInScreenSpace(0, 0, 50, 25, {255, 255, 255});
+    ras.drawInScreenSpace(0, 0, 50, 50, {255, 0, 255});
+    // ras.drawInScreenSpace(0, 0, 50, 75, {0, 0, 255});
     imshow("lineDrawing", ras.frame.buffer);
     waitKey();
 }
