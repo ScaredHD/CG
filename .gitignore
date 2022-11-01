@@ -1,2 +1,4 @@
 **/build/
 **/.cache/
+!**/libassimp-5.dll
+!**/*.exe

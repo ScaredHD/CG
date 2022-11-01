@@ -112,8 +112,8 @@ int main() {
 
     Shader shader("../shader/object.vs", "../shader/object.fs");
 
-    unsigned int cubeVAO;
-    unsigned int cubeVBO;
+    GLuint cubeVAO;
+    GLuint cubeVBO;
     glGenVertexArrays(1, &cubeVAO);
     glGenBuffers(1, &cubeVBO);
     glBindVertexArray(cubeVAO);
@@ -130,8 +130,8 @@ int main() {
     glBindVertexArray(0);
 
     // plane VAO
-    unsigned int planeVAO;
-    unsigned int planeVBO;
+    GLuint planeVAO;
+    GLuint planeVBO;
     glGenVertexArrays(1, &planeVAO);
     glGenBuffers(1, &planeVBO);
     glBindVertexArray(planeVAO);
@@ -147,9 +147,9 @@ int main() {
                           (void*)(3 * sizeof(float)));
     glBindVertexArray(0);
 
-    // vegetation
-    unsigned int windowVao;
-    unsigned int windowVbo;
+    // window
+    GLuint windowVao;
+    GLuint windowVbo;
     glGenVertexArrays(1, &windowVao);
     glGenBuffers(1, &windowVbo);
     glBindVertexArray(windowVao);
@@ -165,6 +165,35 @@ int main() {
                           (void*)(3 * sizeof(float)));
     glBindVertexArray(0);
 
+
+    // framebuffer
+    GLuint fbo;
+    glGenFramebuffers(1, &fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+    GLuint textureColorBuffer;
+    glGenTextures(1, &textureColorBuffer);
+    glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, windowWidth, windowHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindBuffer(GL_TEXTURE_2D, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0); 
+
+    GLuint rbo;
+    glGenRenderbuffers(1, &rbo);
+    glBindBuffer(GL_RENDERBUFFER, rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, windowWidth, windowHeight);
+    glBindBuffer(GL_RENDERBUFFER, 0);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete\n";
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
     auto windowTexture = generateTextureFromFile(
         "../img/transparent_window.png", {GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE});
     auto woodTexture = generateTextureFromFile("../img/container.jpg");
@@ -175,6 +204,8 @@ int main() {
     windowPositions.emplace_back(0.0f, 0.0f, 0.7f);
     windowPositions.emplace_back(-0.3f, 0.0f, -2.3f);
     windowPositions.emplace_back(0.5f, 0.0f, -0.6f);
+
+    
 
     // sort transparent window texture by distance to camera,
     // preventing display error caused by depth testing
