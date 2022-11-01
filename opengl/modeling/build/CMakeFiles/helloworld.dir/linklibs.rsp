@@ -1,1 +1,0 @@
- D:/GAMES101/glfw/lib/libglfw3.a D:/GAMES101/assimp/lib/libassimp.dll.a D:/GAMES101/assimp/lib/libzlibstatic.a -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
