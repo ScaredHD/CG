@@ -1,0 +1,22 @@
+[
+{
+  "directory": "D:/Programming/CG/opengl/modeling/build",
+  "command": "C:\\mingw64\\bin\\x86_64-w64-mingw32-g++.exe  @CMakeFiles/helloworld.dir/includes_CXX.rsp -O3 -DNDEBUG -o CMakeFiles\\helloworld.dir\\main.cpp.obj -c D:\\Programming\\CG\\opengl\\modeling\\main.cpp",
+  "file": "D:/Programming/CG/opengl/modeling/main.cpp"
+},
+{
+  "directory": "D:/Programming/CG/opengl/modeling/build",
+  "command": "C:\\mingw64\\bin\\x86_64-w64-mingw32-g++.exe  @CMakeFiles/helloworld.dir/includes_CXX.rsp -O3 -DNDEBUG -o CMakeFiles\\helloworld.dir\\glad.cpp.obj -c D:\\Programming\\CG\\opengl\\modeling\\glad.cpp",
+  "file": "D:/Programming/CG/opengl/modeling/glad.cpp"
+},
+{
+  "directory": "D:/Programming/CG/opengl/modeling/build",
+  "command": "C:\\mingw64\\bin\\x86_64-w64-mingw32-g++.exe  @CMakeFiles/helloworld.dir/includes_CXX.rsp -O3 -DNDEBUG -o CMakeFiles\\helloworld.dir\\src\\mesh.cpp.obj -c D:\\Programming\\CG\\opengl\\modeling\\src\\mesh.cpp",
+  "file": "D:/Programming/CG/opengl/modeling/src/mesh.cpp"
+},
+{
+  "directory": "D:/Programming/CG/opengl/modeling/build",
+  "command": "C:\\mingw64\\bin\\x86_64-w64-mingw32-g++.exe  @CMakeFiles/helloworld.dir/includes_CXX.rsp -O3 -DNDEBUG -o CMakeFiles\\helloworld.dir\\src\\model.cpp.obj -c D:\\Programming\\CG\\opengl\\modeling\\src\\model.cpp",
+  "file": "D:/Programming/CG/opengl/modeling/src/model.cpp"
+}
+]
