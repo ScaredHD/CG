@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(helloworld)
 
-set(CMAKE_PREFIX_PATH "D:/GAMES101/glfw/lib/cmake/glfw3;D:/GAMES101/assimp/lib/cmake/assimp-5.2")
+set(CMAKE_PREFIX_PATH "D:/GAMES101/glfw/lib/cmake/glfw3;D:/GAMES101/assimp-d/lib/cmake/assimp-5.2")
 
 
 add_executable(helloworld 

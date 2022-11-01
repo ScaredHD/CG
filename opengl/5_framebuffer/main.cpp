@@ -15,11 +15,11 @@
 #include <vector>
 
 #include "camera.h"
-#include "light.h"
+#include "light.h" 
 #include "model.h"
 #include "shader.h"
 
-using namespace glm;
+using namespace glm; 
 
 GLFWwindow* init();
 void frameBufferSizeCallback(GLFWwindow* window, int width, int height);
