@@ -25,9 +25,9 @@ class Camera {
     glm::vec3 gaze = glm::vec3(0.0f, 0.0f, -1.0f);
 
     float fov = 45.0f;
-    float aspectRatio = 800.0f / 600.F;
+    float aspectRatio = 800.0f / 600.0f;
     float zNear = 0.1f;
-    float zFar = 100.F;
+    float zFar = 100.f;
 
     float sensitivity = 0.05f;
     float radius = 1.0f;
