@@ -15,11 +15,11 @@
 #include <vector>
 
 #include "camera.h"
-#include "light.h" 
+#include "light.h"
 #include "model.h"
 #include "shader.h"
 
-using namespace glm; 
+using namespace glm;
 
 GLFWwindow* init();
 void frameBufferSizeCallback(GLFWwindow* window, int width, int height);
@@ -95,22 +95,13 @@ std::vector<float> planeVertices = {
     -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
      5.0f, -0.5f, -5.0f,  2.0f, 2.0f								
 };
-std::vector<float> windowVertices = {
-    // positions         // texture Coords (swapped y coordinates because texture is flipped upside down)
-    0.0f,  0.5f,  0.0f,  0.0f,  0.0f,
-    0.0f, -0.5f,  0.0f,  0.0f,  1.0f,
-    1.0f, -0.5f,  0.0f,  1.0f,  1.0f,
-
-    0.0f,  0.5f,  0.0f,  0.0f,  0.0f,
-    1.0f, -0.5f,  0.0f,  1.0f,  1.0f,
-    1.0f,  0.5f,  0.0f,  1.0f,  0.0f
-};
 // clang-format on
 
 int main() {
     auto* window = init();
 
     Shader shader("../shader/object.vs", "../shader/object.fs");
+    Shader screenShader("../shader/screen.vs", "../shader/screen.fs");
 
     GLuint cubeVAO;
     GLuint cubeVBO;
@@ -147,25 +138,6 @@ int main() {
                           (void*)(3 * sizeof(float)));
     glBindVertexArray(0);
 
-    // window
-    GLuint windowVao;
-    GLuint windowVbo;
-    glGenVertexArrays(1, &windowVao);
-    glGenBuffers(1, &windowVbo);
-    glBindVertexArray(windowVao);
-    glBindBuffer(GL_ARRAY_BUFFER, windowVbo);
-    glBufferData(GL_ARRAY_BUFFER,
-                 GLsizeiptr(windowVertices.size() * sizeof(float)),
-                 windowVertices.data(), GL_DYNAMIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
-                          (void*)(3 * sizeof(float)));
-    glBindVertexArray(0);
-
-
     // framebuffer
     GLuint fbo;
     glGenFramebuffers(1, &fbo);
@@ -174,18 +146,20 @@ int main() {
     GLuint textureColorBuffer;
     glGenTextures(1, &textureColorBuffer);
     glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, windowWidth, windowHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, windowWidth, windowHeight, 0, GL_RGB,
+                 GL_UNSIGNED_BYTE, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glBindBuffer(GL_TEXTURE_2D, 0);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0); 
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                           textureColorBuffer, 0);
 
     GLuint rbo;
     glGenRenderbuffers(1, &rbo);
-    glBindBuffer(GL_RENDERBUFFER, rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, windowWidth, windowHeight);
-    glBindBuffer(GL_RENDERBUFFER, 0);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, windowWidth,
+                          windowHeight);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
+                              GL_RENDERBUFFER, rbo);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete\n";
@@ -193,34 +167,43 @@ int main() {
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+    // quadVao
+    // clang-format off
+    std::vector<float> quadVertices = {
+        // positions   // texCoords
+        -1.0f,  1.0f,  0.0f, 1.0f,
+        -1.0f, -1.0f,  0.0f, 0.0f,
+         1.0f, -1.0f,  1.0f, 0.0f,
 
-    auto windowTexture = generateTextureFromFile(
-        "../img/transparent_window.png", {GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE});
+        -1.0f,  1.0f,  0.0f, 1.0f,
+         1.0f, -1.0f,  1.0f, 0.0f,
+         1.0f,  1.0f,  1.0f, 1.0f
+    };
+    // clang-format on
+
+    GLuint quadVao;
+    glGenVertexArrays(1, &quadVao);
+    glBindVertexArray(quadVao);
+
+    GLuint quadVbo;
+    glGenBuffers(1, &quadVbo);
+    glBindBuffer(GL_ARRAY_BUFFER, quadVbo);
+    glBufferData(GL_ARRAY_BUFFER,
+                 static_cast<GLsizeiptr>(quadVertices.size() * sizeof(float)),
+                 quadVertices.data(), GL_DYNAMIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
+                          (void*)(2 * sizeof(float)));
+    glBindVertexArray(0);
+
     auto woodTexture = generateTextureFromFile("../img/container.jpg");
 
-    std::vector<vec3> windowPositions;
-    windowPositions.emplace_back(-1.5f, 0.0f, -0.48f);
-    windowPositions.emplace_back(1.5f, 0.0f, 0.51f);
-    windowPositions.emplace_back(0.0f, 0.0f, 0.7f);
-    windowPositions.emplace_back(-0.3f, 0.0f, -2.3f);
-    windowPositions.emplace_back(0.5f, 0.0f, -0.6f);
-
-    
-
-    // sort transparent window texture by distance to camera,
-    // preventing display error caused by depth testing
-    std::map<float, vec3> sortedPositions;
-    for (const auto& pos : windowPositions) {
-        sortedPositions[length(pos - cam.pos)] = pos;
-    }
-
-    shader.use();
-    shader.setSampler2D("tex0", 0);
+    // draw as wireframe
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // render loop
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     while (!glfwWindowShouldClose(window)) {
         auto currentTime = glfwGetTime();
         deltaTime = currentTime - lastFrame;
@@ -228,19 +211,21 @@ int main() {
 
         processInput(window);
 
-        /* background */
+        // first pass
+        shader.use();
+        shader.setSampler2D("tex0", 0);
+        cam.sendToShader(shader, "view", "projection");
+
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // draw object
-        glEnable(GL_CULL_FACE);
-        auto model = mat4(1.0f);
-
-        cam.sendToShader(shader, "view", "projection");
+        glEnable(GL_DEPTH_TEST);
 
         glBindVertexArray(cubeVAO);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, woodTexture);
+
+        auto model = mat4(1.0f);
         model = glm::translate(mat4(1.0f), glm::vec3(-1.0f, 0.0f, -1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
                            GL_FALSE, value_ptr(model));
@@ -249,9 +234,8 @@ int main() {
         glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
                            GL_FALSE, value_ptr(model));
         glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
 
-        // draw plane
-        glDisable(GL_CULL_FACE);
         glBindVertexArray(planeVAO);
         glBindTexture(GL_TEXTURE_2D, woodTexture);
         model = mat4(1.0f);
@@ -260,18 +244,18 @@ int main() {
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
 
-        // draw transparent objects
-        glBindVertexArray(windowVao);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, windowTexture);
-        for (auto it = sortedPositions.rbegin(); it != sortedPositions.rend();
-             ++it) {
-            model = translate(mat4(1.0f), it->second);
-            glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
-                               GL_FALSE, value_ptr(model));
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-        }
-        glBindVertexArray(0);
+        // second pass
+        screenShader.use();
+        screenShader.setSampler2D("screenTexture", 0);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glBindVertexArray(quadVao);
+        glDisable(GL_DEPTH_TEST);
+        glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+        glad_glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
