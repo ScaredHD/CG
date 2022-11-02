@@ -95,6 +95,16 @@ std::vector<float> planeVertices = {
     -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
      5.0f, -0.5f, -5.0f,  2.0f, 2.0f								
 };
+std::vector<float> quadVertices = {
+    // positions   // texCoords
+    -0.5f, 0.5f, 0.0f, 0.0f,
+     0.5f, 0.5f, 1.0f, 0.0f,
+     0.5f, 1.5f, 1.0f, 1.0f,
+
+    -0.5f, 0.5f, 0.0f, 0.0f,
+    -0.5f, 1.5f, 0.0f, 1.0f,
+     0.5f, 1.5f, 1.0f, 1.0f
+};
 // clang-format on
 
 int main() {
@@ -168,19 +178,6 @@ int main() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     // quadVao
-    // clang-format off
-    std::vector<float> quadVertices = {
-        // positions   // texCoords
-        -1.0f,  1.0f,  0.0f, 1.0f,
-        -1.0f, -1.0f,  0.0f, 0.0f,
-         1.0f, -1.0f,  1.0f, 0.0f,
-
-        -1.0f,  1.0f,  0.0f, 1.0f,
-         1.0f, -1.0f,  1.0f, 0.0f,
-         1.0f,  1.0f,  1.0f, 1.0f
-    };
-    // clang-format on
-
     GLuint quadVao;
     glGenVertexArrays(1, &quadVao);
     glBindVertexArray(quadVao);
@@ -200,9 +197,6 @@ int main() {
 
     auto woodTexture = generateTextureFromFile("../img/container.jpg");
 
-    // draw as wireframe
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
     // render loop
     while (!glfwWindowShouldClose(window)) {
         auto currentTime = glfwGetTime();
@@ -211,49 +205,61 @@ int main() {
 
         processInput(window);
 
-        // first pass
+        // first pass: draw scene to default framebuffer
         shader.use();
         shader.setSampler2D("tex0", 0);
         cam.sendToShader(shader, "view", "projection");
 
-        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);  // bind to default framebuffer
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
 
-        glBindVertexArray(cubeVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, woodTexture);
+        auto drawScene = [&]() {
+            glBindVertexArray(cubeVAO);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, woodTexture);
 
-        auto model = mat4(1.0f);
-        model = glm::translate(mat4(1.0f), glm::vec3(-1.0f, 0.0f, -1.0f));
-        glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
-                           GL_FALSE, value_ptr(model));
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        model = glm::translate(mat4(1.0f), glm::vec3(2.0f, 0.0f, 0.0f));
-        glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
-                           GL_FALSE, value_ptr(model));
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
+            auto model = mat4(1.0f);
+            model = glm::translate(mat4(1.0f), glm::vec3(-1.0f, 0.0f, -1.0f));
+            glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
+                               GL_FALSE, value_ptr(model));
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+            model = glm::translate(mat4(1.0f), glm::vec3(2.0f, 0.0f, 0.0f));
+            glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
+                               GL_FALSE, value_ptr(model));
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+            glBindVertexArray(0);
 
-        glBindVertexArray(planeVAO);
-        glBindTexture(GL_TEXTURE_2D, woodTexture);
-        model = mat4(1.0f);
-        glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
-                           GL_FALSE, value_ptr(model));
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
+            glBindVertexArray(planeVAO);
+            glBindTexture(GL_TEXTURE_2D, woodTexture);
+            model = mat4(1.0f);
+            glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
+                               GL_FALSE, value_ptr(model));
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+            glBindVertexArray(0);
+        };
 
-        // second pass
+        drawScene();
+
+        // second pass: off-screen rendering of look in the rear mirror
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);  // use anthoer framebuffer
+        glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        cam.gaze = -cam.gaze;  // camera looking backward
+        cam.sendToShader(shader, "view", "projection");
+        cam.gaze = -cam.gaze;  // back to original direction
+        drawScene();
+
+        // third pass: render mirror view in default framebuffer
         screenShader.use();
         screenShader.setSampler2D("screenTexture", 0);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glDisable(GL_DEPTH_TEST);
 
         glBindVertexArray(quadVao);
-        glDisable(GL_DEPTH_TEST);
         glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
         glad_glDrawArrays(GL_TRIANGLES, 0, 6);
 
