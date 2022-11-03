@@ -218,27 +218,9 @@ int main() {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // draw skybox
-        glDepthMask(GL_FALSE);
-        glDepthFunc(GL_LEQUAL);
-        skyboxShader.use();
-        // cam.sendToShader(skyboxShader, "view", "projection");
-        // remove translation
-        auto view = mat4(mat3(cam.viewMatrix()));
-        auto projection = cam.projectionMatrix();
-        glUniformMatrix4fv(glGetUniformLocation(skyboxShader.id, "view"), 1,
-                           GL_FALSE, value_ptr(view));
-        glUniformMatrix4fv(glGetUniformLocation(skyboxShader.id, "projection"),
-                           1, GL_FALSE, value_ptr(projection));
-        glBindVertexArray(skyboxVao);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, skybox);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-
-        // draw rest
+        // draw scene
         shader.use();
         cam.sendToShader(shader, "view", "projection");
-        glDepthMask(GL_TRUE);
         glDepthFunc(GL_LESS);
 
         glBindVertexArray(cubeVAO);
@@ -251,6 +233,20 @@ int main() {
                            GL_FALSE, value_ptr(model));
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
+
+        // draw skybox
+        glDepthFunc(GL_LEQUAL);
+        skyboxShader.use();
+        auto view = mat4(mat3(cam.viewMatrix()));  // remove translation
+        auto projection = cam.projectionMatrix();
+        glUniformMatrix4fv(glGetUniformLocation(skyboxShader.id, "view"), 1,
+                           GL_FALSE, value_ptr(view));
+        glUniformMatrix4fv(glGetUniformLocation(skyboxShader.id, "projection"),
+                           1, GL_FALSE, value_ptr(projection));
+        glBindVertexArray(skyboxVao);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, skybox);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
