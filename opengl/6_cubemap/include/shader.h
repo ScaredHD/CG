@@ -71,7 +71,7 @@ class Shader {
     GLuint id;
 
     void use() const { glUseProgram(id); }
-    void setSampler2D(const char* samplerName, int textureUnitIdx) const {
+    void setSampler(const char* samplerName, int textureUnitIdx) const {
         glUniform1i(glGetUniformLocation(id, samplerName), textureUnitIdx);
     }
 

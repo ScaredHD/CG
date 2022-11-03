@@ -83,25 +83,57 @@ std::vector<float> cubeVertices = {
     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
     -0.5f,  0.5f,  0.5f,  0.0f, 0.0f  // bottom-left
 };
-std::vector<float> planeVertices = {
-    // positions          // texture Coords
-     5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
-    -5.0f, -0.5f,  5.0f,  0.0f, 0.0f,
-    -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
+std::vector<float> skyboxVertices = {
+    // positions          
+    -1.0f,  1.0f, -1.0f,
+    -1.0f, -1.0f, -1.0f,
+     1.0f, -1.0f, -1.0f,
+     1.0f, -1.0f, -1.0f,
+     1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
 
-     5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
-    -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
-     5.0f, -0.5f, -5.0f,  2.0f, 2.0f								
+    -1.0f, -1.0f,  1.0f,
+    -1.0f, -1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f,  1.0f,
+    -1.0f, -1.0f,  1.0f,
+
+     1.0f, -1.0f, -1.0f,
+     1.0f, -1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f, -1.0f,
+     1.0f, -1.0f, -1.0f,
+
+    -1.0f, -1.0f,  1.0f,
+    -1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+     1.0f, -1.0f,  1.0f,
+    -1.0f, -1.0f,  1.0f,
+
+    -1.0f,  1.0f, -1.0f,
+     1.0f,  1.0f, -1.0f,
+     1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+    -1.0f,  1.0f,  1.0f,
+    -1.0f,  1.0f, -1.0f,
+
+    -1.0f, -1.0f, -1.0f,
+    -1.0f, -1.0f,  1.0f,
+     1.0f, -1.0f, -1.0f,
+     1.0f, -1.0f, -1.0f,
+    -1.0f, -1.0f,  1.0f,
+     1.0f, -1.0f,  1.0f
 };
-std::vector<float> quadVertices = {
-    // positions   // texCoords
-    -0.5f, 0.5f, 0.0f, 0.0f,
-     0.5f, 0.5f, 1.0f, 0.0f,
-     0.5f, 1.5f, 1.0f, 1.0f,
-
-    -0.5f, 0.5f, 0.0f, 0.0f,
-    -0.5f, 1.5f, 0.0f, 1.0f,
-     0.5f, 1.5f, 1.0f, 1.0f
+std::vector<std::string> textureFaces = {
+    "../img/skybox/right.jpg", 
+    "../img/skybox/left.jpg",
+    "../img/skybox/top.jpg",
+    "../img/skybox/bottom.jpg",
+    "../img/skybox/front.jpg",
+    "../img/skybox/back.jpg"
 };
 // clang-format on
 
@@ -109,7 +141,8 @@ int main() {
     auto* window = init();
 
     Shader shader("../shader/object.vs", "../shader/object.fs");
-    Shader screenShader("../shader/screen.vs", "../shader/screen.fs");
+    Shader skyboxShader("../shader/skybox.vs", "../shader/skybox.fs");
+    auto woodTexture = generateTexture2DFromFile("../img/container.jpg");
 
     GLuint cubeVAO;
     GLuint cubeVBO;
@@ -128,74 +161,53 @@ int main() {
                           (void*)(3 * sizeof(float)));
     glBindVertexArray(0);
 
-    // plane VAO
-    GLuint planeVAO;
-    GLuint planeVBO;
-    glGenVertexArrays(1, &planeVAO);
-    glGenBuffers(1, &planeVBO);
-    glBindVertexArray(planeVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, planeVBO);
+    // skybox vao
+    GLuint skyboxVao;
+    GLuint skyboxVbo;
+    glGenVertexArrays(1, &skyboxVao);
+    glGenBuffers(1, &skyboxVbo);
+    glBindVertexArray(skyboxVao);
+    glBindBuffer(GL_ARRAY_BUFFER, skyboxVbo);
     glBufferData(GL_ARRAY_BUFFER,
-                 GLsizeiptr(planeVertices.size() * sizeof(float)),
-                 planeVertices.data(), GL_STATIC_DRAW);
+                 GLsizeiptr(skyboxVertices.size() * sizeof(float)),
+                 skyboxVertices.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
-                          (void*)(3 * sizeof(float)));
-    glBindVertexArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-    // framebuffer
-    GLuint fbo;
-    glGenFramebuffers(1, &fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    // skybox texture
+    GLuint skybox;
+    glGenTextures(1, &skybox);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, skybox);
 
-    GLuint textureColorBuffer;
-    glGenTextures(1, &textureColorBuffer);
-    glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, windowWidth, windowHeight, 0, GL_RGB,
-                 GL_UNSIGNED_BYTE, nullptr);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
-                           textureColorBuffer, 0);
-
-    GLuint rbo;
-    glGenRenderbuffers(1, &rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, windowWidth,
-                          windowHeight);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
-                              GL_RENDERBUFFER, rbo);
-
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete\n";
+    for (int i = 0; i < textureFaces.size(); ++i) {
+        int width;
+        int height;
+        int channelCount;
+        auto* img = stbi_load(textureFaces[i].c_str(), &width, &height,
+                              &channelCount, 0);
+        if (!img) {
+            std::cout << "Failed to load texture: " << textureFaces[i].c_str()
+                      << "\n";
+        }
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width,
+                     height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S,
+                        GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T,
+                        GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R,
+                        GL_CLAMP_TO_EDGE);
+        stbi_image_free(img);
     }
 
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    // quadVao
-    GLuint quadVao;
-    glGenVertexArrays(1, &quadVao);
-    glBindVertexArray(quadVao);
-
-    GLuint quadVbo;
-    glGenBuffers(1, &quadVbo);
-    glBindBuffer(GL_ARRAY_BUFFER, quadVbo);
-    glBufferData(GL_ARRAY_BUFFER,
-                 static_cast<GLsizeiptr>(quadVertices.size() * sizeof(float)),
-                 quadVertices.data(), GL_DYNAMIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
-                          (void*)(2 * sizeof(float)));
-    glBindVertexArray(0);
-
-    auto woodTexture = generateTextureFromFile("../img/container.jpg");
+    skyboxShader.setSampler("skybox", 0);
+    shader.setSampler("tex0", 0);
 
     // render loop
+    glEnable(GL_DEPTH_TEST);
     while (!glfwWindowShouldClose(window)) {
         auto currentTime = glfwGetTime();
         deltaTime = currentTime - lastFrame;
@@ -203,63 +215,42 @@ int main() {
 
         processInput(window);
 
-        // first pass: draw scene to default framebuffer
-        shader.use();
-        shader.setSampler2D("tex0", 0);
-        cam.sendToShader(shader, "view", "projection");
-
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);  // bind to default framebuffer
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_DEPTH_TEST);
 
-        auto drawScene = [&]() {
-            glBindVertexArray(cubeVAO);
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, woodTexture);
+        // draw skybox
+        glDepthMask(GL_FALSE);
+        glDepthFunc(GL_LEQUAL);
+        skyboxShader.use();
+        // cam.sendToShader(skyboxShader, "view", "projection");
+        // remove translation
+        auto view = mat4(mat3(cam.viewMatrix()));
+        auto projection = cam.projectionMatrix();
+        glUniformMatrix4fv(glGetUniformLocation(skyboxShader.id, "view"), 1,
+                           GL_FALSE, value_ptr(view));
+        glUniformMatrix4fv(glGetUniformLocation(skyboxShader.id, "projection"),
+                           1, GL_FALSE, value_ptr(projection));
+        glBindVertexArray(skyboxVao);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, skybox);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
-            auto model = mat4(1.0f);
-            model = glm::translate(mat4(1.0f), glm::vec3(-1.0f, 0.0f, -1.0f));
-            glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
-                               GL_FALSE, value_ptr(model));
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-            model = glm::translate(mat4(1.0f), glm::vec3(2.0f, 0.0f, 0.0f));
-            glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
-                               GL_FALSE, value_ptr(model));
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-            glBindVertexArray(0);
-
-            glBindVertexArray(planeVAO);
-            glBindTexture(GL_TEXTURE_2D, woodTexture);
-            model = mat4(1.0f);
-            glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
-                               GL_FALSE, value_ptr(model));
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-            glBindVertexArray(0);
-        };
-
-        drawScene();
-
-        // second pass: off-screen rendering of look in the rear mirror
-        glBindFramebuffer(GL_FRAMEBUFFER, fbo);  // use anthoer framebuffer
-        glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        cam.gaze = -cam.gaze;  // camera looking backward
+        // draw rest
+        shader.use();
         cam.sendToShader(shader, "view", "projection");
-        cam.gaze = -cam.gaze;  // back to original direction
-        drawScene();
+        glDepthMask(GL_TRUE);
+        glDepthFunc(GL_LESS);
 
-        // third pass: render mirror view in default framebuffer
-        screenShader.use();
-        screenShader.setSampler2D("screenTexture", 0);
+        glBindVertexArray(cubeVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, woodTexture.id);
 
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glDisable(GL_DEPTH_TEST);
-
-        glBindVertexArray(quadVao);
-        glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
-        glad_glDrawArrays(GL_TRIANGLES, 0, 6);
+        auto model = mat4(1.0f);
+        // model = translate(mat4(1.0f), vec3(-1.0f, 0.0f, -1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.id, "model"), 1,
+                           GL_FALSE, value_ptr(model));
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

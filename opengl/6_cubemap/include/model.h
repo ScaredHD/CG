@@ -9,6 +9,8 @@
 
 class Model {
   public:
+    static std::vector<int> channelEnum;
+
     Model(const std::string& path, glm::vec3 pos = glm::vec3(0.0f),
           glm::vec3 scale = glm::vec3(1.0f))
         : pos(pos), scale(scale) {
@@ -38,6 +40,7 @@ class Model {
                                                  const std::string& type);
 };
 
+
 struct TextureWrap {
     GLint s = GL_REPEAT;
     GLint t = GL_REPEAT;
@@ -48,4 +51,13 @@ struct TextureFilter {
     GLint mag = GL_LINEAR;
 };
 
-GLuint generateTextureFromFile(const char* file, TextureWrap wrap = TextureWrap(), TextureFilter filter = TextureFilter());
+struct TextureInfo {
+    GLuint id;
+    int width;
+    int height;
+    int channelCount;
+};
+
+TextureInfo generateTexture2DFromFile(const char* file,
+                                    TextureWrap wrap = TextureWrap(),
+                                    TextureFilter filter = TextureFilter());

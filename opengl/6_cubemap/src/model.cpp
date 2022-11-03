@@ -11,7 +11,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-static std::vector<int> channelEnum{-1, GL_RED, -1, GL_RGB, GL_RGBA};
+std::vector<int> Model::channelEnum = {-1, GL_RED, -1, GL_RGB, GL_RGBA};
+
 
 glm::mat4 Model::modelMatrix() const {
     glm::mat4 m = glm::translate(glm::mat4(1.0f), pos);
@@ -113,7 +114,7 @@ std::vector<Texture> Model::loadTextureFromMaterial(aiMaterial* material,
         } else {
             Texture tex;
             auto file = directory + '/' + path;
-            tex.id = generateTextureFromFile(file.c_str());
+            tex.id = generateTexture2DFromFile(file.c_str()).id;
             tex.type = type;
             textures.emplace_back(tex);
             texturesLoaded.insert(std::make_pair(path, tex));
@@ -122,8 +123,8 @@ std::vector<Texture> Model::loadTextureFromMaterial(aiMaterial* material,
     return textures;
 }
 
-GLuint generateTextureFromFile(const char* file, TextureWrap wrap,
-                               TextureFilter filter) {
+TextureInfo generateTexture2DFromFile(const char* file, TextureWrap wrap,
+                                    TextureFilter filter) {
     GLuint tex;
     glGenTextures(1, &tex);
 
@@ -135,12 +136,12 @@ GLuint generateTextureFromFile(const char* file, TextureWrap wrap,
     if (!img) {
         std::cout << "Failed to load image at path: " << file << "\n";
         stbi_image_free(img);
-        return tex;
+        return {};
     }
 
     // channelCount:
     // 1: GL_RED  3: GL_RGB  4: GL_RGBA
-    GLenum format = channelEnum[channelCount];
+    GLenum format = Model::channelEnum[channelCount];
 
     // send to texture object
     glBindTexture(GL_TEXTURE_2D, tex);
@@ -155,5 +156,5 @@ GLuint generateTextureFromFile(const char* file, TextureWrap wrap,
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter.mag);
 
     stbi_image_free(img);
-    return tex;
+    return {tex, width, height, channelCount};
 }
