@@ -10,8 +10,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include <map>
-#include <random>
 #include <vector>
 
 #include "camera.h"
