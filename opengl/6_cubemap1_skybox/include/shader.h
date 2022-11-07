@@ -2,6 +2,9 @@
 // clang-format off
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "glm/ext/matrix_float4x4.hpp"
+#include "glm/ext/vector_float3.hpp"
+#include "glm/gtc/type_ptr.hpp"
 // clang-format on
 
 #include <array>
@@ -71,8 +74,18 @@ class Shader {
     GLuint id;
 
     void use() const { glUseProgram(id); }
-    void setSampler(const char* samplerName, int textureUnitIdx) const {
-        glUniform1i(glGetUniformLocation(id, samplerName), textureUnitIdx);
+
+    void setInt(const std::string& varname, int value) const {
+        glUniform1i(glGetUniformLocation(id, varname.c_str()), value);
+    }
+
+    void setVec3(const std::string& varname, const glm::vec3& v) const {
+        glUniform3f(glGetUniformLocation(id, varname.c_str()), v.x, v.y, v.z);
+    }
+
+    void setMat4(const std::string& varname, const glm::mat4& mat) const {
+        glUniformMatrix4fv(glGetUniformLocation(id, varname.c_str()), 1,
+                           GL_FALSE, glm::value_ptr(mat));
     }
 
   private:
