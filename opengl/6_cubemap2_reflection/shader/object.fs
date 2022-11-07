@@ -1,10 +1,15 @@
 #version 460 core
 out vec4 FragColor;
 
-in vec2 TexCoords;
+in vec3 positionInView;
+in vec3 normalInView;
 
-uniform sampler2D tex0;
+uniform samplerCube skybox;
 
-void main() {    
-    FragColor = texture(tex0, TexCoords);
+void main() {
+    vec3 n = normalize(normalInView);
+    vec3 eye = normalize(-positionInView);
+    // vec3 r = normalize(-eye + 2 * dot(eye, n) * n);
+    vec3 r = reflect(normalize(positionInView), normalize(normalInView));
+    FragColor = vec4(texture(skybox, r).rgb, 1.0);
 }

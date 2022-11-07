@@ -1,29 +1,31 @@
 #version 460 core
 out vec4 FragColor;
 
-in vec2 TexCoords;
+in vec3 posInView;
+in vec3 normalInView;
+in vec3 lightInView;
 
-uniform sampler2D diffuse0;
-uniform sampler2D diffuse1;
-uniform sampler2D diffuse2;
+uniform vec3 objectColor;
+uniform vec3 lightColor;
 
-uniform sampler2D specular0;
-uniform sampler2D specular1;
-uniform sampler2D specular2;
+void main() {
+    vec3 n = normalize(normalInView);
+    vec3 l = normalize(lightInView - posInView);
+    vec3 e = normalize(-posInView);
 
+    // ambient
+    vec3 ka = vec3(1.0);
+    vec3 ambient = ka * objectColor;
 
-void main()
-{    
-    vec4 diffuse = texture(diffuse0, TexCoords);
-    vec4 specular = texture(specular0, TexCoords);
-    vec4 res = diffuse;
-    FragColor = res;
+    // diffuse
+    vec3 diffuse = lightColor * objectColor * max(0.0, dot(n, l));
 
-    // float ndc = gl_FragCoord.z * 2.0 - 1.0;
-    // float far = 100.0;
-    // float near = 0.1;
-    // float depth = (2.0 * near * far) / (far + near - ndc * (far - near));
-    // FragColor = vec4(vec3(depth), 1.0);
+    // specular
+    float p = 128.0;
+    vec3 h = normalize(e + l);
+    vec3 specular = lightColor * pow(max(0.0, dot(h, n)), p);
 
-    // FragColor = vec4(gl_FragCoord.zzz, 1.0);
+    // total
+    vec3 result = ambient + diffuse + specular;
+    FragColor = vec4(result, 1.0);
 }
