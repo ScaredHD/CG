@@ -176,15 +176,8 @@ int main() {
     windowPositions.emplace_back(-0.3f, 0.0f, -2.3f);
     windowPositions.emplace_back(0.5f, 0.0f, -0.6f);
 
-    // sort transparent window texture by distance to camera,
-    // preventing display error caused by depth testing
-    std::map<float, vec3> sortedPositions;
-    for (const auto& pos : windowPositions) {
-        sortedPositions[length(pos - cam.pos)] = pos;
-    }
-
     shader.use();
-    shader.setSampler2D("tex0", 0);
+    shader.setInt("tex0", 0);
 
     // render loop
     glEnable(GL_DEPTH_TEST);
@@ -196,6 +189,13 @@ int main() {
         lastFrame = currentTime;
 
         processInput(window);
+
+        // sort transparent window texture by distance to camera,
+        // preventing display error caused by depth testing
+        std::map<float, vec3> sortedPositions;
+        for (const auto& pos : windowPositions) {
+            sortedPositions[length(pos - cam.pos)] = pos;
+        }
 
         /* background */
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);

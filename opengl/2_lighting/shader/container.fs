@@ -23,7 +23,7 @@ struct Material {
 }; 
   
 uniform Material material;
-const int lightCnt = 4;
+const int lightCnt = 10;
 uniform Light lights[lightCnt];
 
 vec3 calcPointLight(Light light);

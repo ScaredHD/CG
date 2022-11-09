@@ -205,7 +205,7 @@ int main() {
 
         // first pass: draw scene to default framebuffer
         shader.use();
-        shader.setSampler2D("tex0", 0);
+        shader.setInt("tex0", 0);
         cam.sendToShader(shader, "view", "projection");
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);  // bind to default framebuffer
@@ -252,7 +252,7 @@ int main() {
 
         // third pass: render mirror view in default framebuffer
         screenShader.use();
-        screenShader.setSampler2D("screenTexture", 0);
+        screenShader.setInt("screenTexture", 0);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glDisable(GL_DEPTH_TEST);

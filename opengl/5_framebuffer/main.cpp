@@ -213,7 +213,7 @@ int main() {
 
         // first pass
         shader.use();
-        shader.setSampler2D("tex0", 0);
+        shader.setInt("tex0", 0);
         cam.sendToShader(shader, "view", "projection");
 
         glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -246,7 +246,7 @@ int main() {
 
         // second pass
         screenShader.use();
-        screenShader.setSampler2D("screenTexture", 0);
+        screenShader.setInt("screenTexture", 0);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

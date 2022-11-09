@@ -23,6 +23,7 @@ void Model::draw(const Shader& shader) const {
     for (const auto& m : meshes) m.draw(shader);
 }
 
+
 void Model::loadModel(const std::string& path) {
     Assimp::Importer importer;
     const aiScene* scene =

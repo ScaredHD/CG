@@ -30,7 +30,7 @@ void scrollCallback(GLFWwindow* window, double dx, double dy);
 void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 
 Camera cam(vec3(0.0f, 0.0f, 3.0f));
-Light light(vec3(0.0, 5.0f, 0.0f), vec3(1.0f));
+Light light(vec3(2.0, 2.0f, 0.0f), vec3(1.0f));
 
 int windowWidth = 800;
 int windowHeight = 600;
@@ -105,7 +105,9 @@ int main() {
     Shader shader("../shader/object.vs", "../shader/object.fs");
     Shader lightShader("../shader/light.vs", "../shader/light.fs");
 
-    Model teapot("../model/teapot/teapot.obj");
+    Model teapot1("../model/teapot/teapot.obj");
+    Model teapot2("../model/teapot/teapot.obj");
+    Model teapot3("../model/teapot/teapot.obj");
 
     GLuint lightCubeVbo;
     glGenBuffers(1, &lightCubeVbo);
@@ -122,7 +124,7 @@ int main() {
 
     // render loop
     glEnable(GL_DEPTH_TEST);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
 
@@ -131,6 +133,8 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // preview rotation
+        shader.use();
+
         auto model = rotationMatrix * lastModel;
         model = scale(model, vec3(0.2f));
         shader.setMat4("model", model);
@@ -140,9 +144,21 @@ int main() {
         shader.setVec3("lightColor", light.color);
         shader.setVec3("objectColor", vec3(0.5f, 0.3f, 0.1f));
 
-        // drawing
-        shader.use();
-        teapot.draw(shader);
+        teapot1.draw(shader);
+
+        // draw light cube
+        lightShader.use();
+
+        model = translate(mat4(1.0f), light.pos);
+        model = scale(model, vec3(0.2f));
+        lightShader.setMat4("model", model);
+        lightShader.setMat4("view", cam.viewMatrix());
+        lightShader.setMat4("projection", cam.projectionMatrix());
+        lightShader.setVec3("lightColor", light.color);
+
+        glBindVertexArray(lightCubeVao);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

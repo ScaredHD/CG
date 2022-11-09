@@ -21,6 +21,7 @@ class Model {
 
     void draw(const Shader& shader) const;
 
+
   private:
     // a model comprises multiple meshes
     std::vector<Mesh> meshes;

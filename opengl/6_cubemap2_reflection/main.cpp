@@ -202,8 +202,8 @@ int main() {
         stbi_image_free(img);
     }
 
-    skyboxShader.setSampler("skybox", 0);
-    shader.setSampler("skybox", 0);
+    skyboxShader.setInt("skybox", 0);
+    shader.setInt("skybox", 0);
 
     // render loop
     glEnable(GL_DEPTH_TEST);

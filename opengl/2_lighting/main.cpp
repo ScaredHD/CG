@@ -25,73 +25,73 @@ void        scrollCallback(GLFWwindow* window, double dx, double dy);
 // clang-format off
 std::vector<float> vertices = {
     // positions          // normals           // texture coords
-    -0.5F, -0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  0.0F, 0.0F,
-     0.5F, -0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  1.0F, 0.0F,
-     0.5F,  0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  1.0F, 1.0F,
-     0.5F,  0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  1.0F, 1.0F,
-    -0.5F,  0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  0.0F, 1.0F,
-    -0.5F, -0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  0.0F, 0.0F,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
 
-    -0.5F, -0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   0.0F, 0.0F,
-     0.5F, -0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   1.0F, 0.0F,
-     0.5F,  0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   1.0F, 1.0F,
-     0.5F,  0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   1.0F, 1.0F,
-    -0.5F,  0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   0.0F, 1.0F,
-    -0.5F, -0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   0.0F, 0.0F,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
 
-    -0.5F,  0.5F,  0.5F, -1.0F,  0.0F,  0.0F,  1.0F, 0.0F,
-    -0.5F,  0.5F, -0.5F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F,
-    -0.5F, -0.5F, -0.5F, -1.0F,  0.0F,  0.0F,  0.0F, 1.0F,
-    -0.5F, -0.5F, -0.5F, -1.0F,  0.0F,  0.0F,  0.0F, 1.0F,
-    -0.5F, -0.5F,  0.5F, -1.0F,  0.0F,  0.0F,  0.0F, 0.0F,
-    -0.5F,  0.5F,  0.5F, -1.0F,  0.0F,  0.0F,  1.0F, 0.0F,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-     0.5F,  0.5F,  0.5F,  1.0F,  0.0F,  0.0F,  1.0F, 0.0F,
-     0.5F,  0.5F, -0.5F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F,
-     0.5F, -0.5F, -0.5F,  1.0F,  0.0F,  0.0F,  0.0F, 1.0F,
-     0.5F, -0.5F, -0.5F,  1.0F,  0.0F,  0.0F,  0.0F, 1.0F,
-     0.5F, -0.5F,  0.5F,  1.0F,  0.0F,  0.0F,  0.0F, 0.0F,
-     0.5F,  0.5F,  0.5F,  1.0F,  0.0F,  0.0F,  1.0F, 0.0F,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-    -0.5F, -0.5F, -0.5F,  0.0F, -1.0F,  0.0F,  0.0F, 1.0F,
-     0.5F, -0.5F, -0.5F,  0.0F, -1.0F,  0.0F,  1.0F, 1.0F,
-     0.5F, -0.5F,  0.5F,  0.0F, -1.0F,  0.0F,  1.0F, 0.0F,
-     0.5F, -0.5F,  0.5F,  0.0F, -1.0F,  0.0F,  1.0F, 0.0F,
-    -0.5F, -0.5F,  0.5F,  0.0F, -1.0F,  0.0F,  0.0F, 0.0F,
-    -0.5F, -0.5F, -0.5F,  0.0F, -1.0F,  0.0F,  0.0F, 1.0F,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
 
-    -0.5F,  0.5F, -0.5F,  0.0F,  1.0F,  0.0F,  0.0F, 1.0F,
-     0.5F,  0.5F, -0.5F,  0.0F,  1.0F,  0.0F,  1.0F, 1.0F,
-     0.5F,  0.5F,  0.5F,  0.0F,  1.0F,  0.0F,  1.0F, 0.0F,
-     0.5F,  0.5F,  0.5F,  0.0F,  1.0F,  0.0F,  1.0F, 0.0F,
-    -0.5F,  0.5F,  0.5F,  0.0F,  1.0F,  0.0F,  0.0F, 0.0F,
-    -0.5F,  0.5F, -0.5F,  0.0F,  1.0F,  0.0F,  0.0F, 1.0F
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
 };
 std::vector<glm::vec3> cubePositions = {
-    glm::vec3( 0.0F,  0.0F,  0.0F),
-    glm::vec3( 2.0F,  5.0F, -15.0F),
-    glm::vec3(-1.5F, -2.2F, -2.5F),
-    glm::vec3(-3.8F, -2.0F, -12.3F),
-    glm::vec3( 2.4F, -0.4F, -3.5F),
-    glm::vec3(-1.7F,  3.0F, -7.5F),
-    glm::vec3( 1.3F, -2.0F, -2.5F),
-    glm::vec3( 1.5F,  2.0F, -2.5F),
-    glm::vec3( 1.5F,  0.2F, -1.5F),
-    glm::vec3(-1.3F,  1.0F, -1.5F)
+    glm::vec3( 0.0f,  0.0f,  0.0f),
+    glm::vec3( 2.0f,  5.0f, -15.0f),
+    glm::vec3(-1.5f, -2.2f, -2.5f),
+    glm::vec3(-3.8f, -2.0f, -12.3f),
+    glm::vec3( 2.4f, -0.4f, -3.5f),
+    glm::vec3(-1.7f,  3.0f, -7.5f),
+    glm::vec3( 1.3f, -2.0f, -2.5f),
+    glm::vec3( 1.5f,  2.0f, -2.5f),
+    glm::vec3( 1.5f,  0.2f, -1.5f),
+    glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 // clang-format on
 
 int windowWidth = 800;
 int windowHeight = 600;
 
-double deltaTime = 0.0F;
-double lastFrame = 0.0F;
+double deltaTime = 0.0f;
+double lastFrame = 0.0f;
 
 bool cursorFirstEntering = true;
 auto cursorX = float(windowWidth) / 2;
 auto cursorY = float(windowHeight) / 2;
 
-Camera cam(glm::vec3(0.0F, 0.0F, 3.0F));
+Camera cam(glm::vec3(0.0f, 0.0f, 3.0f));
 
 int main() {
     auto* window = init();
@@ -157,19 +157,24 @@ int main() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    glm::vec3 objectColor(1.0F, 0.5F, 0.31F);
-    glm::vec3 lightColor(1.0F);
+    glm::vec3 objectColor(1.0f, 0.5f, 0.31f);
+    glm::vec3 lightColor(1.0f);
     // clang-format off
     std::vector<glm::vec3> lightsInWorld = {
-        glm::vec3( 0.7F,  0.2F,  2.0F), 
-        glm::vec3( 2.3F, -3.3F, -4.0F), 
-        glm::vec3(-4.0F,  2.0F, -12.0F),
-        glm::vec3( 0.0F,  0.0F, -3.0F)
+        glm::vec3( 0.7f,  0.2f,  2.0f), 
+        glm::vec3( 2.3f, -3.3f, -4.0f), 
+        glm::vec3(-4.0f,  2.0f, -12.0f),
+        glm::vec3( 0.0f,  0.0f, -3.0f),
+        glm::vec3( 0.0f,  3.0f, -3.0f),
+        glm::vec3( 2.0f,  5.0f, -3.0f),
+        glm::vec3( 0.0f,  0.0f, -6.0f),
+        glm::vec3( 3.0f,  0.0f, -9.0f),
+        glm::vec3( 3.0f,  3.0f, 3.0f),
+        glm::vec3( -3.0f,  0.0f, -10.0f)
     };
     // clang-format on
     shader.use();
     glUniform1i(glGetUniformLocation(shader.id, "lightCnt"), int(lightsInWorld.size()));
-    
 
     glEnable(GL_DEPTH_TEST);
 
@@ -182,20 +187,19 @@ int main() {
         processInput(window);
 
         /* background */
-        glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
         // for (int i = 0; i < lightsInWorld.size(); ++i) {
         //     auto t = float(glfwGetTime());
-        //     auto radius = 2.0F;
-        //     auto moveSpeed = 2.0F;
+        //     auto radius = 2.0f;
+        //     auto moveSpeed = 2.0f;
         //     lightsInWorld[i].x = radius * std::cos(moveSpeed * t);
-        //     lightsInWorld[i].y = 0.0F;
+        //     lightsInWorld[i].y = 0.0f;
         //     lightsInWorld[i].z = radius * std::sin(moveSpeed * t);
-        //     auto m = glm::rotate(glm::mat4(1.0F), glm::radians(360 * std::sin(t / 16.0F)),
-        //                         glm::vec3(0.0F, 0.0F, 1.0F));
-        //     lightsInWorld[i] = glm::vec3(m * glm::vec4(lightsInWorld[i], 1.0F));
+        //     auto m = glm::rotate(glm::mat4(1.0f), glm::radians(360 * std::sin(t / 16.0f)),
+        //                         glm::vec3(0.0f, 0.0f, 1.0f));
+        //     lightsInWorld[i] = glm::vec3(m * glm::vec4(lightsInWorld[i], 1.0f));
 
         //     lightColor.r = float(glm::clamp(std::sin(0.5 * t) / 2 + 0.5, 0.2, 1.0));
         //     lightColor.g = float(glm::clamp(std::sin(1.3 * t) / 2 + 0.5, 0.3, 1.0));
@@ -216,19 +220,19 @@ int main() {
         // glUniform3fv(glGetUniformLocation(shader.id, "lightInWorld"), 1,
         //              glm::value_ptr(lightInWorld));
 
-        auto mAmbient = glm::vec3(1.0F, 0.5F, 0.31F);
-        auto mDiffuse = glm::vec3(1.0F, 0.5F, 0.31F);
-        auto mSpecular = glm::vec3(0.5F, 0.5F, 0.5F);
-        auto mShininess = 32.0F;
+        auto mAmbient = glm::vec3(1.0f, 0.5f, 0.31f);
+        auto mDiffuse = glm::vec3(1.0f, 0.5f, 0.31f);
+        auto mSpecular = glm::vec3(0.5f, 0.5f, 0.5f);
+        auto mShininess = 32.0f;
 
         glUniform1i(glGetUniformLocation(shader.id, "material.diffuse"), 0);
         glUniform1i(glGetUniformLocation(shader.id, "material.specular"), 1);
         glUniform1f(glGetUniformLocation(shader.id, "material.shininess"), mShininess);
 
-        // auto lDiffuse = glm::vec3(0.5F, 0.5F, 0.5F);
+        // auto lDiffuse = glm::vec3(0.5f, 0.5f, 0.5f);
         glm::vec3 lDiffuse = lightColor;
-        auto      lAmbient = glm::vec3(0.2F);
-        auto      lSpecular = glm::vec3(1.0F, 1.0F, 1.0F);
+        auto      lAmbient = glm::vec3(0.2f);
+        auto      lSpecular = glm::vec3(1.0f, 1.0f, 1.0f);
 
         for (int i = 0; i < lightsInWorld.size(); ++i) {
             glUniform3fv(
@@ -246,10 +250,10 @@ int main() {
         }
 
         for (int i = 0; i < cubePositions.size(); ++i) {
-            auto model = glm::mat4(1.0F);
+            auto model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
-            auto angle = 20.0F * float(i);
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0F, 0.3F, 0.5F));
+            auto angle = 20.0f * float(i);
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
             glm::mat3 normalMatrix = glm::transpose(glm::inverse(model));
 
@@ -263,10 +267,10 @@ int main() {
         /* light rendering */
         lightShader.use();
 
-        for (int i = 0; i < lightsInWorld.size(); ++i) {
-            glm::mat4 lightModel(1.0F);
-            lightModel = glm::translate(lightModel, lightsInWorld[i]);
-            lightModel = glm::scale(lightModel, glm::vec3(0.2F));
+        for (auto& light : lightsInWorld) {
+            glm::mat4 lightModel(1.0f);
+            lightModel = glm::translate(lightModel, light);
+            lightModel = glm::scale(lightModel, glm::vec3(0.2f));
             glUniformMatrix4fv(glGetUniformLocation(lightShader.id, "model"), 1, GL_FALSE,
                                glm::value_ptr(lightModel));
             glUniformMatrix4fv(glGetUniformLocation(lightShader.id, "view"), 1, GL_FALSE,

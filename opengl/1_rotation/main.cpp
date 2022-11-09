@@ -280,7 +280,7 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
             // reset rotation matrix, otherwise it will be applied agian on
             // already fixed model in next render loop preview
             rotationMatrix = glm::mat4(1.0F);
-        }
+        } 
     }
 }
 
