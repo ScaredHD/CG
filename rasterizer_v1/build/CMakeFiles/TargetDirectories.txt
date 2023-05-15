@@ -1,0 +1,3 @@
+D:/Project/code/CG/rasterizer_v1/build/CMakeFiles/rasterizer_v1.dir
+D:/Project/code/CG/rasterizer_v1/build/CMakeFiles/edit_cache.dir
+D:/Project/code/CG/rasterizer_v1/build/CMakeFiles/rebuild_cache.dir

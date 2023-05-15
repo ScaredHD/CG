@@ -1,0 +1,14 @@
+[
+{
+  "directory": "D:/Project/code/CG/win32/build",
+  "command": "D:\\Programming\\mingw64\\bin\\g++.exe   -municode -g -o CMakeFiles\\win32_test.dir\\test.cpp.obj -c D:\\Project\\code\\CG\\win32\\test.cpp",
+  "file": "D:/Project/code/CG/win32/test.cpp",
+  "output": "CMakeFiles/win32_test.dir/test.cpp.obj"
+},
+{
+  "directory": "D:/Project/code/CG/win32/build",
+  "command": "D:\\Programming\\mingw64\\bin\\g++.exe   -municode -g -o CMakeFiles\\win32_test.dir\\window.cpp.obj -c D:\\Project\\code\\CG\\win32\\window.cpp",
+  "file": "D:/Project/code/CG/win32/window.cpp",
+  "output": "CMakeFiles/win32_test.dir/window.cpp.obj"
+}
+]
