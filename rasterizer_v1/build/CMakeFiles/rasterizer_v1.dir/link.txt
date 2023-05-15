@@ -1,3 +1,0 @@
-D:\Programming\CMake\bin\cmake.exe -E rm -f CMakeFiles\rasterizer_v1.dir/objects.a
-D:\Programming\mingw64\bin\ar.exe qc CMakeFiles\rasterizer_v1.dir/objects.a @CMakeFiles\rasterizer_v1.dir\objects1.rsp
-D:\Programming\mingw64\bin\g++.exe -municode -g -Wl,--whole-archive CMakeFiles\rasterizer_v1.dir/objects.a -Wl,--no-whole-archive -o rasterizer_v1.exe -Wl,--out-implib,librasterizer_v1.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\rasterizer_v1.dir\linkLibs.rsp
