@@ -1,31 +1,42 @@
 #pragma once
 
+#include <string>
+
 #include "vec.h"
 
+// coordinate system: right-handed, y-up
+
 struct Camera {
-    Vec3 pos;
-    Vec3 gaze;
-    Vec3 top;
-    double fovDeg;
-    double aspectRatio;
-    double zNear;
-    double zFar;
+    Camera(Vec3 location, Vec3 lookAt, Vec3 up = {0.0, 0.0, 1.0})
+        : location(location), lookAt(lookAt), up(up) {}
 
-    Camera(Vec3 pos = Vec3(0.0, 0.0, 0.0), Vec3 gaze = Vec3(0.0, 0.0, -1.0),
-           Vec3 top = Vec3(0.0, 1.0, 0.0), double fovDeg = 90, double aspectRatio = 1.0,
-           double zNear = 1.0, double zFar = 100.0)
-        : pos(pos),
-          gaze(gaze.normalized()),
-          top(top.normalized()),
-          fovDeg(fovDeg),
-          aspectRatio(aspectRatio),
-          zNear(zNear),
-          zFar(zFar) {}
+    double pitch() const;
+    double yaw() const;
 
-    // camera movement
+    Vec3 location;
+    Vec3 lookAt;  // direction of looking
+    Vec3 up;
+
+    double fovDeg = 90.0;
+    double aspectRatio = 16.0 / 9.0;
+    double zNear = 1.0;
+    double zFar = 100.0;
+
+    std::string type = "base";
+
+  private:
+};
+
+struct FpsCamera : public Camera {
+    FpsCamera(Vec3 location, Vec3 lookAt, Vec3 up = {0.0, 0.0, 1.0})
+        : Camera(location, lookAt, up) {
+        type = "fps";
+    }
+
     void moveForward(double dist);
     void moveRight(double dist);
-    void moveUp(double dist);
-    void lookup(double deg);
-    void lookleft(double deg);
+    void lookUp(double deg);
+    void lookRight(double deg);
 };
+
+struct OrbitCamera : public Camera {};

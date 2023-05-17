@@ -1,29 +1,38 @@
 #include "camera.h"
 
-void Camera::moveForward(double dist) {
-    pos += dist * gaze.normalized();
+#include <tuple>
+#include <cmath>
+
+#include "mathutils.h"
+
+double Camera::pitch() const {
+    return 90.0 - toDegree(SphericalCoordinates(CartesianCoordinates(lookAt)).theta);
 }
 
-void Camera::moveRight(double dist) {
-    pos += dist * cross(gaze.normalized(), top.normalized());
+double Camera::yaw() const {
+    return toDegree(SphericalCoordinates(CartesianCoordinates(lookAt)).phi);
 }
 
-void Camera::moveUp(double dist) {
-    pos += dist * top.normalized();
+void FpsCamera::moveForward(double dist) {
+    location += dist * lookAt.normalized();
 }
 
-void Camera::lookup(double deg) {
-    auto axis = cross(gaze.normalized(), top.normalized());
-    // auto M = matrix::rotation(axis, deg);
-    // gaze = (M * gaze.homogeneous()).head<3>();
-    // top = (M * top.homogeneous()).head<3>();
-    gaze = matrix::rotation(gaze, axis, deg);
-    top = matrix::rotation(top, axis, deg);
+void FpsCamera::moveRight(double dist) {
+    location = dist * cross(lookAt.normalized(), up.normalized());
 }
 
-void Camera::lookleft(double deg) {
-    // auto M = matrix::rotation(top.normalized(), deg);
-    // gaze = (M * gaze.homogeneous()).head<3>();
-    // top = (M * top.homogeneous()).head<3>();
-    gaze = matrix::rotation(gaze, top.normalized(), deg);
+void FpsCamera::lookUp(double deg) {
+    auto s = SphericalCoordinates(CartesianCoordinates(lookAt));
+    s.theta -= toRadian(deg);
+    auto c = CartesianCoordinates(s);
+    lookAt = Vec3(c.x, c.y, c.z);
+}
+
+void FpsCamera::lookRight(double deg) {
+    auto s = SphericalCoordinates(CartesianCoordinates(lookAt));
+    s.phi += toRadian(deg);
+    if (s.phi > pi) s.phi -= 2 * pi;
+    if (s.phi < -pi) s.phi += 2 * pi;
+    auto c = CartesianCoordinates(s);
+    lookAt = Vec3(c.x, c.y, c.z);
 }
