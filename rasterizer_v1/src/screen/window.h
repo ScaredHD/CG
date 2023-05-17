@@ -5,6 +5,7 @@
 #endif
 
 #include <windows.h>
+#include <windowsx.h>
 
 #include "buffer.h"
 #include "image.h"
@@ -23,7 +24,7 @@ class Window {
     void show();
     void pollEvents();
 
-    void updateFrameBufferFromImage(const RgbaImage& image);
+    void updateFrameBufferFromImage(const RgbaImage &image);
     void updateFrameBuffer(std::shared_ptr<Buffer> frameBuffer);
     void drawFrameBuffer();
 
@@ -34,7 +35,13 @@ class Window {
 
   private:
     void prepareDC();
+    void quit();
+
     LRESULT handleMessages(UINT uMsg, WPARAM wParam, LPARAM lParam);
+    void handleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam);
+    void handleMouseEvents(UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+    void centerCursor();
 
     std::shared_ptr<Buffer> frameBuffer;
 
@@ -45,4 +52,6 @@ class Window {
     void *surface;
     HDC windowDC;
     HDC memoryDC;
+
+    RECT windowRect;
 };

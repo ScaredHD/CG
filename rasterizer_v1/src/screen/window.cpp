@@ -4,7 +4,6 @@
 
 static int eventCount = 0;
 
-
 Window::Window(int width, int height, HINSTANCE hInstance, int nCmdShow)
     : width(width), height(height), hInstance(hInstance), nCmdShow(nCmdShow) {
     createWindow(width, height, hInstance);
@@ -47,6 +46,8 @@ void Window::createWindow(int &width, int &height, HINSTANCE &hInstance) {
     }
 
     isRunning = true;
+
+    GetWindowRect(hwnd, &windowRect);
 }
 
 void Window::prepareDC() {
@@ -90,7 +91,7 @@ void Window::updateFrameBuffer(std::shared_ptr<Buffer> frameBuffer) {
     this->frameBuffer = frameBuffer;
 }
 
-void Window::updateFrameBufferFromImage(const RgbaImage&image) {
+void Window::updateFrameBufferFromImage(const RgbaImage &image) {
     updateFrameBuffer(image.buffer());
 }
 
@@ -121,11 +122,41 @@ static int val = 2;
 
 LRESULT Window::handleMessages(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
-        case WM_DESTROY:
-            isRunning = false;
-            PostQuitMessage(0);
+        case WM_CLOSE:
+            quit();
+            return 0;
+        case WM_MOUSEMOVE:
+            handleMouseEvents(uMsg, wParam, lParam);
+            return 0;
+        case WM_KEYDOWN:
+            handleKeyEvents(uMsg, wParam, lParam);
             return 0;
     }
 
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
+}
+
+void Window::handleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    auto keyCode = LOWORD(wParam);
+    switch (keyCode) {
+        case VK_ESCAPE:
+            quit();
+    }
+}
+
+void Window::handleMouseEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    int xPos = GET_X_LPARAM(lParam);
+    int yPos = GET_Y_LPARAM(lParam);
+    std::cout << xPos << ", " << yPos << "\n";
+    centerCursor();
+}
+
+void Window::quit() {
+    isRunning = false;
+    PostQuitMessage(0);
+}
+
+void Window::centerCursor() {
+    SetCursorPos((windowRect.left + windowRect.right) / 2,
+                 (windowRect.top + windowRect.bottom) / 2);
 }
