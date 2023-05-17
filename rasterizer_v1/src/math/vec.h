@@ -4,6 +4,7 @@
 #include <cmath>
 #include <ostream>
 
+// Vector of variable length
 template <size_t Len, typename T = double>
 class VectorX {
   public:
@@ -38,7 +39,11 @@ std::ostream& operator<<(std::ostream& os, const VectorX<Len, T>& v) {
     return os;
 }
 
-// arithmetics between Vectors and numbers
+// arithmetics of VectorX
+// VectorX + VectorX
+// VectorX - VectorX and -VectorX
+// VectorX * c and c * VectorX
+// VectorX / c
 template <size_t Len, typename T>
 auto operator+(const VectorX<Len, T>& u, const VectorX<Len, T>& v) {
     VectorX<Len, T> res(u);
@@ -77,6 +82,11 @@ auto operator/(const VectorX<Len, T>& v, T x) {
     return v * (1 / x);
 }
 
+// Compound assignment operations
+// v1 += v2
+// v1 -= v2
+// v1 *= v2
+// v1 /= v2
 template <size_t Len, typename T>
 T& VectorX<Len, T>::operator+=(const VectorX<Len, T>& v) {
     return *this = (*this) + v;
@@ -85,6 +95,16 @@ T& VectorX<Len, T>::operator+=(const VectorX<Len, T>& v) {
 template <size_t Len, typename T>
 const T& VectorX<Len, T>::operator+=(const VectorX<Len, T>& v) const {
     return *this = (*this) + v;
+}
+
+template <size_t Len, typename T>
+T& VectorX<Len, T>::operator-=(const VectorX<Len, T>& v) {
+    return *this = (*this) - v;
+}
+
+template <size_t Len, typename T>
+const T& VectorX<Len, T>::operator-=(const VectorX<Len, T>& v) const {
+    return *this = (*this) - v;
 }
 
 template <size_t Len, typename T>
@@ -107,6 +127,10 @@ const T& VectorX<Len, T>::operator/=(T x) const {
     return *this = (*this) / x;
 }
 
+// Other operations of VectorX
+// dot product: dot(u, v)
+// norm of vector : v.norm()
+// normalized vector : v.normalized()
 template <size_t Len, typename T>
 T dot(const VectorX<Len, T>& u, const VectorX<Len, T>& v) {
     T res = T(0);

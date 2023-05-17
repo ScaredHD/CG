@@ -63,10 +63,20 @@ using Mat2 = MatrixX<2, double>;
 using Mat3 = MatrixX<3, double>;
 using Mat4 = MatrixX<4, double>;
 
+
+// Matrix(L x L) * Matrix(L x L)
 template <size_t L, typename T>
 MatrixX<L, T> operator*(const MatrixX<L, T>& m, const MatrixX<L, T>& n) {
+    MatrixX<L, T> res;
+    for (int i = 0; i < L; ++i) {
+        for (int j = 0; j < L; ++j) {
+            res[i][j] = (m.row(i)) * (n.col(j));
+        }
+    }
+    return res;
 }
 
+// Matrix(L x L) * Vector(L x 1)
 template <size_t L, typename T>
 VectorX<L, T> operator*(const MatrixX<L, T>& m, const VectorX<L, T>& v) {
     VectorX<L, T> res;
@@ -76,6 +86,7 @@ VectorX<L, T> operator*(const MatrixX<L, T>& m, const VectorX<L, T>& v) {
     return res;
 }
 
+// Matrix * c and c * Matrix
 template <size_t L, typename T>
 auto operator*(const MatrixX<L, T>& m, T x) {
     MatrixX<L, T> res(m);
