@@ -5,9 +5,9 @@
 #endif
 
 #include <windows.h>
-#include <memory>
 
 #include "buffer.h"
+#include "image.h"
 
 class Window {
   public:
@@ -23,6 +23,7 @@ class Window {
     void show();
     void pollEvents();
 
+    void updateFrameBufferFromImage(const RgbaImage& image);
     void updateFrameBuffer(std::shared_ptr<Buffer> frameBuffer);
     void drawFrameBuffer();
 

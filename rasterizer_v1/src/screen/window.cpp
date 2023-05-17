@@ -86,6 +86,10 @@ void Window::updateFrameBuffer(std::shared_ptr<Buffer> frameBuffer) {
     this->frameBuffer = frameBuffer;
 }
 
+void Window::updateFrameBufferFromImage(const RgbaImage &image) {
+    updateFrameBuffer(image.buffer());
+}
+
 void Window::drawFrameBuffer() {
     memcpy(surface, frameBuffer->data(), width * height * 4);
     BitBlt(windowDC, 0, 0, width, height, memoryDC, 0, 0, SRCCOPY);

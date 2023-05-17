@@ -5,6 +5,7 @@ project(rasterizer_v1)
 set(CppFiles
     src/screen/buffer.cpp
     src/screen/window.cpp
+    src/screen/image.cpp
 )
 
 add_executable(rasterizer_v1 
