@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+static int eventCount = 0;
+
+
 Window::Window(int width, int height, HINSTANCE hInstance, int nCmdShow)
     : width(width), height(height), hInstance(hInstance), nCmdShow(nCmdShow) {
     createWindow(width, height, hInstance);
@@ -20,6 +23,7 @@ void Window::createWindow(int &width, int &height, HINSTANCE &hInstance) {
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = hInstance;
     wc.lpszClassName = CLASS_NAME;
+    wc.style = CS_HREDRAW | CS_VREDRAW;
 
     RegisterClass(&wc);
 
@@ -76,7 +80,7 @@ void Window::show() {
 
 void Window::pollEvents() {
     MSG msg{};
-    while (GetMessage(&msg, nullptr, 0, 0) > 0) {
+    while (PeekMessage(&msg, hwnd, 0, 0, PM_REMOVE)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
@@ -86,7 +90,7 @@ void Window::updateFrameBuffer(std::shared_ptr<Buffer> frameBuffer) {
     this->frameBuffer = frameBuffer;
 }
 
-void Window::updateFrameBufferFromImage(const Image<4> &image) {
+void Window::updateFrameBufferFromImage(const RgbaImage&image) {
     updateFrameBuffer(image.buffer());
 }
 
@@ -117,9 +121,6 @@ static int val = 2;
 
 LRESULT Window::handleMessages(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
-        case WM_PAINT:
-            this->drawFrameBuffer();
-            return 0;
         case WM_DESTROY:
             isRunning = false;
             PostQuitMessage(0);
