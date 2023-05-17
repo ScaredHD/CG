@@ -6,8 +6,8 @@
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
     Window w(800, 600, hInstance, nCmdShow);
 
-    RgbaImage img(800, 600, {255, 0, 0, 0});
-    
+    Image<4> img(800, 600, {255, 0, 0, 0});
+
     w.updateFrameBufferFromImage(img);
 
     w.show();

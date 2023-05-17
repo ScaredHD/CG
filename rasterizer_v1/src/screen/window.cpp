@@ -86,7 +86,7 @@ void Window::updateFrameBuffer(std::shared_ptr<Buffer> frameBuffer) {
     this->frameBuffer = frameBuffer;
 }
 
-void Window::updateFrameBufferFromImage(const RgbaImage &image) {
+void Window::updateFrameBufferFromImage(const Image<4> &image) {
     updateFrameBuffer(image.buffer());
 }
 

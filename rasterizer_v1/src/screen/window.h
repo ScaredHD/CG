@@ -23,7 +23,7 @@ class Window {
     void show();
     void pollEvents();
 
-    void updateFrameBufferFromImage(const RgbaImage& image);
+    void updateFrameBufferFromImage(const Image<4>& image);
     void updateFrameBuffer(std::shared_ptr<Buffer> frameBuffer);
     void drawFrameBuffer();
 
