@@ -24,9 +24,9 @@ class Image {
     int channelCount;
 
   private:
-    Buffer buf;
-
     size_t startIdx(int x, int y) { return (x * width + y) * ChannelCount; }
+
+    Buffer buf;
 };
 
 template <size_t ChannelCount>
@@ -65,7 +65,10 @@ std::shared_ptr<Buffer> Image<ChannelCount>::buffer() const {
     return std::make_shared<Buffer>(buf);
 }
 
+struct GrayscaleImage : public Image<1> {
+    GrayscaleImage(int width, int height, Uchar color) : Image<1>(width, height, {color}) {}
+};
 
-using RgbaImage = Image<4>;
 using RgbImage = Image<3>;
-using GrayscaleImage = Image<1>;
+using RgbaImage = Image<4>;
+
