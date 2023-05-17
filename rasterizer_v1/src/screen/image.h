@@ -26,7 +26,7 @@ class Image {
   private:
     Buffer buf;
 
-    size_t startIdx(int x, int y) { return (x * width + y) * channelCount; }
+    size_t startIdx(int x, int y) { return (x * width + y) * ChannelCount; }
 };
 
 template <size_t ChannelCount>
