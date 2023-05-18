@@ -11,7 +11,7 @@ TimePoint getTime() {
 }
 
 auto timeIntervalInMs(const TimePoint& start, const TimePoint& end) {
-    return std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    return std::chrono::duration<double>(end - start).count();
 }
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
@@ -25,10 +25,21 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         }
     }
 
+    long long frameTime = 0;
+
     while (w.isRunning) {
+        TimePoint frameBegin = getTime();
+
         w.updateFrameBufferFromImage(img);
         w.drawFrameBuffer();
-        w.pollEvents();
+        
+
+
+        TimePoint frameEnd = getTime();
+        frameTime = timeIntervalInMs(frameBegin, frameEnd);
+
+        w.pollEvents(frameTime);
+        std::cout << frameTime << "\n";
     }
 
     return 0;

@@ -26,13 +26,17 @@ void Window::createWindow(int &width, int &height, HINSTANCE &hInstance) {
 
     RegisterClass(&wc);
 
+    windowRect = {0, 0, width, height};
+    AdjustWindowRect(&windowRect, style, 0);
+
     hwnd = CreateWindowEx(0,                            // Optional window styles.
                           CLASS_NAME,                   // Window class
                           L"Learn to Program Windows",  // Window text
-                          WS_OVERLAPPEDWINDOW,          // Window style
+                          style,                        // Window style
 
                           // Position and size
-                          CW_USEDEFAULT, CW_USEDEFAULT, width, height,
+                          CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left,
+                          windowRect.bottom - windowRect.top,
 
                           NULL,       // Parent window
                           NULL,       // Menu
@@ -40,14 +44,20 @@ void Window::createWindow(int &width, int &height, HINSTANCE &hInstance) {
                           this        // Additional application data
 
     );
-
     if (hwnd == nullptr) {
         std::cout << "hwnd is nullptr\n";
     }
 
+    GetWindowRect(hwnd, &windowRect);
+    GetClientRect(hwnd, &clientRect);
+
     isRunning = true;
 
-    GetWindowRect(hwnd, &windowRect);
+    centerCursor();
+    POINT cursor;
+    GetCursorPos(&cursor);
+    cursorX = cursor.x;
+    cursorY = cursor.y;
 }
 
 void Window::prepareDC() {
@@ -79,7 +89,7 @@ void Window::show() {
     ShowWindow(hwnd, nCmdShow);
 }
 
-void Window::pollEvents() {
+void Window::pollEvents(double deltaTime) {
     MSG msg{};
     while (PeekMessage(&msg, hwnd, 0, 0, PM_REMOVE)) {
         TranslateMessage(&msg);
@@ -139,13 +149,18 @@ void Window::handleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (keyCode) {
         case VK_ESCAPE:
             quit();
+            break;
+        case 'W':
+            fpsCamera->moveForward(1);
+            break;
     }
 }
 
 void Window::handleMouseEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    int xPos = GET_X_LPARAM(lParam);
-    int yPos = GET_Y_LPARAM(lParam);
-    std::cout << xPos << ", " << yPos << "\n";
+    POINT cursor;
+    GetCursorPos(&cursor);
+    cursorDeltaX = cursor.x - cursorX;
+    cursorDeltaY = cursor.y - cursorY;
     centerCursor();
 }
 
@@ -155,6 +170,12 @@ void Window::quit() {
 }
 
 void Window::centerCursor() {
-    SetCursorPos((windowRect.left + windowRect.right) / 2,
-                 (windowRect.top + windowRect.bottom) / 2);
+    POINT p = {width / 2, height / 2};
+    ClientToScreen(hwnd, &p);
+    SetCursorPos(p.x, p.y);
+}
+
+void Window::bindCamera(Camera *camera) {
+    if (camera->type == "fps") fpsCamera = reinterpret_cast<FpsCamera *>(camera);
+    if (camera->type == "orbit") orbitCamera = reinterpret_cast<OrbitCamera *>(camera);
 }

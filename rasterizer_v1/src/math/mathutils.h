@@ -31,3 +31,5 @@ struct SphericalCoordinates {
 
 double toRadian(double deg);
 double toDegree(double rad);
+
+double clamp(double val, double min, double max);
