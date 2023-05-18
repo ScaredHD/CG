@@ -90,6 +90,8 @@ void Window::show() {
 }
 
 void Window::pollEvents(double deltaTime) {
+    this->deltaTime = deltaTime;
+
     MSG msg{};
     while (PeekMessage(&msg, hwnd, 0, 0, PM_REMOVE)) {
         TranslateMessage(&msg);
@@ -151,7 +153,16 @@ void Window::handleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
             quit();
             break;
         case 'W':
-            fpsCamera->moveForward(1);
+            fpsCamera->moveForward(fpsCamera->moveSpeed * deltaTime);
+            break;
+        case 'S':
+            fpsCamera->moveForward(-fpsCamera->moveSpeed * deltaTime);
+            break;
+        case 'A':
+            fpsCamera->moveRight(-fpsCamera->moveSpeed * deltaTime);
+            break;
+        case 'D':
+            fpsCamera->moveRight(fpsCamera->moveSpeed * deltaTime);
             break;
     }
 }
@@ -162,6 +173,8 @@ void Window::handleMouseEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     cursorDeltaX = cursor.x - cursorX;
     cursorDeltaY = cursor.y - cursorY;
     centerCursor();
+    fpsCamera->lookUp(-cursorDeltaY * fpsCamera->mouseSensitivity);
+    fpsCamera->lookRight(cursorDeltaX * fpsCamera->mouseSensitivity);
 }
 
 void Window::quit() {
