@@ -13,24 +13,24 @@ double Camera::yaw() const {
     return toDegree(SphericalCoordinates(CartesianCoordinates(lookAt)).phi);
 }
 
-void FpsCamera::moveForward(double dist) {
-    location += dist * lookAt.normalized();
+void FpsCamera::moveForward(double delta) {
+    location += moveSpeed * delta * lookAt.normalized();
 }
 
-void FpsCamera::moveRight(double dist) {
-    location = dist * cross(lookAt.normalized(), up.normalized());
+void FpsCamera::moveRight(double delta) {
+    location = moveSpeed * delta * cross(lookAt.normalized(), up.normalized());
 }
 
-void FpsCamera::lookUp(double deg) {
+void FpsCamera::lookUp(double delta) {
     auto s = SphericalCoordinates(CartesianCoordinates(lookAt));
-    s.theta -= toRadian(deg);
+    s.theta -= toRadian(mouseSensitivity * delta);
     auto c = CartesianCoordinates(s);
     lookAt = Vec3(c.x, c.y, c.z);
 }
 
-void FpsCamera::lookRight(double deg) {
+void FpsCamera::lookRight(double delta) {
     auto s = SphericalCoordinates(CartesianCoordinates(lookAt));
-    s.phi += toRadian(deg);
+    s.phi += toRadian(mouseSensitivity * delta);
     if (s.phi > pi) s.phi -= 2 * pi;
     if (s.phi < -pi) s.phi += 2 * pi;
     auto c = CartesianCoordinates(s);

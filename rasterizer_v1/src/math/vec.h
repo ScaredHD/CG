@@ -8,20 +8,21 @@
 template <size_t Len, typename T = double>
 class VectorX {
   public:
-    VectorX() : v(Len, 0) {}
+    VectorX() {}
     VectorX(const std::array<T, Len>& v) : v(v) {}
+    VectorX(const VectorX& other) : v(other.v) {}
 
     T& operator[](size_t i) { return v[i]; }
     const T& operator[](size_t i) const { return v[i]; }
-    T operator-() const;
-    T& operator+=(const VectorX<Len, T>& v);
-    const T& operator+=(const VectorX<Len, T>& v) const;
-    T& operator-=(const VectorX<Len, T>& v);
-    const T& operator-=(const VectorX<Len, T>& v) const;
-    T& operator*=(T x);
-    const T& operator*=(T x) const;
-    T& operator/=(T x);
-    const T& operator/=(T x) const;
+    VectorX<Len, T> operator-() const;
+    VectorX<Len, T>& operator+=(const VectorX<Len, T>& v);
+    const VectorX<Len, T>& operator+=(const VectorX<Len, T>& v) const;
+    VectorX<Len, T>& operator-=(const VectorX<Len, T>& v);
+    const VectorX<Len, T>& operator-=(const VectorX<Len, T>& v) const;
+    VectorX<Len, T>& operator*=(T x);
+    const VectorX<Len, T>& operator*=(T x) const;
+    VectorX<Len, T>& operator/=(T x);
+    const VectorX<Len, T>& operator/=(T x) const;
 
     // common vector operations
     VectorX<Len, T> normalized() const;
@@ -52,7 +53,7 @@ auto operator+(const VectorX<Len, T>& u, const VectorX<Len, T>& v) {
 }
 
 template <size_t Len, typename T>
-T VectorX<Len, T>::operator-() const {
+VectorX<Len, T> VectorX<Len, T>::operator-() const {
     VectorX<Len, T> res(v);
     for (size_t i = 0; i < Len; ++i) res[i] = -res[i];
     return res;
@@ -88,42 +89,42 @@ auto operator/(const VectorX<Len, T>& v, T x) {
 // v1 *= v2
 // v1 /= v2
 template <size_t Len, typename T>
-T& VectorX<Len, T>::operator+=(const VectorX<Len, T>& v) {
+VectorX<Len, T>& VectorX<Len, T>::operator+=(const VectorX<Len, T>& v) {
     return *this = (*this) + v;
 }
 
 template <size_t Len, typename T>
-const T& VectorX<Len, T>::operator+=(const VectorX<Len, T>& v) const {
+const VectorX<Len, T>& VectorX<Len, T>::operator+=(const VectorX<Len, T>& v) const {
     return *this = (*this) + v;
 }
 
 template <size_t Len, typename T>
-T& VectorX<Len, T>::operator-=(const VectorX<Len, T>& v) {
+VectorX<Len, T>& VectorX<Len, T>::operator-=(const VectorX<Len, T>& v) {
     return *this = (*this) - v;
 }
 
 template <size_t Len, typename T>
-const T& VectorX<Len, T>::operator-=(const VectorX<Len, T>& v) const {
+const VectorX<Len, T>& VectorX<Len, T>::operator-=(const VectorX<Len, T>& v) const {
     return *this = (*this) - v;
 }
 
 template <size_t Len, typename T>
-T& VectorX<Len, T>::operator*=(T x) {
+VectorX<Len, T>& VectorX<Len, T>::operator*=(T x) {
     return *this = (*this) * x;
 }
 
 template <size_t Len, typename T>
-const T& VectorX<Len, T>::operator*=(T x) const {
+const VectorX<Len, T>& VectorX<Len, T>::operator*=(T x) const {
     return *this = (*this) * x;
 }
 
 template <size_t Len, typename T>
-T& VectorX<Len, T>::operator/=(T x) {
+VectorX<Len, T>& VectorX<Len, T>::operator/=(T x) {
     return *this = (*this) / x;
 }
 
 template <size_t Len, typename T>
-const T& VectorX<Len, T>::operator/=(T x) const {
+const VectorX<Len, T>& VectorX<Len, T>::operator/=(T x) const {
     return *this = (*this) / x;
 }
 
@@ -206,8 +207,8 @@ using Vec4 = Vector4<double>;
 template <typename T>
 Vec3 cross(const VectorX<3, T>& u, const VectorX<3, T>& v) {
     Vec3 res;
-    res.x() = u.y() * v.z() - u.z() * v.y();
-    res.y() = u.z() * v.x() - u.x() * v.z();
-    res.z() = u.x() * v.y() - u.y() * v.x();
+    res[0] = u[1] * v[2] - u[2] * v[1];
+    res[1] = u[2] * v[0] - u[0] * v[2];
+    res[2] = u[0] * v[1] - u[1] * v[0];
     return res;
 }
