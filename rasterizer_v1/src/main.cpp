@@ -19,11 +19,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     Window w(800, 600, hInstance, nCmdShow);
     w.show();
     
-    FpsCamera cam({0, 0, 0}, {0, 0, -1});
+    FpsCamera cam({{0, 0, 0}}, {{0, 0, -1}});
     w.bindCamera(&cam);
 
     Image<4> img(800, 600, {255, 0, 0, 0});
-
 
     double deltaTime = 0;
     while (w.isRunning) {
@@ -40,6 +39,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
         w.pollEvents(deltaTime);
     }
-
+    
     return 0;
 }

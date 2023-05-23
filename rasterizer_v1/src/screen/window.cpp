@@ -192,3 +192,7 @@ void Window::bindCamera(Camera *camera) {
     if (camera->type == "fps") fpsCamera = reinterpret_cast<FpsCamera *>(camera);
     if (camera->type == "orbit") orbitCamera = reinterpret_cast<OrbitCamera *>(camera);
 }
+
+Mat4 Window::viewportTransformation() const {
+    return Mat4();
+}

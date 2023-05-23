@@ -2,7 +2,7 @@
 
 const double pi = std::acos(-1);
 
-CartesianCoordinates::CartesianCoordinates(const Vec3& p) : x(p.x()), y(p.y()), z(p.z()) {
+CartesianCoordinates::CartesianCoordinates(const Vec3& p) : x(p[0]), y(p[1]), z(p[2]) {
 }
 
 CartesianCoordinates::CartesianCoordinates(const SphericalCoordinates& p) {

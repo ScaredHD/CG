@@ -3,212 +3,97 @@
 #include <array>
 #include <cmath>
 #include <ostream>
+#include <algorithm>
+#include <numeric>
 
-// Vector of variable length
-template <size_t Len, typename T = double>
-class VectorX {
-  public:
+// array(L) + array(L)
+template <size_t L, typename T>
+std::array<T, L> operator+(const std::array<T, L>& a, const std::array<T, L>& b) {
+    std::array<T, L> res;
+    std::transform(a.begin(), a.end(), b.begin(), res.begin(), std::plus<>());
+    return res;
+}
+
+// array(L) * c
+template <size_t L, typename T>
+std::array<T, L> operator*(const std::array<T, L>& v, T c) {
+    std::array<T, L> res(v);
+    std::for_each(v.begin(), v.end(), [c](T x) { x *= c; });
+    return res;
+}
+
+template <size_t L, typename T>
+T dot(const std::array<T, L>& a, const std::array<T, L>& b) {
+    std::array<T, L> prod;
+    std::transform(a.begin(), a.end(), b.begin(), prod.begin(), std::multiplies<>());
+    return std::accumulate(prod.begin(), prod.end(), 0);
+}
+
+template <size_t L, typename T>
+struct VectorX {
     VectorX() {}
-    VectorX(const std::array<T, Len>& v) : v(v) {}
+    VectorX(const std::array<T, L>& v) : v(v) {}
     VectorX(const VectorX& other) : v(other.v) {}
 
-    T& operator[](size_t i) { return v[i]; }
-    const T& operator[](size_t i) const { return v[i]; }
-    VectorX<Len, T> operator-() const;
-    VectorX<Len, T>& operator+=(const VectorX<Len, T>& v);
-    const VectorX<Len, T>& operator+=(const VectorX<Len, T>& v) const;
-    VectorX<Len, T>& operator-=(const VectorX<Len, T>& v);
-    const VectorX<Len, T>& operator-=(const VectorX<Len, T>& v) const;
-    VectorX<Len, T>& operator*=(T x);
-    const VectorX<Len, T>& operator*=(T x) const;
-    VectorX<Len, T>& operator/=(T x);
-    const VectorX<Len, T>& operator/=(T x) const;
+    VectorX operator-() { return v * (-1); }
+    VectorX& operator+=(const VectorX& other) { return *this = *this + other; }
+    VectorX& operator-=(const VectorX& other) { return *this = *this - other; }
+    VectorX& operator*=(T x) { return *this = *this * x; }
+    VectorX& operator/=(T x) { return *this = *this / x; }
+    T& operator[](int i) { return v[i]; }
+    const T& operator[](int i) const { return v[i]; }
 
-    // common vector operations
-    VectorX<Len, T> normalized() const;
-    T norm() const;
+    T norm() const { return std::sqrt(dot(v, v)); }
+    VectorX normalized() const { return *this / norm(); }
 
-  private:
-    std::array<T, Len> v;
+    std::array<T, L> v;
 };
 
-template <size_t Len, typename T>
-std::ostream& operator<<(std::ostream& os, const VectorX<Len, T>& v) {
-    for (size_t i = 0; i < Len; ++i) {
-        os << v[i] << (i != Len - 1 ? ", " : "");
-    }
-    return os;
+template <size_t L, typename T>
+VectorX<L, T> operator+(const VectorX<L, T>& a, const VectorX<L, T>& b) {
+    return VectorX(a.v + b.v);
 }
 
-// arithmetics of VectorX
-// VectorX + VectorX
-// VectorX - VectorX and -VectorX
-// VectorX * c and c * VectorX
-// VectorX / c
-template <size_t Len, typename T>
-auto operator+(const VectorX<Len, T>& u, const VectorX<Len, T>& v) {
-    VectorX<Len, T> res(u);
-    for (size_t i = 0; i < Len; ++i) res[i] += v[i];
-    return res;
+template <size_t L, typename T>
+VectorX<L, T> operator-(const VectorX<L, T>& a, const VectorX<L, T>& b) {
+    return a + b * (-1);
 }
 
-template <size_t Len, typename T>
-VectorX<Len, T> VectorX<Len, T>::operator-() const {
-    VectorX<Len, T> res(v);
-    for (size_t i = 0; i < Len; ++i) res[i] = -res[i];
-    return res;
+template <size_t L, typename T>
+VectorX<L, T> operator*(const VectorX<L, T>& a, T x) {
+    return VectorX(a.v * x);
 }
 
-template <size_t Len, typename T>
-auto operator-(const VectorX<Len, T>& u, const VectorX<Len, T>& v) {
-    return u + (-v);
+template <size_t L, typename T>
+VectorX<L, T> operator*(T x, const VectorX<L, T>& a) {
+    return a * x;
 }
 
-template <size_t Len, typename T>
-auto operator*(T x, const VectorX<Len, T>& v) {
-    VectorX<Len, T> res(v);
-    for (size_t i = 0; i < Len; ++i) res[i] *= x;
-    return res;
+template <size_t L, typename T>
+VectorX<L, T> operator/(const VectorX<L, T>& a, T x) {
+    return a * (1 / x);
 }
 
-template <size_t Len, typename T>
-auto operator*(const VectorX<Len, T>& v, T x) {
-    VectorX<Len, T> res(v);
-    for (size_t i = 0; i < Len; ++i) res[i] *= x;
-    return res;
+template <size_t L, typename T>
+auto dot(const VectorX<L, T>& a, const VectorX<L, T>& b) {
+    return VectorX(dot(a.v, b.v));
 }
-
-template <size_t Len, typename T>
-auto operator/(const VectorX<Len, T>& v, T x) {
-    return v * (1 / x);
-}
-
-// Compound assignment operations
-// v1 += v2
-// v1 -= v2
-// v1 *= v2
-// v1 /= v2
-template <size_t Len, typename T>
-VectorX<Len, T>& VectorX<Len, T>::operator+=(const VectorX<Len, T>& v) {
-    return *this = (*this) + v;
-}
-
-template <size_t Len, typename T>
-const VectorX<Len, T>& VectorX<Len, T>::operator+=(const VectorX<Len, T>& v) const {
-    return *this = (*this) + v;
-}
-
-template <size_t Len, typename T>
-VectorX<Len, T>& VectorX<Len, T>::operator-=(const VectorX<Len, T>& v) {
-    return *this = (*this) - v;
-}
-
-template <size_t Len, typename T>
-const VectorX<Len, T>& VectorX<Len, T>::operator-=(const VectorX<Len, T>& v) const {
-    return *this = (*this) - v;
-}
-
-template <size_t Len, typename T>
-VectorX<Len, T>& VectorX<Len, T>::operator*=(T x) {
-    return *this = (*this) * x;
-}
-
-template <size_t Len, typename T>
-const VectorX<Len, T>& VectorX<Len, T>::operator*=(T x) const {
-    return *this = (*this) * x;
-}
-
-template <size_t Len, typename T>
-VectorX<Len, T>& VectorX<Len, T>::operator/=(T x) {
-    return *this = (*this) / x;
-}
-
-template <size_t Len, typename T>
-const VectorX<Len, T>& VectorX<Len, T>::operator/=(T x) const {
-    return *this = (*this) / x;
-}
-
-// Other operations of VectorX
-// dot product: dot(u, v)
-// norm of vector : v.norm()
-// normalized vector : v.normalized()
-template <size_t Len, typename T>
-T dot(const VectorX<Len, T>& u, const VectorX<Len, T>& v) {
-    T res = T(0);
-    for (size_t i = 0; i < Len; ++i) {
-        res += u[i] * v[i];
-    }
-    return res;
-}
-
-// common vector operations
-template <size_t Len, typename T>
-T VectorX<Len, T>::norm() const {
-    T sumOfSquares = T(0);
-    for (size_t i = 0; i < Len; ++i) {
-        sumOfSquares += v[i] * v[i];
-    }
-    return std::sqrt(sumOfSquares);
-}
-
-template <size_t Len, typename T>
-VectorX<Len, T> VectorX<Len, T>::normalized() const {
-    return (*this) / norm();
-}
-
-// Vector2/3/4
-template <typename T = double>
-class Vector2 : public VectorX<2, T> {
-  public:
-    Vector2() : VectorX<2, T>() {}
-    Vector2(T x, T y) : VectorX<2, T>({x, y}) {}
-
-    T& x() { return (*this)[0]; }
-    T& y() { return (*this)[1]; }
-    const T& x() const { return (*this)[0]; }
-    const T& y() const { return (*this)[1]; }
-};
-
-template <typename T = double>
-class Vector3 : public VectorX<3, T> {
-  public:
-    Vector3() : VectorX<3, T>() {}
-    Vector3(T x, T y, T z) : VectorX<3, T>({x, y, z}) {}
-    Vector3(const VectorX<3, T>& other) : VectorX<3, T>(other) {}
-
-    T& x() { return (*this)[0]; }
-    T& y() { return (*this)[1]; }
-    T& z() { return (*this)[2]; }
-    const T& x() const { return (*this)[0]; }
-    const T& y() const { return (*this)[1]; }
-    const T& z() const { return (*this)[2]; }
-};
-
-template <typename T = double>
-class Vector4 : public VectorX<4, T> {
-  public:
-    Vector4() : VectorX<4, T>() {}
-    Vector4(T x, T y, T z, T w) : VectorX<4, T>({x, y, z, w}) {}
-
-    T& x() { return (*this)[0]; }
-    T& y() { return (*this)[1]; }
-    T& z() { return (*this)[2]; }
-    T& w() { return (*this)[3]; }
-    const T& x() const { return (*this)[0]; }
-    const T& y() const { return (*this)[1]; }
-    const T& z() const { return (*this)[2]; }
-    const T& w() const { return (*this)[3]; }
-};
-
-using Vec2 = Vector2<double>;
-using Vec3 = Vector3<double>;
-using Vec4 = Vector4<double>;
 
 template <typename T>
-Vec3 cross(const VectorX<3, T>& u, const VectorX<3, T>& v) {
-    Vec3 res;
-    res[0] = u[1] * v[2] - u[2] * v[1];
-    res[1] = u[2] * v[0] - u[0] * v[2];
-    res[2] = u[0] * v[1] - u[1] * v[0];
-    return res;
+VectorX<3, T> cross(const VectorX<3, T>& a, const VectorX<3, T>& b) {
+    const auto& [a0, a1, a2] = a.v;
+    const auto& [b0, b1, b2] = b.v;
+    return {{a0 * b1 - a1 * b0, a2 * b0 - a0 * b2, a0 * b1 - a1 * b0}};
+}
+
+using Vec2 = VectorX<2, double>;
+using Vec3 = VectorX<3, double>;
+using Vec4 = VectorX<4, double>;
+
+template <size_t L, typename T>
+std::ostream& operator<<(std::ostream& os, const VectorX<L, T>& v) {
+    for (int i = 0; i < L; ++i) {
+        os << v[i] << (i == L - 1 ? ", " : "");
+    }
+    return os;
 }

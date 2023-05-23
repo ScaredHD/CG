@@ -3,15 +3,18 @@
 #include <string>
 
 #include "vec.h"
+#include "matrix.h"
 
 // coordinate system: right-handed, y-up
 
 struct Camera {
-    Camera(Vec3 location, Vec3 lookAt, Vec3 up)
-        : location(location), lookAt(lookAt), up(up) {}
+    Camera(Vec3 location, Vec3 lookAt, Vec3 up) : location(location), lookAt(lookAt), up(up) {}
 
     double pitch() const;
     double yaw() const;
+
+    Mat4 viewTransformation() const;
+    Mat4 projectionTransformation() const;
 
     Vec3 location;
     Vec3 lookAt;  // direction of looking
@@ -28,7 +31,7 @@ struct Camera {
 };
 
 struct FpsCamera : public Camera {
-    FpsCamera(Vec3 location, Vec3 lookAt, Vec3 up = {0.0, 1.0, 0.0})
+    FpsCamera(Vec3 location, Vec3 lookAt, Vec3 up = {{0.0, 1.0, 0.0}})
         : Camera(location, lookAt, up) {
         type = "fps";
     }
@@ -38,7 +41,7 @@ struct FpsCamera : public Camera {
     void lookUp(double deg);
     void lookRight(double deg);
 
-    double moveSpeed = 1.0;
+    double moveSpeed = 0.5;
     double mouseSensitivity = 0.5;
 };
 

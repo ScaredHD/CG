@@ -1,104 +1,69 @@
 #pragma once
 #include <array>
 #include <cmath>
+#include <numeric>
 #include <ostream>
+#include <algorithm>
+#include <tuple>
 
 #include "vec.h"
 
 template <size_t L, typename T>
-void assignTransposed(const std::array<std::array<T, L>, L> mat,
-                      const std::array<std::array<T, L>, L>& other) {
-    for (size_t row = 0; row < L; ++row)
-        for (size_t col = 0; col < L; ++col) mat[row][col] = other[col][row];
+auto transposed(const std::array<std::array<T, L>, L>& m) {
+    std::array<std::array<T, L>, L> res;
+    for (size_t i = 0; i < L; ++i)
+        for (size_t j = 0; j < L; ++j) res[i][j] = m[j][i];
+    return res;
 }
 
-template <size_t L, typename T = double>
-class MatrixX {
-  public:
-    MatrixX() {}
-    MatrixX(const std::array<std::array<T, L>, L>& mat);
+template <size_t L, typename T>
+struct Matrix {
+    Matrix() {}
+    Matrix(const std::array<std::array<T, L>, L>& mat) : mat(mat) {}
 
-    MatrixX& operator=(const MatrixX& other);
-    MatrixX& operator=(const std::array<std::array<T, L>, L>& other);
+    std::array<T, L>& operator[](int i) { return mat[i]; }
+    const std::array<T, L>& operator[](int i) const { return mat[i]; }
 
-    std::array<T, L>& operator[](size_t i) { return mat[i]; }
-    const std::array<T, L>& operator[](size_t i) const { return mat[i]; }
+    Matrix transposed() const;
 
-    VectorX<L, T> row(int r) const;
-    VectorX<L, T> col(int c) const;
-
-  private:
     std::array<std::array<T, L>, L> mat;
-    std::array<std::array<T, L>, L> matTransposed;
 };
 
 template <size_t L, typename T>
-MatrixX<L, T>::MatrixX(const std::array<std::array<T, L>, L>& mat) : mat(mat) {
-    assignTransposed(matTransposed, mat);
-}
-
-template <size_t L, typename T>
-MatrixX<L, T>& MatrixX<L, T>::operator=(const MatrixX& other) {
-    mat = other.mat;
-    matTransposed = other.matTransposed;
-}
-
-template <size_t L, typename T>
-MatrixX<L, T>& MatrixX<L, T>::operator=(const std::array<std::array<T, L>, L>& other) {
-    mat = other;
-    assignTransposed(matTransposed, other);
-}
-
-template <size_t L, typename T>
-VectorX<L, T> MatrixX<L, T>::row(int r) const {
-    return mat[r];
-}
-
-template <size_t L, typename T>
-VectorX<L, T> MatrixX<L, T>::col(int c) const {
-    return matTransposed[c];
-}
-
-using Mat2 = MatrixX<2, double>;
-using Mat3 = MatrixX<3, double>;
-using Mat4 = MatrixX<4, double>;
-
-
-// Matrix(L x L) * Matrix(L x L)
-template <size_t L, typename T>
-MatrixX<L, T> operator*(const MatrixX<L, T>& m, const MatrixX<L, T>& n) {
-    MatrixX<L, T> res;
-    for (int i = 0; i < L; ++i) {
-        for (int j = 0; j < L; ++j) {
-            res[i][j] = (m.row(i)) * (n.col(j));
-        }
-    }
+Matrix<L, T> Matrix<L, T>::transposed() const {
+    std::array<std::array<T, L>, L> res;
+    for (size_t i = 0; i < L; ++i)
+        for (size_t j = 0; j < L; ++j) res[i][j] = mat[j][i];
     return res;
 }
 
-// Matrix(L x L) * Vector(L x 1)
 template <size_t L, typename T>
-VectorX<L, T> operator*(const MatrixX<L, T>& m, const VectorX<L, T>& v) {
-    VectorX<L, T> res;
+Matrix<L, T> operator+(const Matrix<L, T>& m, const Matrix<L, T>& n) {
+    Matrix<L, T> res;
+    std::transform(m.mat.begin(), m.mat.end(), n.mat.begin(), res.mat.begin(),
+                   [](const std::array<T, L>& a, const std::array<T, L>& b) { return a + b; });
+    return res;
+}
+
+template <size_t L, typename T>
+Matrix<L, T> operator*(const Matrix<L, T>& m, T x) {
+    Matrix<L, T> res(m);
+    std::for_each(m.begin(), m.end(), [x](std::array<T, L>& row) { row = row * x; });
+    return res;
+}
+
+template <size_t L, typename T>
+Matrix<L, T> operator*(const Matrix<L, T>& m, const Matrix<L, T>& n) {
+    const auto& [rows, cols] = std::make_tuple(m.mat, n.transposed().mat);
+    Matrix<L, T> res;
     for (size_t i = 0; i < L; ++i) {
-        res[i] = dot(m.row(i), v);
-    }
-    return res;
-}
-
-// Matrix * c and c * Matrix
-template <size_t L, typename T>
-auto operator*(const MatrixX<L, T>& m, T x) {
-    MatrixX<L, T> res(m);
-    for (auto& row : res) {
-        for (auto& elem : row) {
-            elem *= x;
+        for (size_t j = 0; j < L; ++j) {
+            res[i][j] = dot(rows[i], cols[j]);
         }
     }
     return res;
 }
 
-template <size_t L, typename T>
-auto operator*(T x, const MatrixX<L, T>& m) {
-    return m * x;
-}
+using Mat2 = Matrix<2, double>;
+using Mat3 = Matrix<3, double>;
+using Mat4 = Matrix<4, double>;

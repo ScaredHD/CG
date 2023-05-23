@@ -27,7 +27,7 @@ void FpsCamera::lookUp(double deg) {
     auto s = SphericalCoordinates(CartesianCoordinates(lookAt));
     s.theta -= toRadian(deg);
     auto c = CartesianCoordinates(s);
-    lookAt = Vec3(c.x, c.y, c.z);
+    lookAt = {{c.x, c.y, c.z}};
 }
 
 void FpsCamera::lookRight(double deg) {
@@ -36,5 +36,13 @@ void FpsCamera::lookRight(double deg) {
     if (s.phi > pi) s.phi -= 2 * pi;
     if (s.phi < -pi) s.phi += 2 * pi;
     auto c = CartesianCoordinates(s);
-    lookAt = Vec3(c.x, c.y, c.z);
+    lookAt = {{c.x, c.y, c.z}};
+}
+
+Mat4 Camera::viewTransformation() const {
+    return Mat4();
+}
+
+Mat4 Camera::projectionTransformation() const {
+    return Mat4();
 }
