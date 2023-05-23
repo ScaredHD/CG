@@ -10,7 +10,7 @@ struct Vertex {
     double x;
     double y;
     double z;
-    double color;
+    Vec4 color;
 };
 
 struct Mesh {

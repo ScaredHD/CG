@@ -43,6 +43,13 @@ struct VectorX {
     T& operator[](int i) { return v[i]; }
     const T& operator[](int i) const { return v[i]; }
 
+    template <typename U>
+    operator VectorX<L, U>() {
+        std::array<U, L> u;
+        std::transform(v.begin(), v.end(), u.begin(), [](const T& x) { return U(x); });
+        return VectorX<L, U>(u);
+    }
+
     T norm() const { return std::sqrt(dot(v, v)); }
     VectorX normalized() const { return *this / norm(); }
 
@@ -76,7 +83,7 @@ VectorX<L, T> operator/(const VectorX<L, T>& a, T x) {
 
 template <size_t L, typename T>
 auto dot(const VectorX<L, T>& a, const VectorX<L, T>& b) {
-    return VectorX(dot(a.v, b.v));
+    return dot(a.v, b.v);
 }
 
 template <typename T>

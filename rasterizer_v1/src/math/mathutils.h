@@ -1,13 +1,14 @@
 #pragma once
 
 #include <cmath>
+#include <tuple>
 
 #include "vec.h"
 
 extern const double pi;
+extern const double epsilon;
 
 // coordinate system: right-handed, y-up
-
 
 struct SphericalCoordinates;
 
@@ -28,6 +29,7 @@ struct SphericalCoordinates {
     double theta;  // polar angle (polar axis: y)
 };
 
+std::tuple<double, double> barycentricCoordinates(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Vec2& p);
 
 double toRadian(double deg);
 double toDegree(double rad);

@@ -1,15 +1,51 @@
 #include "shader.h"
+#include "mathutils.h"
 
 void VertexShader::processVertices(Mesh& mesh) {
     auto t = viewport * projection * view * model;
     for (auto& [x, y, z, color] : mesh.vertices) {
-        // VectorX<4> p({x, y, z, 1.0});
-        // p = t * p;
+        Vec4 p{{x, y, z, 1.0}};
+        p = t * p;
+        p /= p[3];
+        x = p[0];
+        y = p[1];
+        z = p[2];
     }
 }
 
-void FragmentShader::processFragments() {
+void FragmentShader::rasterize() {
+    const auto& [x0, y0] = std::make_tuple(v0->x, v0->y);
+    const auto& [x1, y1] = std::make_tuple(v1->x, v1->y);
+    const auto& [x2, y2] = std::make_tuple(v2->x, v2->y);
+    
+    auto [alpha, beta] = barycentricCoordinates({{x0, y0}}, {{x1, y1}}, {{x2, y2}}, {{0, 0}});
+    if (alpha == -1) return;
 
+    auto xmin = int(std::min({x0, x1, x2}));
+    auto xmax = int(std::max({x0, x1, x2}));
+    auto ymin = int(std::min({y0, y1, y2}));
+    auto ymax = int(std::max({y0, y1, y2}));
+    for (int i = xmin; i <= xmax; ++i) {
+        for (int j = ymin; j <= ymax; ++j) {
+            double x = i + 0.5;
+            double y = j + 0.5;
+            processFragments(x, y);
+        }
+    }
+}
+
+void FragmentShader::processFragments(int fragX, int fragY) {
+    auto x = fragX + 0.5;
+    auto y = fragY + 0.5;
+    const auto& [x0, y0] = std::make_tuple(v0->x, v0->y);
+    const auto& [x1, y1] = std::make_tuple(v1->x, v1->y);
+    const auto& [x2, y2] = std::make_tuple(v2->x, v2->y);
+    auto [alpha, beta] = barycentricCoordinates({{x0, y0}}, {{x1, y1}}, {{x2, y2}}, {{x, y}});
+    auto gamma = 1 - alpha - beta;
+
+    auto c = alpha * v0->color + beta * v1->color + gamma * v2->color;
+    VectorX<4, Uchar> color(c * 255.0);
+    outputImage.setPixelValue(fragX, outputImage.height - fragY, color.v);
 }
 
 void FragmentShader::setTriangle(const Vertex& v0, const Vertex& v1, const Vertex& v2) {

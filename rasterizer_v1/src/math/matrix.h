@@ -37,6 +37,7 @@ Matrix<L, T> Matrix<L, T>::transposed() const {
     return res;
 }
 
+// Matrix(L x L) + Matrix(L x L)
 template <size_t L, typename T>
 Matrix<L, T> operator+(const Matrix<L, T>& m, const Matrix<L, T>& n) {
     Matrix<L, T> res;
@@ -45,6 +46,7 @@ Matrix<L, T> operator+(const Matrix<L, T>& m, const Matrix<L, T>& n) {
     return res;
 }
 
+// Matrix(L x L) * x
 template <size_t L, typename T>
 Matrix<L, T> operator*(const Matrix<L, T>& m, T x) {
     Matrix<L, T> res(m);
@@ -52,6 +54,7 @@ Matrix<L, T> operator*(const Matrix<L, T>& m, T x) {
     return res;
 }
 
+// Matrix(L x L) * Matrix(L x L)
 template <size_t L, typename T>
 Matrix<L, T> operator*(const Matrix<L, T>& m, const Matrix<L, T>& n) {
     const auto& [rows, cols] = std::make_tuple(m.mat, n.transposed().mat);
@@ -61,6 +64,15 @@ Matrix<L, T> operator*(const Matrix<L, T>& m, const Matrix<L, T>& n) {
             res[i][j] = dot(rows[i], cols[j]);
         }
     }
+    return res;
+}
+
+// Matrix(L x L) * Vector(L x 1)
+template <size_t L, typename T>
+VectorX<L, T> operator*(const Matrix<L, T>& m, const VectorX<L, T>& v) {
+    VectorX<L, T> res;
+    std::transform(m.mat.begin(), m.mat.end(), res.v.begin(),
+                   [v](const VectorX<L, T>& a) { return dot(a, v); });
     return res;
 }
 

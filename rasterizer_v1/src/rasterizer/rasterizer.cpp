@@ -17,7 +17,7 @@ void Rasterizer::render(const Mesh& mesh) {
     vShader->processVertices(m);
     for (auto& t : m.triangles) {
         fShader->setTriangle(m.vertices[t[0]], m.vertices[t[1]], m.vertices[t[2]]);
-        fShader->processFragments();
+        fShader->rasterize();
     }
     window->updateFrameBufferFromImage(fShader->outputImage);
 }

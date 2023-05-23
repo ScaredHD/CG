@@ -20,7 +20,7 @@ struct Camera {
     Vec3 lookAt;  // direction of looking
     Vec3 up;
 
-    double fovDeg = 90.0;
+    double hFovDeg = 90.0;
     double aspectRatio = 16.0 / 9.0;
     double zNear = 1.0;
     double zFar = 100.0;

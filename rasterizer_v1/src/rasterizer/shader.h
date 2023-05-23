@@ -15,7 +15,8 @@ struct VertexShader : public Shader {
 
 struct FragmentShader : public Shader {
     void setTriangle(const Vertex& v0, const Vertex& v1, const Vertex& v2);
-    void processFragments();
+    void rasterize();
+    void processFragments(int fragX, int fragY);
     const Vertex* v0;
     const Vertex* v1;
     const Vertex* v2;
