@@ -11,7 +11,6 @@ class Rasterizer {
     void render(const Mesh& mesh);
     void drawScreenSpaceTriangle(const Vec2& a, const Vec2& b, const Vec2& c);
 
-  private:
     Camera* camera;
     Window* window;
     VertexShader* vShader;

@@ -8,9 +8,13 @@ set(CppFiles
     src/screen/image.cpp
     src/camera/camera.cpp
     src/math/mathutils.cpp
+    src/math/transformation.cpp
+    src/math/vec.cpp
+    src/math/matrix.cpp
     src/rasterizer/rasterizer.cpp
     src/rasterizer/shader.cpp
     src/geometry/geometry.cpp
+    src/geometry/testGeometry.cpp
 )
 
 add_executable(rasterizer_v1 

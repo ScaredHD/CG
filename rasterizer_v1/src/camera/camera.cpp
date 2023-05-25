@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "mathutils.h"
+#include "transformation.h"
 
 double Camera::pitch() const {
     auto d = toDegree(SphericalCoordinates(CartesianCoordinates(lookAt)).theta);
@@ -40,7 +41,11 @@ void FpsCamera::lookRight(double deg) {
 }
 
 Mat4 Camera::viewTransformation() const {
-    return Mat4();
+    const auto& w = -lookAt.normalized();
+    const auto& u = cross(lookAt, up).normalized();
+    const auto& v = cross(w, u).normalized();
+    Mat3 r({{{u[0], u[1], u[2]}, {v[0], v[1], v[2]}, {w[0], w[1], w[2]}}});
+    return homogeneousMatrix(r) * translateTransform(-location);
 }
 
 Mat4 Camera::projectionTransformation() const {

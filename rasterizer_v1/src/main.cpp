@@ -3,10 +3,11 @@
 #include <chrono>
 #include <iomanip>
 
-#include "buffer.h"
-#include "window.h"
+#include "rasterizer.h"
+#include "testGeometry.h"
 
 using TimePoint = std::chrono::time_point<std::chrono::high_resolution_clock>;
+
 TimePoint getTime() {
     return std::chrono::high_resolution_clock::now();
 }
@@ -21,6 +22,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     
     FpsCamera cam({{0, 0, 0}}, {{0, 0, -1}});
     w.bindCamera(&cam);
+
+    Rasterizer r;
+    r.camera = &cam;
+    r.window = &w;
+    r.vShader = new VertexShader;
+    r.fShader = new FragmentShader(800, 600);
+
+    TestGeometry testGeo;
 
     Image<4> img(800, 600, {255, 0, 0, 0});
 

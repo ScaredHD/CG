@@ -71,7 +71,7 @@ Matrix<L, T> operator*(const Matrix<L, T>& m, const Matrix<L, T>& n) {
 template <size_t L, typename T>
 VectorX<L, T> operator*(const Matrix<L, T>& m, const VectorX<L, T>& v) {
     VectorX<L, T> res;
-    std::transform(m.mat.begin(), m.mat.end(), res.v.begin(),
+    std::transform(m.mat.begin(), m.mat.end(), res.arr.begin(),
                    [v](const VectorX<L, T>& a) { return dot(a, v); });
     return res;
 }
@@ -79,3 +79,6 @@ VectorX<L, T> operator*(const Matrix<L, T>& m, const VectorX<L, T>& v) {
 using Mat2 = Matrix<2, double>;
 using Mat3 = Matrix<3, double>;
 using Mat4 = Matrix<4, double>;
+
+Mat4 homogeneousMatrix(const Mat3& m);
+Mat3 linearPart(const Mat4& m);

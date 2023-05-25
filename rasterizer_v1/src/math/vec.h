@@ -32,33 +32,34 @@ T dot(const std::array<T, L>& a, const std::array<T, L>& b) {
 template <size_t L, typename T>
 struct VectorX {
     VectorX() {}
-    VectorX(const std::array<T, L>& v) : v(v) {}
-    VectorX(const VectorX& other) : v(other.v) {}
+    VectorX(const std::array<T, L>& v) : arr(v) {}
+    VectorX(const VectorX& other) : arr(other.arr) {}
 
-    VectorX operator-() { return v * (-1); }
+    VectorX operator-() { return VectorX(arr * (-1.0)); }
+    VectorX operator-() const { return VectorX(arr * (-1.0)); }
     VectorX& operator+=(const VectorX& other) { return *this = *this + other; }
     VectorX& operator-=(const VectorX& other) { return *this = *this - other; }
     VectorX& operator*=(T x) { return *this = *this * x; }
     VectorX& operator/=(T x) { return *this = *this / x; }
-    T& operator[](int i) { return v[i]; }
-    const T& operator[](int i) const { return v[i]; }
+    T& operator[](int i) { return arr[i]; }
+    const T& operator[](int i) const { return arr[i]; }
 
     template <typename U>
     operator VectorX<L, U>() {
         std::array<U, L> u;
-        std::transform(v.begin(), v.end(), u.begin(), [](const T& x) { return U(x); });
+        std::transform(arr.begin(), arr.end(), u.begin(), [](const T& x) { return U(x); });
         return VectorX<L, U>(u);
     }
 
-    T norm() const { return std::sqrt(dot(v, v)); }
+    T norm() const { return std::sqrt(dot(arr, arr)); }
     VectorX normalized() const { return *this / norm(); }
 
-    std::array<T, L> v;
+    std::array<T, L> arr;
 };
 
 template <size_t L, typename T>
 VectorX<L, T> operator+(const VectorX<L, T>& a, const VectorX<L, T>& b) {
-    return VectorX(a.v + b.v);
+    return VectorX(a.arr + b.arr);
 }
 
 template <size_t L, typename T>
@@ -68,7 +69,7 @@ VectorX<L, T> operator-(const VectorX<L, T>& a, const VectorX<L, T>& b) {
 
 template <size_t L, typename T>
 VectorX<L, T> operator*(const VectorX<L, T>& a, T x) {
-    return VectorX(a.v * x);
+    return VectorX(a.arr * x);
 }
 
 template <size_t L, typename T>
@@ -83,13 +84,13 @@ VectorX<L, T> operator/(const VectorX<L, T>& a, T x) {
 
 template <size_t L, typename T>
 auto dot(const VectorX<L, T>& a, const VectorX<L, T>& b) {
-    return dot(a.v, b.v);
+    return dot(a.arr, b.arr);
 }
 
 template <typename T>
 VectorX<3, T> cross(const VectorX<3, T>& a, const VectorX<3, T>& b) {
-    const auto& [a0, a1, a2] = a.v;
-    const auto& [b0, b1, b2] = b.v;
+    const auto& [a0, a1, a2] = a.arr;
+    const auto& [b0, b1, b2] = b.arr;
     return {{a0 * b1 - a1 * b0, a2 * b0 - a0 * b2, a0 * b1 - a1 * b0}};
 }
 
@@ -104,3 +105,6 @@ std::ostream& operator<<(std::ostream& os, const VectorX<L, T>& v) {
     }
     return os;
 }
+
+Vec4 homogeneous(const Vec3& v);
+Vec3 hnormalized(const Vec4& v);

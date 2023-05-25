@@ -4,20 +4,21 @@
 void VertexShader::processVertices(Mesh& mesh) {
     auto t = viewport * projection * view * model;
     for (auto& [x, y, z, color] : mesh.vertices) {
-        Vec4 p{{x, y, z, 1.0}};
-        p = t * p;
-        p /= p[3];
+        Vec3 p = hnormalized(t * homogeneous({{x, y, z}}));
         x = p[0];
         y = p[1];
         z = p[2];
     }
 }
 
+FragmentShader::FragmentShader(int w, int h) : outputImage(w, h) {
+}
+
 void FragmentShader::rasterize() {
     const auto& [x0, y0] = std::make_tuple(v0->x, v0->y);
     const auto& [x1, y1] = std::make_tuple(v1->x, v1->y);
     const auto& [x2, y2] = std::make_tuple(v2->x, v2->y);
-    
+
     auto [alpha, beta] = barycentricCoordinates({{x0, y0}}, {{x1, y1}}, {{x2, y2}}, {{0, 0}});
     if (alpha == -1) return;
 
@@ -45,7 +46,7 @@ void FragmentShader::processFragments(int fragX, int fragY) {
 
     auto c = alpha * v0->color + beta * v1->color + gamma * v2->color;
     VectorX<4, Uchar> color(c * 255.0);
-    outputImage.setPixelValue(fragX, outputImage.height - fragY, color.v);
+    outputImage.setPixelValue(fragX, outputImage.height - fragY, color.arr);
 }
 
 void FragmentShader::setTriangle(const Vertex& v0, const Vertex& v1, const Vertex& v2) {

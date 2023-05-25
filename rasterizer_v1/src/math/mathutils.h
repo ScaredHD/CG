@@ -35,3 +35,5 @@ double toRadian(double deg);
 double toDegree(double rad);
 
 double clamp(double val, double min, double max);
+
+std::tuple<Vec3, Vec3> alignedBasis(const Vec3& wAlignedTo);
