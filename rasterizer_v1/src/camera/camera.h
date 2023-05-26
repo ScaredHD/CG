@@ -27,7 +27,7 @@ struct Camera {
 
     double hFovDeg = 90.0;
     double aspectRatio = 16.0 / 9.0;
-    double zNear = -1.0;
+    double zNear = -0.1;
     double zFar = -100.0;
 
     std::string type = "base";
