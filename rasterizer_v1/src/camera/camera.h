@@ -46,8 +46,8 @@ struct FpsCamera : public Camera {
     void lookUp(double deg);
     void lookRight(double deg);
 
-    double moveSpeed = 0.5;
-    double mouseSensitivity = 0.5;
+    double moveSpeed = 0.001;
+    double mouseSensitivity = 0.04;
 };
 
 struct OrbitCamera : public Camera {};

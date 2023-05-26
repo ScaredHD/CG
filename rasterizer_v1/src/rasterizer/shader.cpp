@@ -14,6 +14,10 @@ void VertexShader::processVertices(Mesh& mesh) {
 FragmentShader::FragmentShader(int w, int h) : outputImage(w, h) {
 }
 
+void FragmentShader::clearBuffer(Uchar r, Uchar g, Uchar b) {
+    outputImage.fill({r, g, b, 255});
+}
+
 void FragmentShader::rasterize() {
     const auto& [x0, y0] = std::make_tuple(v0->x, v0->y);
     const auto& [x1, y1] = std::make_tuple(v1->x, v1->y);
@@ -40,8 +44,12 @@ void FragmentShader::processFragments(int fragX, int fragY) {
     const auto& [x0, y0] = std::make_tuple(v0->x, v0->y);
     const auto& [x1, y1] = std::make_tuple(v1->x, v1->y);
     const auto& [x2, y2] = std::make_tuple(v2->x, v2->y);
-    auto [alpha, beta] = barycentricCoordinates({{x0, y0}}, {{x1, y1}}, {{x2, y2}}, {{x, y}});
+    auto [alpha, beta] = barycentricCoordinates(Vec2{{x0, y0}}, Vec2{{x1, y1}}, Vec2{{x2, y2}}, Vec2{{x, y}});
     auto gamma = 1 - alpha - beta;
+
+    if (alpha < 0 || alpha > 1) return;
+    if (beta < 0 || beta > 1) return;
+    if (alpha + beta > 1) return;
 
     auto c = alpha * v0->color + beta * v1->color + gamma * v2->color;
     VectorX<4, Uchar> color(c * 255.0);
