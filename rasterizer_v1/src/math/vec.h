@@ -26,7 +26,7 @@ template <size_t L, typename T>
 T dot(const std::array<T, L>& a, const std::array<T, L>& b) {
     std::array<T, L> prod;
     std::transform(a.begin(), a.end(), b.begin(), prod.begin(), std::multiplies<>());
-    return std::accumulate(prod.begin(), prod.end(), 0);
+    return std::accumulate(prod.begin(), prod.end(), T(0));
 }
 
 template <size_t L, typename T>
