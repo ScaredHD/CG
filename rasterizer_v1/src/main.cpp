@@ -5,6 +5,7 @@
 
 #include "rasterizer.h"
 #include "testGeometry.h"
+#include "transformation.h"
 
 using TimePoint = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
@@ -21,6 +22,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     w.show();
     
     FpsCamera cam({{0, 0, 0}}, {{0, 0, -1}});
+    cam.aspectRatio = 800 / 600.;
     w.bindCamera(&cam);
 
     Rasterizer r;
@@ -31,8 +33,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
     TestGeometry testGeo;
 
-    Image<4> img(800, 600, {255, 0, 0, 0});
-
     double deltaTime = 0;
     while (w.isRunning) {
         TimePoint frameBegin = getTime();
@@ -40,7 +40,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         std::cout << std::setprecision(3) << std::fixed;
         std::cout << cam.location << "\t(p:" << cam.pitch() << "  y:" << cam.yaw() << ")\n";
 
-        w.updateFrameBufferFromImage(img);
+        r.render(testGeo.triangle1);
         w.drawFrameBuffer();
 
         TimePoint frameEnd = getTime();

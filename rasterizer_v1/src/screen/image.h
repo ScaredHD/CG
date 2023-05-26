@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <array>
+#include <iostream>
 
 #include "buffer.h"
 
@@ -24,7 +25,7 @@ class Image {
     int channelCount;
 
   private:
-    size_t startIdx(int x, int y) { return (x * width + y) * ChannelCount; }
+    size_t startIdx(int x, int y) { return (y * width + x) * ChannelCount; }
 
     Buffer buf;
 };

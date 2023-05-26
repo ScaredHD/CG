@@ -18,7 +18,7 @@ std::array<T, L> operator+(const std::array<T, L>& a, const std::array<T, L>& b)
 template <size_t L, typename T>
 std::array<T, L> operator*(const std::array<T, L>& v, T c) {
     std::array<T, L> res(v);
-    std::for_each(v.begin(), v.end(), [c](T x) { x *= c; });
+    std::for_each(res.begin(), res.end(), [c](T& x) { x *= c; });
     return res;
 }
 
@@ -91,7 +91,7 @@ template <typename T>
 VectorX<3, T> cross(const VectorX<3, T>& a, const VectorX<3, T>& b) {
     const auto& [a0, a1, a2] = a.arr;
     const auto& [b0, b1, b2] = b.arr;
-    return {{a0 * b1 - a1 * b0, a2 * b0 - a0 * b2, a0 * b1 - a1 * b0}};
+    return {{a1 * b2 - a2 * b1, a2 * b0 - a0 * b2, a0 * b1 - a1 * b0}};
 }
 
 using Vec2 = VectorX<2, double>;

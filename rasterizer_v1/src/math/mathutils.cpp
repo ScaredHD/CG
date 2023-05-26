@@ -43,7 +43,10 @@ std::tuple<double, double> barycentricCoordinates(const Vec2& v0, const Vec2& v1
     alpha /= D;
     beta /= D;
 
-    return std::make_tuple(alpha, beta);
+    if (alpha < 0 || beta < 0 || alpha + beta > 1)
+        return std::make_tuple(-1.0, -1.0);
+    else
+        return std::make_tuple(alpha, beta);
 }
 
 std::tuple<Vec3, Vec3> alignedBasis(const Vec3& wAlignedTo) {

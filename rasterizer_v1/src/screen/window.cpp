@@ -31,7 +31,7 @@ void Window::createWindow(int &width, int &height, HINSTANCE &hInstance) {
 
     hwnd = CreateWindowEx(0,                            // Optional window styles.
                           CLASS_NAME,                   // Window class
-                          L"Learn to Program Windows",  // Window text
+                          L"Rasterizer",  // Window text
                           style,                        // Window style
 
                           // Position and size
@@ -194,5 +194,14 @@ void Window::bindCamera(Camera *camera) {
 }
 
 Mat4 Window::viewportTransformation() const {
-    return Mat4();
+    double w = width;
+    double h = height;
+    // clang-format off
+    return {{{
+        {w / 2, 0, 0, w / 2},
+        {0, h / 2, 0, h / 2},
+        {0, 0, 1,     0},
+        {0, 0, 0,     1}
+    }}};
+    // clang-fromat on
 }

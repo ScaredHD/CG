@@ -20,6 +20,7 @@ class Buffer {
     }
 
     Uchar* data() { return buf.data(); }
+    size_t size() const { return buf.size(); }
 
   private:
     std::vector<Uchar> buf;

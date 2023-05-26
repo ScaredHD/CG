@@ -49,5 +49,29 @@ Mat4 Camera::viewTransformation() const {
 }
 
 Mat4 Camera::projectionTransformation() const {
-    return Mat4();
+    const auto& [n, f, l, r, t, b] = std::make_tuple(zNear, zFar, left(), right(), top(), bottom());
+    // clang-format off
+    return Mat4({{
+        {2 * n / (r - l),               0,  (l + r) / (l - r),                    0},
+        {              0, 2 * n / (t - b),  (b + t) / (b - t),                    0},
+        {              0,               0,  (f + n) / (n - f),  2 * f * n / (f - n)},
+        {              0,               0,                  1,                    0}
+    }});
+    // clang-format on
+}
+
+double Camera::top() const {
+    return right() / aspectRatio;
+}
+
+double Camera::bottom() const {
+    return -top();
+}
+
+double Camera::left() const {
+    return -right();
+}
+
+double Camera::right() const {
+    return std::tan(toRadian(hFovDeg) / 2) * std::abs(zNear);
 }

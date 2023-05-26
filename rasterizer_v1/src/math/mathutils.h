@@ -34,6 +34,9 @@ std::tuple<double, double> barycentricCoordinates(const Vec2& v0, const Vec2& v1
 double toRadian(double deg);
 double toDegree(double rad);
 
-double clamp(double val, double min, double max);
+template <typename T>
+T clamp(T val, T min, T max) {
+    return val < min ? min : (val > max ? max : val);
+}
 
 std::tuple<Vec3, Vec3> alignedBasis(const Vec3& wAlignedTo);

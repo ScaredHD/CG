@@ -2,5 +2,6 @@
 
 struct TestGeometry {
     TestGeometry();
+    Mesh mesh1;
     Model triangle1;
 };
