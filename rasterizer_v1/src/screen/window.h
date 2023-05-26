@@ -44,6 +44,7 @@ class Window {
     LRESULT handleMessages(UINT uMsg, WPARAM wParam, LPARAM lParam);
     void handleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam);
     void handleMouseEvents(UINT uMsg, WPARAM wParam, LPARAM lParam);
+    bool keyPressed(BYTE key);
 
     void centerCursor();
 
@@ -60,6 +61,8 @@ class Window {
 
     RECT windowRect;
     RECT clientRect;
+
+    BYTE keyState[256];
 
     int cursorX;
     int cursorY;

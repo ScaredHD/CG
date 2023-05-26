@@ -101,7 +101,7 @@ using Vec4 = VectorX<4, double>;
 template <size_t L, typename T>
 std::ostream& operator<<(std::ostream& os, const VectorX<L, T>& v) {
     for (int i = 0; i < L; ++i) {
-        os << v[i] << (i == L - 1 ? ", " : "");
+        os << v[i] << (i != L - 1 ? ", " : "");
     }
     return os;
 }

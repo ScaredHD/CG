@@ -29,10 +29,10 @@ void Window::createWindow(int &width, int &height, HINSTANCE &hInstance) {
     windowRect = {0, 0, width, height};
     AdjustWindowRect(&windowRect, style, 0);
 
-    hwnd = CreateWindowEx(0,                            // Optional window styles.
-                          CLASS_NAME,                   // Window class
+    hwnd = CreateWindowEx(0,              // Optional window styles.
+                          CLASS_NAME,     // Window class
                           L"Rasterizer",  // Window text
-                          style,                        // Window style
+                          style,          // Window style
 
                           // Position and size
                           CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left,
@@ -139,6 +139,9 @@ LRESULT Window::handleMessages(UINT uMsg, WPARAM wParam, LPARAM lParam) {
             handleMouseEvents(uMsg, wParam, lParam);
             return 0;
         case WM_KEYDOWN:
+            if (!GetKeyboardState(keyState)) {
+                std::cout << "failed to get keyboard state\n";
+            }
             handleKeyEvents(uMsg, wParam, lParam);
             return 0;
     }
@@ -146,25 +149,36 @@ LRESULT Window::handleMessages(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
+
+bool Window::keyPressed(BYTE key) {
+    return keyState[key] & 0x80;
+}
+
 void Window::handleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    auto keyCode = LOWORD(wParam);
-    switch (keyCode) {
-        case VK_ESCAPE:
-            quit();
-            break;
-        case 'W':
-            fpsCamera->moveForward(fpsCamera->moveSpeed * deltaTime);
-            break;
-        case 'S':
-            fpsCamera->moveForward(-fpsCamera->moveSpeed * deltaTime);
-            break;
-        case 'A':
-            fpsCamera->moveRight(-fpsCamera->moveSpeed * deltaTime);
-            break;
-        case 'D':
-            fpsCamera->moveRight(fpsCamera->moveSpeed * deltaTime);
-            break;
-    }
+    if (keyPressed(VK_ESCAPE)) quit();
+    if (keyPressed('W')) fpsCamera->moveForward(fpsCamera->moveSpeed * deltaTime);
+    if (keyPressed('S')) fpsCamera->moveForward(-fpsCamera->moveSpeed * deltaTime);
+    if (keyPressed('A')) fpsCamera->moveRight(-fpsCamera->moveSpeed * deltaTime);
+    if (keyPressed('D')) fpsCamera->moveRight(fpsCamera->moveSpeed * deltaTime);
+
+    // auto keyCode = LOWORD(wParam);
+    // switch (keyCode) {
+    //     case VK_ESCAPE:
+    //         quit();
+    //         break;
+    //     case 'W':
+    //         fpsCamera->moveForward(fpsCamera->moveSpeed * deltaTime);
+    //         break;
+    //     case 'S':
+    //         fpsCamera->moveForward(-fpsCamera->moveSpeed * deltaTime);
+    //         break;
+    //     case 'A':
+    //         fpsCamera->moveRight(-fpsCamera->moveSpeed * deltaTime);
+    //         break;
+    //     case 'D':
+    //         fpsCamera->moveRight(fpsCamera->moveSpeed * deltaTime);
+    //         break;
+    // }
 }
 
 void Window::handleMouseEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
