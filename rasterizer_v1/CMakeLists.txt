@@ -3,9 +3,7 @@ cmake_minimum_required(VERSION 3.20)
 project(rasterizer_v1)
 
 set(CppFiles
-    src/screen/buffer.cpp
     src/screen/window.cpp
-    src/screen/image.cpp
     src/camera/camera.cpp
     src/math/mathutils.cpp
     src/math/transformation.cpp

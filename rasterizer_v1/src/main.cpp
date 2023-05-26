@@ -38,7 +38,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         TimePoint frameBegin = getTime();
 
         std::cout << std::setprecision(3) << std::fixed;
-        std::cout << cam.location << "\t(p:" << cam.pitch() << "  y:" << cam.yaw() << ")\n";
+        std::cout << cam.location << "\t(p:" << cam.pitch() << "\ty:" << cam.yaw() << ")\n";
 
         r.render(testGeo.triangle1);
         w.drawFrameBuffer();

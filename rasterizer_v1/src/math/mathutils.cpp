@@ -34,13 +34,15 @@ std::tuple<double, double> barycentricCoordinates(const Vec2& v0, const Vec2& v1
         std::make_tuple(v0[0], v0[1], v1[0], v1[1], v2[0], v2[1], p[0], p[1]);
 
     auto D = (x0 - x2) * (y1 - y2) - (x1 - x2) * (y0 - y2);
+    
     if (std::abs(D) < epsilon) {
         return std::make_tuple(-1.0, -1.0);
     }
 
     auto alpha = (x - x2) * (y1 - y2) - (x1 - x2) * (y - y2);
-    auto beta = (x0 - x2) * (y - y2) - (x - x2) * (y0 - y2);
     alpha /= D;
+
+    auto beta = (x0 - x2) * (y - y2) - (x - x2) * (y0 - y2);
     beta /= D;
 
     return std::make_tuple(alpha, beta);

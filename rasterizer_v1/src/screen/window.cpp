@@ -160,25 +160,6 @@ void Window::handleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (keyPressed('S')) fpsCamera->moveForward(-fpsCamera->moveSpeed * deltaTime);
     if (keyPressed('A')) fpsCamera->moveRight(-fpsCamera->moveSpeed * deltaTime);
     if (keyPressed('D')) fpsCamera->moveRight(fpsCamera->moveSpeed * deltaTime);
-
-    // auto keyCode = LOWORD(wParam);
-    // switch (keyCode) {
-    //     case VK_ESCAPE:
-    //         quit();
-    //         break;
-    //     case 'W':
-    //         fpsCamera->moveForward(fpsCamera->moveSpeed * deltaTime);
-    //         break;
-    //     case 'S':
-    //         fpsCamera->moveForward(-fpsCamera->moveSpeed * deltaTime);
-    //         break;
-    //     case 'A':
-    //         fpsCamera->moveRight(-fpsCamera->moveSpeed * deltaTime);
-    //         break;
-    //     case 'D':
-    //         fpsCamera->moveRight(fpsCamera->moveSpeed * deltaTime);
-    //         break;
-    // }
 }
 
 void Window::handleMouseEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
