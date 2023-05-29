@@ -2,7 +2,7 @@
 
 #include "mathutils.h"
 
-Mat4 translateTransform(double x, double y, double z) {
+Mat4 translateTransformation(double x, double y, double z) {
     // clang-format off
     return {{{
         {1, 0, 0, x},
@@ -13,8 +13,8 @@ Mat4 translateTransform(double x, double y, double z) {
     // clang-fromat on
 }
 
-Mat4 translateTransform(const Vec3& v) {
-    return translateTransform(v[0], v[1], v[2]);
+Mat4 translateTransformation(const Vec3& v) {
+    return translateTransformation(v[0], v[1], v[2]);
 }
 
 
@@ -54,12 +54,12 @@ Mat4 rotateZ(double deg) {
     // clang-fromat on
 }
 
-Mat4 rotateTransform(double x, double y, double z) {
+Mat4 rotateTransformation(double x, double y, double z) {
     return rotateX(x) * rotateY(y) * rotateZ(z);
 }
 
 
-Mat4 rotateTransform(const Vec3& axis, double deg) {
+Mat4 rotateTransformation(const Vec3& axis, double deg) {
     const auto& w = axis.normalized();
     const auto& [u, v] = alignedBasis(w);
     Mat3 rot({{
@@ -71,7 +71,7 @@ Mat4 rotateTransform(const Vec3& axis, double deg) {
     return homogeneousMatrix(res);
 }
 
-Mat4 scaleTransform(double scaleX, double scaleY, double scaleZ) {
+Mat4 scaleTransformation(double scaleX, double scaleY, double scaleZ) {
     // clang-format off
     return {{{
         {scaleX, 0,      0,      0},

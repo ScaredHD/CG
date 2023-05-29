@@ -58,6 +58,8 @@ void Window::createWindow(int &width, int &height, HINSTANCE &hInstance) {
     GetCursorPos(&cursor);
     cursorX = cursor.x;
     cursorY = cursor.y;
+
+    ShowCursor(FALSE);
 }
 
 void Window::prepareDC() {

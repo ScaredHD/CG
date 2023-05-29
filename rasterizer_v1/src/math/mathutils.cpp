@@ -17,7 +17,7 @@ CartesianCoordinates::CartesianCoordinates(const SphericalCoordinates& p) {
 SphericalCoordinates::SphericalCoordinates(const CartesianCoordinates& p) {
     r = std::sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
     phi = std::atan2(p.z, p.x);
-    theta = std::acos(p.y / std::sqrt(p.x * p.x + p.y * p.y + p.z * p.z));
+    theta = std::acos(p.y / r); 
 }
 
 double toRadian(double deg) {

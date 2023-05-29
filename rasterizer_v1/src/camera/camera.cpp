@@ -45,7 +45,7 @@ Mat4 Camera::viewTransformation() const {
     const auto& u = cross(lookAt, up).normalized();
     const auto& v = cross(w, u).normalized();
     Mat3 r({{{u[0], u[1], u[2]}, {v[0], v[1], v[2]}, {w[0], w[1], w[2]}}});
-    return homogeneousMatrix(r) * translateTransform(-location);
+    return homogeneousMatrix(r) * translateTransformation(-location);
 }
 
 Mat4 Camera::projectionTransformation() const {

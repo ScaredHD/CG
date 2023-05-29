@@ -56,7 +56,7 @@ void FragmentShader::processFragments(int fragX, int fragY) {
     outputImage.setPixelValue(fragX, outputImage.height - 1 - fragY, color.arr);
 }
 
-void FragmentShader::setTriangle(const Vertex& v0, const Vertex& v1, const Vertex& v2) {
+void FragmentShader::loadTriangleVertices(const Vertex& v0, const Vertex& v1, const Vertex& v2) {
     this->v0 = &v0;
     this->v1 = &v1;
     this->v2 = &v2;
