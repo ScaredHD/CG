@@ -22,10 +22,10 @@ Mat4 rotateX(double deg) {
     auto t = toRadian(deg);
     // clang-format off
     return {{{
-        {1, 0,            0,           0},
-        {0, std::cos(t), -std::sin(t), 0},
-        {0, std::sin(t),  std::cos(t), 0},
-        {0, 0,            0,           1}
+        {1,           0,            0,   0},
+        {0, std::cos(t), -std::sin(t),   0},
+        {0, std::sin(t),  std::cos(t),   0},
+        {0,           0,            0,   1}
     }}};
     // clang-fromat on
 }
@@ -35,9 +35,9 @@ Mat4 rotateY(double deg) {
     // clang-format off
     return {{{
         { std::cos(t), 0, std::sin(t), 0},
-        { 0,           1, 0,           0},
+        {           0, 1,           0, 0},
         {-std::sin(t), 0, std::cos(t), 0},
-        { 0,           0, 0,           1}
+        {           0, 0,           0, 1}
     }}};
     // clang-fromat on
 }
@@ -48,8 +48,8 @@ Mat4 rotateZ(double deg) {
     return {{{
         {std::cos(t), -std::sin(t), 0, 0},
         {std::sin(t),  std::cos(t), 0, 0},
-        {0,            0,           1, 0},
-        {0,            0,           0, 1}
+        {          0,            0, 1, 0},
+        {          0,            0, 0, 1}
     }}};
     // clang-fromat on
 }
@@ -74,10 +74,10 @@ Mat4 rotateTransformation(const Vec3& axis, double deg) {
 Mat4 scaleTransformation(double scaleX, double scaleY, double scaleZ) {
     // clang-format off
     return {{{
-        {scaleX, 0,      0,      0},
-        {0,      scaleY, 0,      0},
-        {0,      0,      scaleZ, 0},
-        {0,      0,      0,      1}
+        {scaleX,       0,       0,   0},
+        {     0,  scaleY,       0,   0},
+        {     0,       0,  scaleZ,   0},
+        {     0,       0,       0,   1}
     }}};
     // clang-fromat on
 }
