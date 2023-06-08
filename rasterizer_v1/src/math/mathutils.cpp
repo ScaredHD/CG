@@ -62,3 +62,7 @@ std::tuple<Vec3, Vec3> alignedBasis(const Vec3& wAlignedTo) {
     auto u = cross(v, w).normalized();
     return {u, v};
 }
+
+double lerp(double a, double b, double t) {
+    return a + t * (b - a);
+}

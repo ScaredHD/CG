@@ -10,6 +10,8 @@ class Rasterizer {
     void render(const Model& model);
     void render(const Mesh& mesh);
 
+    void drawLine(const Vec2& start, const Vec2& end);
+
     Camera* camera;
     Window* window;
     VertexShader* vShader;

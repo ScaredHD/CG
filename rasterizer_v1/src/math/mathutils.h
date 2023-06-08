@@ -39,4 +39,6 @@ T clamp(T val, T min, T max) {
     return val < min ? min : (val > max ? max : val);
 }
 
+double lerp(double a, double b, double t);
+
 std::tuple<Vec3, Vec3> alignedBasis(const Vec3& wAlignedTo);

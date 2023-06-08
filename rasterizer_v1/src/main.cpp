@@ -18,18 +18,20 @@ double timeInterval(const TimePoint& start, const TimePoint& end) {
 }
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
-    Window w(800, 600, hInstance, nCmdShow);
+    int canvasWidth = 800;
+    int canvasHeight = 600;
+    Window w(canvasWidth, canvasHeight, hInstance, nCmdShow);
     w.show();
     
     FpsCamera cam({{0, 0, 0}}, {{0, 0, -1}});
-    cam.aspectRatio = 800 / 600.;
+    cam.aspectRatio = double(canvasWidth) / canvasHeight;
     w.bindCamera(&cam);
 
     Rasterizer r;
     r.camera = &cam;
     r.window = &w;
     r.vShader = new VertexShader;
-    r.fShader = new FragmentShader(800, 600);
+    r.fShader = new FragmentShader(canvasWidth, canvasHeight);
 
     TestGeometry testGeo;
 
