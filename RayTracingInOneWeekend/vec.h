@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <array>
+#include <iostream>
 
 class Vec3 {
   public:
@@ -75,4 +76,8 @@ inline Vec3 cross(const Vec3& u, const Vec3& v) {
 
 inline Vec3 normalized(const Vec3& v) {
     return v / v.length();
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Vec3& v) {
+    os << v.x() << ", " << v.y() << ", " << v.z();
 }

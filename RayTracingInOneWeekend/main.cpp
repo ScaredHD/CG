@@ -9,25 +9,33 @@ T lerp(const T& a, const T& b, double t) {
     return (1 - t) * a + t * b;
 }
 
-bool hitSphere(const Ray& r, const Vec3& center, double radius) {
+double hitSphere(const Ray& r, const Vec3& center, double radius) {
     auto oc = r.o - center;
     auto a = dot(r.d, r.d);
     auto b = 2.0 * dot(r.d, oc);
     auto c = dot(oc, oc) - radius * radius;
     auto discriminant = b * b - 4 * a * c;
-    return discriminant > 0.0;
+    if (discriminant < 0.0) {
+        return -1.0;
+    }
+    return -(b + std::sqrt(discriminant)) / (2 * a);
 }
 
 Vec3 rayColor(const Ray& r) {
-    if (hitSphere(r, Vec3(0, 0, -1), 0.5)) {
-        return Vec3(1, 0, 0);
+    auto center = Vec3(0, 0, -1);
+    auto radius = 0.5;
+    auto t = hitSphere(r, center, radius);
+    if (t > 0.0) {
+        auto normal = normalized(r.at(t) - center);
+        normal += {1.0, 1.0, 1.0};
+        normal *= 0.5;
+        return normal;
+    } else {
+        auto u = normalized(r.d);
+        t = (u.y() + 1.0) * 0.5;
+        return lerp(Vec3(1.0, 1.0, 1.0), Vec3(0.5, 0.7, 1.0), t);
     }
-    auto u = normalized(r.d);
-    auto t = (u.y() + 1.0) * 0.5;
-    return lerp(Vec3(1.0, 1.0, 1.0), Vec3(0.5, 0.7, 1.0), t);
 }
-
-
 
 int main() {
     // Image
