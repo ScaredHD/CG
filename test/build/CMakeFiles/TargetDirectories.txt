@@ -1,3 +1,0 @@
-D:/Project/code/CG/test/build/CMakeFiles/test.dir
-D:/Project/code/CG/test/build/CMakeFiles/edit_cache.dir
-D:/Project/code/CG/test/build/CMakeFiles/rebuild_cache.dir
