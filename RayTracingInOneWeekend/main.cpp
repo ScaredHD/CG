@@ -11,14 +11,14 @@ T lerp(const T& a, const T& b, double t) {
 
 double hitSphere(const Ray& r, const Vec3& center, double radius) {
     auto oc = r.o - center;
-    auto a = dot(r.d, r.d);
-    auto b = 2.0 * dot(r.d, oc);
-    auto c = dot(oc, oc) - radius * radius;
-    auto discriminant = b * b - 4 * a * c;
+    auto a = r.d.lengthSquared();
+    auto h = dot(r.d, oc);
+    auto c = oc.lengthSquared() - radius * radius;
+    auto discriminant = h * h - a * c;
     if (discriminant < 0.0) {
         return -1.0;
     }
-    return -(b + std::sqrt(discriminant)) / (2 * a);
+    return -(h + std::sqrt(discriminant)) / a;
 }
 
 Vec3 rayColor(const Ray& r) {
