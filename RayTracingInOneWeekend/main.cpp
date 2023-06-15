@@ -6,10 +6,15 @@
 #include "hittable_list.h"
 #include "camera.h"
 
-Vec3 rayColor(const Ray& r, const HittableList& world) {
+RandomGenerator gen;
+
+Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
+    if (maxDepth <= 0) return Vec3(0, 0, 0);
+
     HitRecord rec;
     if (world.hit(r, 0.0, infinity, rec)) {
-        return 0.5 * (rec.normal + Vec3(1, 1, 1));
+        auto outDir = rec.normal + gen.randomVec3InUnitSphere();
+        return 0.5 * rayColor(Ray(rec.p, outDir), world, maxDepth - 1);
     } else {
         auto u = normalized(r.d);
         auto t = (u.y() + 1.0) * 0.5;
@@ -23,6 +28,7 @@ int main() {
     const int imageWidth = 400;
     const int imageHeight = static_cast<int>(imageWidth / aspectRatio);
     const int samplesPerPixel = 100;
+    const int maxDepth = 50;
 
     // Camera
     Camera cam;
@@ -35,8 +41,6 @@ int main() {
     // Render
     std::cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";
 
-    RandomGenerator gen;
-
     for (int j = imageHeight - 1; j >= 0; --j) {
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
         for (int i = 0; i < imageWidth; ++i) {
@@ -45,7 +49,7 @@ int main() {
                 auto u = (i + gen.randomDouble()) / (imageWidth - 1);
                 auto v = (j + gen.randomDouble()) / (imageHeight - 1);
                 Ray r = cam.getRay(u, v);
-                color += rayColor(r, world);
+                color += rayColor(r, world, maxDepth);
             }
 
             writeColor(std::cout, color, samplesPerPixel);
