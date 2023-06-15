@@ -4,11 +4,7 @@
 #include "color.h"
 #include "hittable.h"
 #include "hittable_list.h"
-
-template <typename T>
-T lerp(const T& a, const T& b, double t) {
-    return (1 - t) * a + t * b;
-}
+#include "camera.h"
 
 Vec3 rayColor(const Ray& r, const HittableList& world) {
     HitRecord rec;
@@ -26,16 +22,10 @@ int main() {
     const double aspectRatio = 16.0 / 9.0;
     const int imageWidth = 400;
     const int imageHeight = static_cast<int>(imageWidth / aspectRatio);
+    const int samplesPerPixel = 100;
 
     // Camera
-    auto viewportHeight = 2.0;
-    auto viewportWidth = aspectRatio * viewportHeight;
-    const double focalLength = 1.0;
-
-    auto origin = Vec3(0, 0, 0);
-    auto horizontal = Vec3(viewportWidth, 0, 0);
-    auto vertical = Vec3(0, viewportHeight, 0);
-    auto lowerLeft = origin - horizontal / 2 - vertical / 2 - Vec3(0, 0, focalLength);
+    Camera cam;
 
     // Objects
     HittableList world;
@@ -45,14 +35,20 @@ int main() {
     // Render
     std::cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";
 
+    RandomGenerator gen;
+
     for (int j = imageHeight - 1; j >= 0; --j) {
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
         for (int i = 0; i < imageWidth; ++i) {
-            auto u = double(i) / (imageWidth - 1);
-            auto v = double(j) / (imageHeight - 1);
-            Ray r(origin, lowerLeft + u * horizontal + v * vertical - origin);
+            Vec3 color(0, 0, 0);
+            for (int s = 0; s < samplesPerPixel; ++s) {
+                auto u = (i + gen.randomDouble()) / (imageWidth - 1);
+                auto v = (j + gen.randomDouble()) / (imageHeight - 1);
+                Ray r = cam.getRay(u, v);
+                color += rayColor(r, world);
+            }
 
-            writeColor(std::cout, rayColor(r, world));
+            writeColor(std::cout, color, samplesPerPixel);
         }
     }
     std::cerr << "\nDone.\n";
