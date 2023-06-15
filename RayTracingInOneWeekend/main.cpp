@@ -42,15 +42,17 @@ int main() {
     // Objects
     HittableList world;
 
+    // clang-format off
     auto MaterialGround = make_shared<Lambertian>(Vec3(0.8, 0.8, 0.0));
     auto MaterialCenter = make_shared<Lambertian>(Vec3(0.7, 0.3, 0.3));
-    auto MaterialLeft = make_shared<Metal>(Vec3(0.8, 0.8, 0.8));
-    auto MaterialRight = make_shared<Metal>(Vec3(0.8, 0.6, 0.2));
+    auto MaterialLeft = make_shared<Metal>(Vec3(0.8, 0.8, 0.8), 0.3);
+    auto MaterialRight = make_shared<Metal>(Vec3(0.8, 0.6, 0.2), 1.0);
 
     world.add(make_shared<Sphere>(Vec3{ 0.0, -100.5, -1.0}, 100, MaterialGround));
     world.add(make_shared<Sphere>(Vec3{ 0.0,    0.0, -1.0}, 0.5, MaterialCenter));
     world.add(make_shared<Sphere>(Vec3{-1.0,    0.0, -1.0}, 0.5, MaterialLeft));
     world.add(make_shared<Sphere>(Vec3{ 1.0,    0.0, -1.0}, 0.5, MaterialRight));
+    // clang-format on
 
     // Render
     cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";

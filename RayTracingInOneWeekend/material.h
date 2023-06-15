@@ -26,7 +26,8 @@ struct Lambertian : public Material {
 };
 
 struct Metal : public Material {
-    Metal(const Vec3& albedo) : albedo(albedo) {}
+    Metal(const Vec3& albedo, double roughness = 0.0)
+        : albedo(albedo), roughness(clamp(roughness, 0.0, 1.0)) {}
 
     virtual bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
                          Ray& scattered) const override {
@@ -35,10 +36,11 @@ struct Metal : public Material {
         auto r = d - 2 * dot(d, n) * n;
 
         scattered.o = rec.p;
-        scattered.d = r;
+        scattered.d = r + roughness * gen.randomVec3OnUnitSphere();
         attenuation = albedo;
         return dot(scattered.d, rec.normal) > 0;
     }
 
     Vec3 albedo;
+    double roughness;
 };
