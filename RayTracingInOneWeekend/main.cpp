@@ -12,7 +12,7 @@ Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
     if (maxDepth <= 0) return Vec3(0, 0, 0);
 
     HitRecord rec;
-    if (world.hit(r, 0.0, infinity, rec)) {
+    if (world.hit(r, 0.001, infinity, rec)) {
         auto outDir = rec.normal + gen.randomVec3InUnitSphere();
         return 0.5 * rayColor(Ray(rec.p, outDir), world, maxDepth - 1);
     } else {
