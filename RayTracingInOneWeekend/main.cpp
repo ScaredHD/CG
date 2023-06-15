@@ -46,13 +46,13 @@ int main() {
         for (int i = 0; i < imageWidth; ++i) {
             Vec3 color(0, 0, 0);
             for (int s = 0; s < samplesPerPixel; ++s) {
-                auto u = (i + gen.randomDouble()) / (imageWidth - 1);
-                auto v = (j + gen.randomDouble()) / (imageHeight - 1);
+                auto u = (i + gen.randomDouble()) / imageWidth;
+                auto v = (j + gen.randomDouble()) / imageHeight;
                 Ray r = cam.getRay(u, v);
                 color += rayColor(r, world, maxDepth);
             }
 
-            writeColor(std::cout, color, samplesPerPixel);
+            writeColor(std::cout, color, samplesPerPixel, true);
         }
     }
     std::cerr << "\nDone.\n";
