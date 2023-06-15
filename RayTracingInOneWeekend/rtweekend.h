@@ -41,8 +41,12 @@ struct RandomGenerator {
     Vec3 randomVec3InUnitSphere() {
         while (true) {
             auto v = randomVec3(-1.0, 1.0);
-            if (v.length() >= 1) continue;
+            if (v.lengthSquared() >= 1) continue;
             return v;
         }
+    }
+
+    Vec3 randomVec3OnUnitSphere() {
+        return normalized(randomVec3InUnitSphere());
     }
 };
