@@ -38,6 +38,12 @@ class Vec3 {
 
     double lengthSquared() const { return e[0] * e[0] + e[1] * e[1] + e[2] * e[2]; }
 
+    bool nearZero() const {
+        const auto ep = 1e-8;
+        using std::fabs;
+        return fabs(e[0]) < ep && fabs(e[1]) < ep && fabs(e[2]) < ep;
+    }
+
   private:
     std::array<double, 3> e;
 };

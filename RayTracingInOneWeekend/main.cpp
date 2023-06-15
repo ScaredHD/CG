@@ -5,16 +5,22 @@
 #include "hittable.h"
 #include "hittable_list.h"
 #include "camera.h"
+#include "material.h"
 
-RandomGenerator gen;
+using namespace std;
 
 Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
     if (maxDepth <= 0) return Vec3(0, 0, 0);
 
     HitRecord rec;
     if (world.hit(r, 0.001, infinity, rec)) {
-        auto outDir = rec.normal + gen.randomVec3OnUnitSphere();
-        return 0.5 * rayColor(Ray(rec.p, outDir), world, maxDepth - 1);
+        Ray scattered;
+        Vec3 attenuation;
+        if (rec.material->scatter(r, rec, attenuation, scattered)) {
+            return attenuation * rayColor(scattered, world, maxDepth - 1);
+        } else {
+            return Vec3(0, 0, 0);
+        }
     } else {
         auto u = normalized(r.d);
         auto t = (u.y() + 1.0) * 0.5;
@@ -35,14 +41,22 @@ int main() {
 
     // Objects
     HittableList world;
-    world.add(std::make_shared<Sphere>(Vec3{0, 0, -1}, 0.5));
-    world.add(std::make_shared<Sphere>(Vec3{0, -100.5, -1}, 100));
+
+    auto MaterialGround = make_shared<Lambertian>(Vec3(0.8, 0.8, 0.0));
+    auto MaterialCenter = make_shared<Lambertian>(Vec3(0.7, 0.3, 0.3));
+    auto MaterialLeft = make_shared<Metal>(Vec3(0.8, 0.8, 0.8));
+    auto MaterialRight = make_shared<Metal>(Vec3(0.8, 0.6, 0.2));
+
+    world.add(make_shared<Sphere>(Vec3{ 0.0, -100.5, -1.0}, 100, MaterialGround));
+    world.add(make_shared<Sphere>(Vec3{ 0.0,    0.0, -1.0}, 0.5, MaterialCenter));
+    world.add(make_shared<Sphere>(Vec3{-1.0,    0.0, -1.0}, 0.5, MaterialLeft));
+    world.add(make_shared<Sphere>(Vec3{ 1.0,    0.0, -1.0}, 0.5, MaterialRight));
 
     // Render
-    std::cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";
+    cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";
 
     for (int j = imageHeight - 1; j >= 0; --j) {
-        std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
+        cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
         for (int i = 0; i < imageWidth; ++i) {
             Vec3 color(0, 0, 0);
             for (int s = 0; s < samplesPerPixel; ++s) {
@@ -52,8 +66,8 @@ int main() {
                 color += rayColor(r, world, maxDepth);
             }
 
-            writeColor(std::cout, color, samplesPerPixel, true);
+            writeColor(cout, color, samplesPerPixel, true);
         }
     }
-    std::cerr << "\nDone.\n";
+    cerr << "\nDone.\n";
 }
