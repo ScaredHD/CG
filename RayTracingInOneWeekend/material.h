@@ -44,3 +44,29 @@ struct Metal : public Material {
     Vec3 albedo;
     double roughness;
 };
+
+struct Dielectric : public Material {
+    Dielectric(double refractiveIndex) : refractiveIndex(refractiveIndex) {}
+
+    virtual bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
+                         Ray& scattered) const override {
+        double airIndex = 1.0;
+        double relativeIndex = rec.front ? airIndex / refractiveIndex : refractiveIndex / airIndex;
+
+        scattered.o = rec.p;
+        scattered.d = refract(incident.d, rec.normal, relativeIndex);
+        attenuation = Vec3(1, 1, 1);
+        return true;
+    }
+
+    Vec3 refract(const Vec3& incidentDirection, const Vec3& normal, double relativeIndex) const {
+        const auto& I = normalized(incidentDirection);
+        const auto& N = normalized(normal);
+        double IdotN = std::min(dot(I, N), 1.0);
+        auto tangentPart = relativeIndex * (I - IdotN * N);
+        auto normalPart = -N * std::sqrt(1 - relativeIndex * relativeIndex * (1 - IdotN * IdotN));
+        return tangentPart + normalPart;
+    }
+
+    double refractiveIndex;
+};
