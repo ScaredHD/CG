@@ -36,7 +36,12 @@ int main() {
     const int maxDepth = 50;
 
     // Camera
-    Camera cam(Vec3(-2, 2, 1), Vec3(0, 0, -1), Vec3(0, 1, 0), 20, aspectRatio);
+    Vec3 lookFrom(3, 3, 2);
+    Vec3 lookAt(0, 0, -1);
+    Vec3 vup(0, 1, 0);
+    auto distToFocus = (lookFrom - lookAt).length();
+    auto aperture = 2.0;
+    Camera cam(lookFrom, lookAt, vup, 20, aspectRatio, aperture, distToFocus);
 
     // Objects
     HittableList world;

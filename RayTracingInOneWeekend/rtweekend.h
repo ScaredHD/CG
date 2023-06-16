@@ -8,7 +8,6 @@
 #include "ray.h"
 #include "vec.h"
 
-
 constexpr double infinity = std::numeric_limits<double>::infinity();
 const double pi = std::acos(-1);
 
@@ -47,8 +46,14 @@ struct RandomGenerator {
         }
     }
 
-    Vec3 randomVec3OnUnitSphere() {
-        return normalized(randomVec3InUnitSphere());
+    Vec3 randomVec3OnUnitSphere() { return normalized(randomVec3InUnitSphere()); }
+
+    Vec3 randomInUnitDisk() {
+        while (true) {
+            auto p = Vec3(randomDouble(), randomDouble(), 0.0);
+            if (p.length() >= 1) continue;
+            return p;
+        }
     }
 };
 
