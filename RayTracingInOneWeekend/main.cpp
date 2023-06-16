@@ -36,22 +36,29 @@ int main() {
     const int maxDepth = 50;
 
     // Camera
-    Camera cam;
+    Camera cam(90.0, aspectRatio);
 
     // Objects
     HittableList world;
 
-    // clang-format off
-    auto MaterialGround = make_shared<Lambertian>(Vec3(0.8, 0.8, 0.0));
-    auto MaterialCenter = make_shared<Lambertian>(Vec3(0.1, 0.2, 0.5));
-    auto MaterialLeft = make_shared<Dielectric>(1.5);
-    auto MaterialRight = make_shared<Metal>(Vec3(0.8, 0.6, 0.2), 0.0);
+    auto r = std::cos(pi / 4);
+    auto materialLeft = make_shared<Lambertian>(Vec3(0, 0, 1));
+    auto materialRight = make_shared<Lambertian>(Vec3(1, 0, 0));
 
-    world.add(make_shared<Sphere>(Vec3{ 0.0, -100.5, -1.0}, 100, MaterialGround));
-    world.add(make_shared<Sphere>(Vec3{ 0.0,    0.0, -1.0}, 0.5, MaterialCenter));
-    world.add(make_shared<Sphere>(Vec3{-1.0,    0.0, -1.0}, 0.5, MaterialLeft));
-    world.add(make_shared<Sphere>(Vec3{-1.0,    0.0, -1.0}, -0.4, MaterialLeft));
-    world.add(make_shared<Sphere>(Vec3{ 1.0,    0.0, -1.0}, 0.5, MaterialRight));
+    world.add(make_shared<Sphere>(Vec3(-r, 0, -1), r, materialLeft));
+    world.add(make_shared<Sphere>(Vec3( r, 0, -1), r, materialRight));
+
+    // clang-format off
+    // auto MaterialGround = make_shared<Lambertian>(Vec3(0.8, 0.8, 0.0));
+    // auto MaterialCenter = make_shared<Lambertian>(Vec3(0.1, 0.2, 0.5));
+    // auto MaterialLeft = make_shared<Dielectric>(1.5);
+    // auto MaterialRight = make_shared<Metal>(Vec3(0.8, 0.6, 0.2), 0.0);
+
+    // world.add(make_shared<Sphere>(Vec3{ 0.0, -100.5, -1.0}, 100, MaterialGround));
+    // world.add(make_shared<Sphere>(Vec3{ 0.0,    0.0, -1.0}, 0.5, MaterialCenter));
+    // world.add(make_shared<Sphere>(Vec3{-1.0,    0.0, -1.0}, 0.5, MaterialLeft));
+    // world.add(make_shared<Sphere>(Vec3{-1.0,    0.0, -1.0}, -0.4, MaterialLeft));
+    // world.add(make_shared<Sphere>(Vec3{ 1.0,    0.0, -1.0}, 0.5, MaterialRight));
     // clang-format on
 
     // Render

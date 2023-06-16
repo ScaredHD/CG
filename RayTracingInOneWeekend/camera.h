@@ -2,12 +2,13 @@
 
 #include "vec.h"
 #include "ray.h"
+#include "rtweekend.h"
 
 class Camera {
 public:
-    Camera() {
-        auto aspectRatio = 16.0 / 9.0;
-        auto viewportHeight = 2.0;
+    Camera(double vfov, double aspectRatio) {
+        auto theta = toRadian(vfov);
+        auto viewportHeight = 2.0 * std::tan(theta / 2);
         auto viewportWidth = aspectRatio * viewportHeight;
         auto focalLength = 1.0;
 
