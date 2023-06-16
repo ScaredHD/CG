@@ -5,6 +5,9 @@
 
 struct HitRecord;
 
+static Vec3 reflect(const Vec3& incident, const Vec3& normal);
+static Vec3 refract(const Vec3& incidentDirection, const Vec3& normal, double relativeIndex);
+
 struct Material {
     virtual bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
                          Ray& scattered) const = 0;
@@ -31,12 +34,8 @@ struct Metal : public Material {
 
     virtual bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
                          Ray& scattered) const override {
-        auto d = incident.d;
-        auto n = rec.normal;
-        auto r = d - 2 * dot(d, n) * n;
-
         scattered.o = rec.p;
-        scattered.d = r + roughness * gen.randomVec3OnUnitSphere();
+        scattered.d = reflect(incident.d, rec.normal) + roughness * gen.randomVec3OnUnitSphere();
         attenuation = albedo;
         return dot(scattered.d, rec.normal) > 0;
     }
@@ -53,20 +52,32 @@ struct Dielectric : public Material {
         double airIndex = 1.0;
         double relativeIndex = rec.front ? airIndex / refractiveIndex : refractiveIndex / airIndex;
 
+        const auto& I = normalized(incident.d);
+        const auto& N = normalized(rec.normal);
+        double costheta = std::min(dot(-I, N), 1.0);
+        double sintheta = std::sqrt(1 - costheta * costheta);
+
         scattered.o = rec.p;
-        scattered.d = refract(incident.d, rec.normal, relativeIndex);
+        bool totalReflection = relativeIndex * sintheta > 1.0;
+        scattered.d = totalReflection ? reflect(I, N) : refract(I, N, relativeIndex);
         attenuation = Vec3(1, 1, 1);
         return true;
     }
 
-    Vec3 refract(const Vec3& incidentDirection, const Vec3& normal, double relativeIndex) const {
-        const auto& I = normalized(incidentDirection);
-        const auto& N = normalized(normal);
-        double IdotN = std::min(dot(I, N), 1.0);
-        auto tangentPart = relativeIndex * (I - IdotN * N);
-        auto normalPart = -N * std::sqrt(1 - relativeIndex * relativeIndex * (1 - IdotN * IdotN));
-        return tangentPart + normalPart;
-    }
-
     double refractiveIndex;
 };
+
+static Vec3 reflect(const Vec3& incident, const Vec3& normal) {
+    const auto& d = normalized(incident);
+    const auto& n = normalized(normal);
+    return d - 2 * dot(d, n) * n;
+}
+
+static Vec3 refract(const Vec3& incidentDirection, const Vec3& normal, double relativeIndex) {
+    const auto& I = normalized(incidentDirection);
+    const auto& N = normalized(normal);
+    double IdotN = std::min(dot(I, N), 1.0);
+    auto tangentPart = relativeIndex * (I - IdotN * N);
+    auto normalPart = -N * std::sqrt(1 - relativeIndex * relativeIndex * (1 - IdotN * IdotN));
+    return tangentPart + normalPart;
+}

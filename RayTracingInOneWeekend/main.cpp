@@ -43,9 +43,9 @@ int main() {
 
     // clang-format off
     auto MaterialGround = make_shared<Lambertian>(Vec3(0.8, 0.8, 0.0));
-    auto MaterialCenter = make_shared<Dielectric>(1.5);
+    auto MaterialCenter = make_shared<Lambertian>(Vec3(0.1, 0.2, 0.5));
     auto MaterialLeft = make_shared<Dielectric>(1.5);
-    auto MaterialRight = make_shared<Metal>(Vec3(0.8, 0.6, 0.2), 1.0);
+    auto MaterialRight = make_shared<Metal>(Vec3(0.8, 0.6, 0.2), 0.0);
 
     world.add(make_shared<Sphere>(Vec3{ 0.0, -100.5, -1.0}, 100, MaterialGround));
     world.add(make_shared<Sphere>(Vec3{ 0.0,    0.0, -1.0}, 0.5, MaterialCenter));
