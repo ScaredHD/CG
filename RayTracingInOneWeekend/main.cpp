@@ -50,6 +50,7 @@ int main() {
     world.add(make_shared<Sphere>(Vec3{ 0.0, -100.5, -1.0}, 100, MaterialGround));
     world.add(make_shared<Sphere>(Vec3{ 0.0,    0.0, -1.0}, 0.5, MaterialCenter));
     world.add(make_shared<Sphere>(Vec3{-1.0,    0.0, -1.0}, 0.5, MaterialLeft));
+    world.add(make_shared<Sphere>(Vec3{-1.0,    0.0, -1.0}, -0.4, MaterialLeft));
     world.add(make_shared<Sphere>(Vec3{ 1.0,    0.0, -1.0}, 0.5, MaterialRight));
     // clang-format on
 
