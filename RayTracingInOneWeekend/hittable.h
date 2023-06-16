@@ -40,7 +40,11 @@ struct Sphere : public Hittable {
         }
 
         auto t = -(h + std::sqrt(discriminant)) / a;
-        if (t < tmin || t > tmax) return false;
+        if (t < tmin || t > tmax) {
+            t = (-h + std::sqrt(discriminant)) / a;
+            if (t < tmin || t > tmax) return false;
+        }
+
         rec.t = t;
         rec.p = r.at(t);
         auto outwardNormal = (rec.p - center) / radius;
