@@ -27,37 +27,66 @@ Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
     return lerp(Vec3(1.0, 1.0, 1.0), Vec3(0.5, 0.7, 1.0), t);
 }
 
+HittableList randomScene() {
+    HittableList world;
+    auto groundMaterial = make_shared<Lambertian>(Vec3(0.5, 0.5, 0.5));
+    world.add(make_shared<Sphere>(Vec3(0, -1000, 0), 1000, groundMaterial));
+
+    for (int a = -11; a < 11; ++a) {
+        for (int b = -11; b < 11; ++b) {
+            auto dice = gen.randomDouble();
+            Vec3 center(a + 0.9 * gen.randomDouble(), 0.2, b + 0.9 * gen.randomDouble());
+
+            if ((center - Vec3(4, 0.2, 0)).length() > 0.9) {
+                shared_ptr<Material> mat;
+                if (dice < 0.8) {
+                    // diffuse
+                    auto albedo = gen.randomVec3() * gen.randomVec3();
+                    mat = make_shared<Lambertian>(albedo);
+                } else if (dice < 0.95) {
+                    // metal
+                    auto albedo = gen.randomVec3(0.5, 1);
+                    auto roughness = gen.randomDouble(0, 0.5);
+                    mat = make_shared<Metal>(albedo, roughness);
+                } else {
+                    // glass
+                    mat = make_shared<Dielectric>(1.5);
+                }
+                world.add(make_shared<Sphere>(center, 0.2, mat));
+            }
+        }
+    }
+
+    auto mat1 = make_shared<Dielectric>(1.5);
+    world.add(make_shared<Sphere>(Vec3(0, 1, 0), 1.0, mat1));
+
+    auto mat2 = make_shared<Lambertian>(Vec3(0.4, 0.2, 0.1));
+    world.add(make_shared<Sphere>(Vec3(-4, 1, 0), 1.0, mat2));
+
+    auto mat3 = make_shared<Metal>(Vec3(0.7, 0.6, 0.5), 0.0);
+    world.add(make_shared<Sphere>(Vec3(4, 1, 0), 1.0, mat3));
+
+    return world;
+}
+
 int main() {
     // Image
-    const double aspectRatio = 16.0 / 9.0;
-    const int imageWidth = 400;
+    const double aspectRatio = 3.0 / 2.0;
+    const int imageWidth = 1200;
     const int imageHeight = static_cast<int>(imageWidth / aspectRatio);
-    const int samplesPerPixel = 100;
+    const int samplesPerPixel = 500;
     const int maxDepth = 50;
 
     // Camera
-    Vec3 lookFrom(3, 3, 2);
-    Vec3 lookAt(0, 0, -1);
+    Vec3 lookFrom(13, 2, 3);
+    Vec3 lookAt(0, 0, 0);
     Vec3 vup(0, 1, 0);
-    auto distToFocus = (lookFrom - lookAt).length();
-    auto aperture = 2.0;
+    auto distToFocus = 10.0;
+    auto aperture = 0.1;
     Camera cam(lookFrom, lookAt, vup, 20, aspectRatio, aperture, distToFocus);
 
     // Objects
-    HittableList world;
-
-    // clang-format off
-    auto MaterialGround = make_shared<Lambertian>(Vec3(0.8, 0.8, 0.0));
-    auto MaterialCenter = make_shared<Lambertian>(Vec3(0.1, 0.2, 0.5));
-    auto MaterialLeft = make_shared<Dielectric>(1.5);
-    auto MaterialRight = make_shared<Metal>(Vec3(0.8, 0.6, 0.2), 0.0);
-
-    world.add(make_shared<Sphere>(Vec3{ 0.0, -100.5, -1.0}, 100, MaterialGround));
-    world.add(make_shared<Sphere>(Vec3{ 0.0,    0.0, -1.0}, 0.5, MaterialCenter));
-    world.add(make_shared<Sphere>(Vec3{-1.0,    0.0, -1.0}, 0.5, MaterialLeft));
-    world.add(make_shared<Sphere>(Vec3{-1.0,    0.0, -1.0}, -0.45, MaterialLeft));
-    world.add(make_shared<Sphere>(Vec3{ 1.0,    0.0, -1.0}, 0.5, MaterialRight));
-    // clang-format on
+    HittableList world = randomScene();
 
     // Render
     cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";
