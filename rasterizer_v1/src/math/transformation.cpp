@@ -82,6 +82,14 @@ Mat4 scaleTransformation(double scaleX, double scaleY, double scaleZ) {
     // clang-fromat on
 }
 
+Mat4 modelTransformation(const Model& model) {
+    auto m1 = translateTransformation(model.location);
+    auto m2 = rotateTransformation(model.rotation[0], model.rotation[1], model.rotation[2]);
+    auto m3 = scaleTransformation(model.scale[0], model.scale[1], model.scale[2]);
+    return m1 * m2 * m3;
+}
+ 
+
 Mat4 viewTransformation(const Camera& cam) {
     const auto& w = -cam.lookAt.normalized();
     const auto& u = cross(cam.lookAt, cam.up).normalized();

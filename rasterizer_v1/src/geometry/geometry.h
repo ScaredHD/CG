@@ -20,7 +20,6 @@ struct Mesh {
 };
 
 struct Model {
-    Mat4 modelTransformation() const;
     std::vector<Mesh*> meshes;
     Vec3 location;
     Vec3 rotation;

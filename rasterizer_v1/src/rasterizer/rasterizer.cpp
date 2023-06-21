@@ -3,7 +3,7 @@
 #include "transformation.h"
 
 void Rasterizer::render(const Model& model) {
-    vShader->model = model.modelTransformation();
+    vShader->model = modelTransformation(model);
     vShader->view = viewTransformation(*camera);
     vShader->projection = projectionTransformation(*camera);
     vShader->viewport = window->viewportTransformation();
