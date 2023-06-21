@@ -189,16 +189,3 @@ void Window::bindCamera(Camera *camera) {
     if (camera->type == "fps") fpsCamera = reinterpret_cast<FpsCamera *>(camera);
     if (camera->type == "orbit") orbitCamera = reinterpret_cast<OrbitCamera *>(camera);
 }
-
-Mat4 Window::viewportTransformation() const {
-    double w = width;
-    double h = height;
-    // clang-format off
-    return {{{
-        {w / 2, 0, 0, w / 2},
-        {0, h / 2, 0, h / 2},
-        {0, 0, 1,     0},
-        {0, 0, 0,     1}
-    }}};
-    // clang-fromat on
-}

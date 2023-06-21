@@ -3,6 +3,7 @@
 #include "matrix.h"
 #include "camera.h"
 #include "geometry.h"
+#include "window.h"
 
 Mat4 translateTransformation(double x, double y, double z);
 
@@ -25,3 +26,5 @@ Mat4 modelTransformation(const Model& model);
 Mat4 viewTransformation(const Camera& cam);
 
 Mat4 projectionTransformation(const Camera& cam);
+
+Mat4 viewportTransformation(const Window& window);

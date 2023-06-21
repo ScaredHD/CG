@@ -109,3 +109,16 @@ Mat4 projectionTransformation(const Camera& cam) {
     }});
     // clang-format on
 }
+
+Mat4 viewportTransformation(const Window& window) {
+    double w = window.width;
+    double h = window.height;
+    // clang-format off
+    return {{{
+        {w / 2,     0, 0, w / 2},
+        {    0, h / 2, 0, h / 2},
+        {    0,     0, 1,     0},
+        {    0,     0, 0,     1}
+    }}};
+    // clang-fromat on
+}

@@ -6,7 +6,7 @@ void Rasterizer::render(const Model& model) {
     vShader->model = modelTransformation(model);
     vShader->view = viewTransformation(*camera);
     vShader->projection = projectionTransformation(*camera);
-    vShader->viewport = window->viewportTransformation();
+    vShader->viewport = viewportTransformation(*window);
 
     fShader->clearBuffer(0, 0, 0);
     for (const auto& mesh : model.meshes) {

@@ -30,8 +30,6 @@ class Window {
     void updateFrameBuffer(std::shared_ptr<Buffer> frameBuffer);
     void drawFrameBuffer();
 
-    Mat4 viewportTransformation() const;
-
     int width;
     int height;
 
