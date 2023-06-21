@@ -2,6 +2,9 @@
 
 #include <tuple>
 #include <cmath>
+#include <iostream>
+#include <iomanip>
+
 
 #include "mathutils.h"
 #include "transformation.h"
@@ -37,7 +40,7 @@ void FpsCamera::lookRight(double deg) {
     s.phi += toRadian(deg);
     if (s.phi > pi) s.phi -= 2 * pi;
     if (s.phi < -pi) s.phi += 2 * pi;
-    
+
     auto c = CartesianCoordinates(s);
     lookAt = {{c.x, c.y, c.z}};
 }
@@ -56,4 +59,9 @@ double Camera::left() const {
 
 double Camera::right() const {
     return std::tan(toRadian(hFovDeg) / 2) * std::abs(zNear);
+}
+
+void printCameraPose(const Camera& cam) {
+    std::cout << std::setprecision(3) << std::fixed;
+    std::cout << cam.location << "\t(p:" << cam.pitch() << "\ty:" << cam.yaw() << ")\n";
 }

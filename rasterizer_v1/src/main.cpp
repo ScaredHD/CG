@@ -1,7 +1,6 @@
 
 #include <iostream>
 #include <chrono>
-#include <iomanip>
 
 #include "rasterizer.h"
 #include "testGeometry.h"
@@ -22,7 +21,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     int canvasHeight = 600;
     Window w(canvasWidth, canvasHeight, hInstance, nCmdShow);
     w.show();
-    
+
     FpsCamera cam({{0, 0, 0}}, {{0, 0, -1}});
     cam.aspectRatio = double(canvasWidth) / canvasHeight;
 
@@ -38,17 +37,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     while (w.isRunning) {
         TimePoint frameBegin = getTime();
 
-        std::cout << std::setprecision(3) << std::fixed;
-        std::cout << cam.location << "\t(p:" << cam.pitch() << "\ty:" << cam.yaw() << ")\n";
+        printCameraPose(*r.camera);
 
         r.render(testGeo.triangle1);
-        w.drawFrameBuffer();
+        r.drawFrameBufferToWindow();
 
         TimePoint frameEnd = getTime();
         deltaTime = timeInterval(frameBegin, frameEnd);
 
         r.update(deltaTime);
     }
-    
+
     return 0;
 }

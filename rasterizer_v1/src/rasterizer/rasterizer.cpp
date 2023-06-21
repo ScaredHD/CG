@@ -29,7 +29,7 @@ void Rasterizer::render(const Mesh& mesh) {
 void Rasterizer::update(double deltaTime) {
     window->pollEvents();
 
-    // Update camera
+    // Move camera by key presses
     auto fpsCamera = reinterpret_cast<FpsCamera*>(camera);
     if (window->keyPressed('W')) {
         fpsCamera->moveForward(deltaTime * fpsCamera->moveSpeed);
@@ -44,6 +44,7 @@ void Rasterizer::update(double deltaTime) {
         fpsCamera->moveRight(-deltaTime * fpsCamera->moveSpeed);
     }
 
+    // Rotate camera by mouse movement
     auto dx = window->getCursorDeltaX();
     auto dy = window->getCursorDeltaY();
     fpsCamera->lookUp(-dy * fpsCamera->mouseSensitivity);

@@ -11,6 +11,7 @@ class Rasterizer {
     void render(const Mesh& mesh);
 
     void update(double deltaTime);
+    void drawFrameBufferToWindow() { window->drawFrameBuffer(); }
 
     Camera* camera;
     Window* window;

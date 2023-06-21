@@ -49,3 +49,5 @@ struct FpsCamera : public Camera {
 };
 
 struct OrbitCamera : public Camera {};
+
+void printCameraPose(const Camera& cam);
