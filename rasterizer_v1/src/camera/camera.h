@@ -7,14 +7,12 @@
 
 // coordinate system: right-handed, y-up
 
-struct Camera {
+class Camera {
+  public:
     Camera(Vec3 location, Vec3 lookAt, Vec3 up) : location(location), lookAt(lookAt), up(up) {}
 
     double pitch() const;
     double yaw() const;
-
-    Mat4 viewTransformation() const;
-    Mat4 projectionTransformation() const;
 
     double top() const;
     double bottom() const;
