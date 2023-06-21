@@ -21,14 +21,17 @@ class Window {
 
     HWND handle() const { return hwnd; }
     void createWindow(int &width, int &height, HINSTANCE &hInstance);
-    void bindCamera(Camera* camera);
 
     void show();
-    void pollEvents(double deltaTime);
+    void pollEvents();
 
     void updateFrameBufferFromImage(const RgbaImage &image);
     void updateFrameBuffer(std::shared_ptr<Buffer> frameBuffer);
     void drawFrameBuffer();
+
+    bool keyPressed(BYTE key);
+    int getCursorDeltaX() const { return cursorDeltaX; }
+    int getCursorDeltaY() const { return cursorDeltaY; }
 
     int width;
     int height;
@@ -40,9 +43,7 @@ class Window {
     void quit();
 
     LRESULT handleMessages(UINT uMsg, WPARAM wParam, LPARAM lParam);
-    void handleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam);
     void handleMouseEvents(UINT uMsg, WPARAM wParam, LPARAM lParam);
-    bool keyPressed(BYTE key);
 
     void centerCursor();
 
@@ -66,10 +67,4 @@ class Window {
     int cursorY;
     int cursorDeltaX;
     int cursorDeltaY;
-
-    // camera with which user input will interact
-    FpsCamera* fpsCamera = nullptr;
-    OrbitCamera* orbitCamera = nullptr;
-
-    double deltaTime;
 };

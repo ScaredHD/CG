@@ -25,7 +25,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     
     FpsCamera cam({{0, 0, 0}}, {{0, 0, -1}});
     cam.aspectRatio = double(canvasWidth) / canvasHeight;
-    w.bindCamera(&cam);
 
     Rasterizer r;
     r.camera = &cam;
@@ -48,7 +47,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         TimePoint frameEnd = getTime();
         deltaTime = timeInterval(frameBegin, frameEnd);
 
-        w.pollEvents(deltaTime);
+        r.update(deltaTime);
     }
     
     return 0;

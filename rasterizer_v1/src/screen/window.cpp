@@ -91,9 +91,7 @@ void Window::show() {
     ShowWindow(hwnd, nCmdShow);
 }
 
-void Window::pollEvents(double deltaTime) {
-    this->deltaTime = deltaTime;
-
+void Window::pollEvents() {
     MSG msg{};
     while (PeekMessage(&msg, hwnd, 0, 0, PM_REMOVE)) {
         TranslateMessage(&msg);
@@ -141,10 +139,11 @@ LRESULT Window::handleMessages(UINT uMsg, WPARAM wParam, LPARAM lParam) {
             handleMouseEvents(uMsg, wParam, lParam);
             return 0;
         case WM_KEYDOWN:
+        case WM_KEYUP:
             if (!GetKeyboardState(keyState)) {
                 std::cout << "failed to get keyboard state\n";
             }
-            handleKeyEvents(uMsg, wParam, lParam);
+            if (keyPressed(VK_ESCAPE)) quit();
             return 0;
     }
 
@@ -155,23 +154,12 @@ LRESULT Window::handleMessages(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 bool Window::keyPressed(BYTE key) {
     return keyState[key] & 0x80;
 }
-
-void Window::handleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    if (keyPressed(VK_ESCAPE)) quit();
-    if (keyPressed('W')) fpsCamera->moveForward(fpsCamera->moveSpeed * deltaTime);
-    if (keyPressed('S')) fpsCamera->moveForward(-fpsCamera->moveSpeed * deltaTime);
-    if (keyPressed('A')) fpsCamera->moveRight(-fpsCamera->moveSpeed * deltaTime);
-    if (keyPressed('D')) fpsCamera->moveRight(fpsCamera->moveSpeed * deltaTime);
-}
-
 void Window::handleMouseEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     POINT cursor;
     GetCursorPos(&cursor);
     cursorDeltaX = cursor.x - cursorX;
     cursorDeltaY = cursor.y - cursorY;
     centerCursor();
-    fpsCamera->lookUp(-cursorDeltaY * fpsCamera->mouseSensitivity);
-    fpsCamera->lookRight(cursorDeltaX * fpsCamera->mouseSensitivity);
 }
 
 void Window::quit() {
@@ -183,9 +171,4 @@ void Window::centerCursor() {
     POINT p = {width / 2, height / 2};
     ClientToScreen(hwnd, &p);
     SetCursorPos(p.x, p.y);
-}
-
-void Window::bindCamera(Camera *camera) {
-    if (camera->type == "fps") fpsCamera = reinterpret_cast<FpsCamera *>(camera);
-    if (camera->type == "orbit") orbitCamera = reinterpret_cast<OrbitCamera *>(camera);
 }

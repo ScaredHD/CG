@@ -25,3 +25,27 @@ void Rasterizer::render(const Mesh& mesh) {
 
     window->updateFrameBufferFromImage(fShader->outputImage);
 }
+
+void Rasterizer::update(double deltaTime) {
+    window->pollEvents();
+
+    // Update camera
+    auto fpsCamera = reinterpret_cast<FpsCamera*>(camera);
+    if (window->keyPressed('W')) {
+        fpsCamera->moveForward(deltaTime * fpsCamera->moveSpeed);
+    }
+    if (window->keyPressed('S')) {
+        fpsCamera->moveForward(-deltaTime * fpsCamera->moveSpeed);
+    }
+    if (window->keyPressed('D')) {
+        fpsCamera->moveRight(deltaTime * fpsCamera->moveSpeed);
+    }
+    if (window->keyPressed('A')) {
+        fpsCamera->moveRight(-deltaTime * fpsCamera->moveSpeed);
+    }
+
+    auto dx = window->getCursorDeltaX();
+    auto dy = window->getCursorDeltaY();
+    fpsCamera->lookUp(-dy * fpsCamera->mouseSensitivity);
+    fpsCamera->lookRight(dx * fpsCamera->mouseSensitivity);
+}
