@@ -7,6 +7,7 @@ static int eventCount = 0;
 Window::Window(int width, int height, HINSTANCE hInstance, int nCmdShow)
     : width(width), height(height), hInstance(hInstance), nCmdShow(nCmdShow) {
     createWindow(width, height, hInstance);
+    show();
     prepareDC();
 }
 

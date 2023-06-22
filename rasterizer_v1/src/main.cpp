@@ -22,7 +22,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     int canvasWidth = 800;
     int canvasHeight = 600;
     Window w(canvasWidth, canvasHeight, hInstance, nCmdShow);
-    // w.show();
 
     FpsCamera cam({{0, 0, 0}}, {{0, 0, -1}});
     cam.aspectRatio = double(canvasWidth) / canvasHeight;
@@ -30,7 +29,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     Rasterizer r;
     r.camera = make_shared<FpsCamera>(cam);
     r.window = &w;
-    r.window->show();
     r.vShader = make_shared<VertexShader>();
     r.fShader = make_shared<FragmentShader>(canvasWidth, canvasHeight);
 

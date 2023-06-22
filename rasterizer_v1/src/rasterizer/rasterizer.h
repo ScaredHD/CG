@@ -16,7 +16,7 @@ class Rasterizer {
     void drawFrameBufferToWindow() { window->drawFrameBuffer(); }
 
     std::shared_ptr<Camera> camera;
-    Window* window;  // using shared_ptr introduces bugs I can't fix
+    Window* window;  // Using shared_ptr introduces bugs I can't fix
     std::shared_ptr<VertexShader> vShader;
     std::shared_ptr<FragmentShader> fShader;
 };

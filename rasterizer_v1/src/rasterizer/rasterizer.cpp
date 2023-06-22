@@ -29,8 +29,8 @@ void Rasterizer::render(const Mesh& mesh) {
 void Rasterizer::update(double deltaTime) {
     window->pollEvents();
 
-    // Move camera by key presses
     if (camera->type == CameraType::fps) {
+        // Move camera by key presses
         auto fpsCamera = std::static_pointer_cast<FpsCamera>(camera);
         if (window->keyPressed('W')) {
             fpsCamera->moveForward(deltaTime * fpsCamera->moveSpeed);
@@ -50,5 +50,9 @@ void Rasterizer::update(double deltaTime) {
         auto dy = window->getCursorDeltaY();
         fpsCamera->lookUp(-dy * fpsCamera->mouseSensitivity);
         fpsCamera->lookRight(dx * fpsCamera->mouseSensitivity);
+    }
+
+    if (camera->type == CameraType::orbit) {
+        // Orbit camera interaction
     }
 }
