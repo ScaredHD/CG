@@ -63,5 +63,5 @@ double Camera::right() const {
 
 void printCameraPose(const Camera& cam) {
     std::cout << std::setprecision(3) << std::fixed;
-    std::cout << cam.location << "\t(p:" << cam.pitch() << "\ty:" << cam.yaw() << ")\n";
+    std::cout << cam.location << "\t(p:" << cam.pitch() << "\ty:" << cam.yaw() << ")\r";
 }

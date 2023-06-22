@@ -7,6 +7,8 @@
 
 // coordinate system: right-handed, y-up
 
+enum class CameraType { base, fps, orbit };
+
 class Camera {
   public:
     Camera(Vec3 location, Vec3 lookAt, Vec3 up) : location(location), lookAt(lookAt), up(up) {}
@@ -28,7 +30,7 @@ class Camera {
     double zNear = -0.1;
     double zFar = -100.0;
 
-    std::string type = "base";
+    CameraType type = CameraType::base;
 
   private:
 };
@@ -36,7 +38,7 @@ class Camera {
 struct FpsCamera : public Camera {
     FpsCamera(Vec3 location, Vec3 lookAt, Vec3 up = {{0.0, 1.0, 0.0}})
         : Camera(location, lookAt, up) {
-        type = "fps";
+        type = CameraType::fps;
     }
 
     void moveForward(double dist);
