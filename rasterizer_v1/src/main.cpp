@@ -6,6 +6,8 @@
 #include "testGeometry.h"
 #include "transformation.h"
 
+using std::make_shared;
+
 using TimePoint = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
 TimePoint getTime() {
@@ -20,16 +22,17 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     int canvasWidth = 800;
     int canvasHeight = 600;
     Window w(canvasWidth, canvasHeight, hInstance, nCmdShow);
-    w.show();
+    // w.show();
 
     FpsCamera cam({{0, 0, 0}}, {{0, 0, -1}});
     cam.aspectRatio = double(canvasWidth) / canvasHeight;
 
     Rasterizer r;
-    r.camera = &cam;
+    r.camera = make_shared<FpsCamera>(cam);
     r.window = &w;
-    r.vShader = new VertexShader;
-    r.fShader = new FragmentShader(canvasWidth, canvasHeight);
+    r.window->show();
+    r.vShader = make_shared<VertexShader>();
+    r.fShader = make_shared<FragmentShader>(canvasWidth, canvasHeight);
 
     TestGeometry testGeo;
 
