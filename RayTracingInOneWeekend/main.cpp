@@ -10,7 +10,7 @@
 using namespace std;
 
 Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
-    if (maxDepth <= 0) return Vec3(0, 0, 0);
+    if (maxDepth <= 0) return {0, 0, 0};
 
     HitRecord rec;
     if (world.hit(r, 0.001, infinity, rec)) {
@@ -19,7 +19,7 @@ Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
         if (rec.material->scatter(r, rec, attenuation, scattered)) {
             return attenuation * rayColor(scattered, world, maxDepth - 1);
         }
-        return Vec3(0, 0, 0);
+        return {0, 0, 0};
     }
 
     auto u = normalized(r.d);
