@@ -18,6 +18,7 @@ struct Lambertian : public Material {
 
     bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
                  Ray& scattered) const override {
+        scattered.time = incident.time;
         scattered.o = rec.p;
         scattered.d = rec.normal + gen.randomVec3OnUnitSphere();
         if (scattered.d.nearZero()) scattered.d = rec.normal;
@@ -34,6 +35,7 @@ struct Metal : public Material {
 
     bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
                  Ray& scattered) const override {
+        scattered.time = incident.time;
         scattered.o = rec.p;
         scattered.d = reflect(incident.d, rec.normal) + roughness * gen.randomVec3OnUnitSphere();
         attenuation = albedo;
@@ -57,6 +59,7 @@ struct Dielectric : public Material {
         double costheta = std::min(dot(-I, N), 1.0);
         double sintheta = std::sqrt(1 - costheta * costheta);
 
+        scattered.time = incident.time;
         scattered.o = rec.p;
         bool totalReflection = relativeIndex * sintheta > 1.0;
         scattered.d = totalReflection || reflectance(costheta, relativeIndex) > gen.randomDouble()

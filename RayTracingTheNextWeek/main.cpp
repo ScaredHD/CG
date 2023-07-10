@@ -24,18 +24,19 @@ Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
 
     auto u = normalized(r.d);
     auto t = (u.y() + 1.0) * 0.5;
-    return lerp(Vec3(1.0, 1.0, 1.0), Vec3(0.5, 0.7, 1.0), t);
+    return lerp(Vec3{1.0, 1.0, 1.0}, Vec3{0.5, 0.7, 1.0}, t);
 }
 
 HittableList randomScene() {
     HittableList world;
-    auto groundMaterial = make_shared<Lambertian>(Vec3(0.5, 0.5, 0.5));
-    world.add(make_shared<Sphere>(Vec3(0, -1000, 0), 1000, groundMaterial));
+    auto groundMaterial = make_shared<Lambertian>(Vec3{0.5, 0.5, 0.5});
+    world.add(make_shared<Sphere>(Vec3{0, -1000, 0}, 1000, groundMaterial));
 
-    for (int a = -11; a < 11; ++a) {
-        for (int b = -11; b < 11; ++b) {
-            auto dice = gen.randomDouble();
-            Vec3 center(a + 0.9 * gen.randomDouble(), 0.2, b + 0.9 * gen.randomDouble());
+    for (int a = -4; a < 4; ++a) {
+        for (int b = -4; b < 4; ++b) {
+            auto dice{gen.randomDouble()};
+            Vec3 center{a + 0.9 * gen.randomDouble(), 0.2, b + 0.9 * gen.randomDouble()};
+            Vec3 center2{center + Vec3{0, gen.randomDouble(0, 0.5), 0}};
 
             if ((center - Vec3(4, 0.2, 0)).length() > 0.9) {
                 shared_ptr<Material> mat;
@@ -52,7 +53,7 @@ HittableList randomScene() {
                     // glass
                     mat = make_shared<Dielectric>(1.5);
                 }
-                world.add(make_shared<Sphere>(center, 0.2, mat));
+                world.add(make_shared<MovingSphere>(center, center2, 0.0, 1.0, 0.2, mat));
             }
         }
     }
@@ -71,19 +72,20 @@ HittableList randomScene() {
 
 int main() {
     // Image
-    const double aspectRatio = 3.0 / 2.0;
-    const int imageWidth = 100;
+    const double aspectRatio = 16.0 / 9.0;
+    const int imageWidth = 400;
     const int imageHeight = static_cast<int>(imageWidth / aspectRatio);
     const int samplesPerPixel = 32;
     const int maxDepth = 32;
 
     // Camera
-    Vec3 lookFrom(13, 2, 3);
-    Vec3 lookAt(0, 0, 0);
-    Vec3 vup(0, 1, 0);
-    auto distToFocus = 10.0;
-    auto aperture = 0.1;
-    Camera cam{lookFrom, lookAt, vup, 20, aspectRatio, aperture, distToFocus};
+    Vec3 lookFrom{13, 2, 3};
+    Vec3 lookAt{0, 0, 0};
+    Vec3 vup{0, 1, 0};
+    auto distToFocus{10.0};
+    auto aperture{0.1};
+    const auto& [t0, t1] = std::make_tuple(0.0, 1.0);
+    Camera cam{lookFrom, lookAt, vup, 20, aspectRatio, aperture, distToFocus, t0, t1};
 
     // Objects
     HittableList world = randomScene();
