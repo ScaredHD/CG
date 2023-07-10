@@ -10,7 +10,7 @@
 using namespace std;
 
 Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
-    if (maxDepth <= 0) return Vec3(0, 0, 0);
+    if (maxDepth <= 0) return {0, 0, 0};
 
     HitRecord rec;
     if (world.hit(r, 0.001, infinity, rec)) {
@@ -19,7 +19,7 @@ Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
         if (rec.material->scatter(r, rec, attenuation, scattered)) {
             return attenuation * rayColor(scattered, world, maxDepth - 1);
         }
-        return Vec3(0, 0, 0);
+        return {0, 0, 0};
     }
 
     auto u = normalized(r.d);
@@ -72,10 +72,10 @@ HittableList randomScene() {
 int main() {
     // Image
     const double aspectRatio = 3.0 / 2.0;
-    const int imageWidth = 1200;
+    const int imageWidth = 100;
     const int imageHeight = static_cast<int>(imageWidth / aspectRatio);
-    const int samplesPerPixel = 500;
-    const int maxDepth = 50;
+    const int samplesPerPixel = 32;
+    const int maxDepth = 32;
 
     // Camera
     Vec3 lookFrom(13, 2, 3);
@@ -83,7 +83,7 @@ int main() {
     Vec3 vup(0, 1, 0);
     auto distToFocus = 10.0;
     auto aperture = 0.1;
-    Camera cam(lookFrom, lookAt, vup, 20, aspectRatio, aperture, distToFocus);
+    Camera cam{lookFrom, lookAt, vup, 20, aspectRatio, aperture, distToFocus};
 
     // Objects
     HittableList world = randomScene();

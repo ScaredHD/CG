@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(rt_the_next_week)
+project(rt2)
 
-add_executable(rt_the_next_week
+add_executable(rt2
     main.cpp
 )

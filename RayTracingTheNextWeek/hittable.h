@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <utility>
 
 #include "vec.h"
 #include "ray.h"
@@ -27,9 +28,9 @@ struct Hittable {
 
 struct Sphere : public Hittable {
     Sphere(const Vec3& center, double radius, std::shared_ptr<Material> material)
-        : center(center), radius(radius), material(material) {}
+        : center(center), radius(radius), material(std::move(material)) {}
 
-    virtual bool hit(const Ray& r, double tmin, double tmax, HitRecord& rec) const {
+    bool hit(const Ray& r, double tmin, double tmax, HitRecord& rec) const override {
         auto oc = r.o - center;
         auto a = r.d.lengthSquared();
         auto h = dot(r.d, oc);

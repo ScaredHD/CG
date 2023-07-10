@@ -16,8 +16,8 @@ struct Material {
 struct Lambertian : public Material {
     Lambertian(const Vec3& albedo) : albedo(albedo) {}
 
-    virtual bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
-                         Ray& scattered) const override {
+    bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
+                 Ray& scattered) const override {
         scattered.o = rec.p;
         scattered.d = rec.normal + gen.randomVec3OnUnitSphere();
         if (scattered.d.nearZero()) scattered.d = rec.normal;
@@ -32,8 +32,8 @@ struct Metal : public Material {
     Metal(const Vec3& albedo, double roughness = 0.0)
         : albedo(albedo), roughness(clamp(roughness, 0.0, 1.0)) {}
 
-    virtual bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
-                         Ray& scattered) const override {
+    bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
+                 Ray& scattered) const override {
         scattered.o = rec.p;
         scattered.d = reflect(incident.d, rec.normal) + roughness * gen.randomVec3OnUnitSphere();
         attenuation = albedo;
@@ -47,8 +47,8 @@ struct Metal : public Material {
 struct Dielectric : public Material {
     Dielectric(double refractiveIndex) : refractiveIndex(refractiveIndex) {}
 
-    virtual bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
-                         Ray& scattered) const override {
+    bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
+                 Ray& scattered) const override {
         double airIndex = 1.0;
         double relativeIndex = rec.front ? airIndex / refractiveIndex : refractiveIndex / airIndex;
 

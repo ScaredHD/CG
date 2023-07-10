@@ -35,7 +35,7 @@ struct RandomGenerator {
     }
 
     Vec3 randomVec3(double a = 0.0, double b = 1.0) {
-        return Vec3(randomDouble(a, b), randomDouble(a, b), randomDouble(a, b));
+        return {randomDouble(a, b), randomDouble(a, b), randomDouble(a, b)};
     }
 
     Vec3 randomVec3InUnitSphere() {
