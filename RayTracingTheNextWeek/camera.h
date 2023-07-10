@@ -11,7 +11,7 @@ class Camera {
         auto theta = toRadian(vfov);
         auto viewportHeight = 2.0 * std::tan(theta / 2);
         auto viewportWidth = aspectRatio * viewportHeight;
-        auto focalLength = 1.0;
+        [[maybe_unused]] auto focalLength = 1.0;
 
         w = normalized(lookFrom - lookAt);
         u = normalized(cross(vup, w));
@@ -25,10 +25,10 @@ class Camera {
         lensRadius = aperture / 2;
     }
 
-    Ray getRay(double s, double t) const {
+    [[nodiscard]] Ray getRay(double s, double t) const {
         Vec3 rd = lensRadius * gen.randomInUnitDisk();
         Vec3 offset = u * rd.x() + v * rd.y();
-        return Ray(origin + offset, lowerLeft + s * horizontal + t * vertical - origin - offset);
+        return {origin + offset, lowerLeft + s * horizontal + t * vertical - origin - offset};
     }
 
   private:
