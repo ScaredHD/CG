@@ -6,6 +6,7 @@
 #include "vec.h"
 #include "ray.h"
 #include "rtweekend.h"
+#include "aabb.h"
 
 struct Material;
 
@@ -25,7 +26,9 @@ struct HitRecord {
 
 struct Hittable {
     virtual bool hit(const Ray& r, double tmin, double tmax, HitRecord& rec) const = 0;
+    virtual bool boundingBox(double time0, double time1, AABB& outBox) const = 0;
 };
+
 
 struct Sphere : public Hittable {
     Sphere(const Vec3& center, double radius, const std::shared_ptr<Material>& material)
@@ -52,6 +55,12 @@ struct Sphere : public Hittable {
         auto outwardNormal = (rec.p - center) / radius;
         rec.setFaceNormal(r, outwardNormal);
         rec.material = material;
+        return true;
+    }
+
+    bool boundingBox(double time0, double time1, AABB& outBox) const override {
+        const auto& v = Vec3(radius, radius, radius);
+        outBox = {center + v, center - v};
         return true;
     }
 
@@ -91,6 +100,16 @@ class MovingSphere : public Hittable {
     }
 
     Vec3 centerAtTime(double t) const { return lerp(c0, c1, (t - t0) / (t1 - t0)); }
+
+    bool boundingBox(double time0, double time1, AABB& outBox) const override {
+        const auto& v = Vec3(radius, radius, radius);
+        const auto& c0 = centerAtTime(time0);
+        const auto& c1 = centerAtTime(time1);
+        const auto& box0 = AABB(c0 + v, c0 - v);
+        const auto& box1 = AABB(c1 + v, c1 - v);
+        outBox = surroundingBox(box0, box1);
+        return true;
+    }
 
   private:
     Vec3 c0;

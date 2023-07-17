@@ -9,7 +9,7 @@
 #include "vec.h"
 
 constexpr double infinity = std::numeric_limits<double>::infinity();
-const double pi = std::acos(-1);
+const double pi = std::acos(-1.0);
 
 template <typename T>
 T lerp(const T& a, const T& b, double t) {
@@ -29,13 +29,18 @@ struct RandomGenerator {
     std::random_device rd;
     std::mt19937 gen = std::mt19937(rd());
 
-    double randomDouble(double a = 0.0, double b = 1.0) {
-        std::uniform_real_distribution<double> dist;
+    int randomInt(int min, int max) {
+        std::uniform_int_distribution<int> dist(min, max);
         return dist(gen);
     }
 
-    Vec3 randomVec3(double a = 0.0, double b = 1.0) {
-        return {randomDouble(a, b), randomDouble(a, b), randomDouble(a, b)};
+    double randomDouble(double min = 0.0, double maxExcluded = 1.0) {
+        std::uniform_real_distribution<double> dist(min, maxExcluded);
+        return dist(gen);
+    }
+
+    Vec3 randomVec3(double a = 0.0, double bExcluded = 1.0) {
+        return {randomDouble(a, bExcluded), randomDouble(a, bExcluded), randomDouble(a, bExcluded)};
     }
 
     Vec3 randomVec3InUnitSphere() {
