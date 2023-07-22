@@ -29,7 +29,9 @@ Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
 
 HittableList randomScene() {
     HittableList world;
-    auto groundMaterial = make_shared<Lambertian>(Vec3{0.5, 0.5, 0.5});
+
+    auto checker = make_shared<CheckerTexture>(Vec3{0.2, 0.3, 0.1}, Vec3{0.9, 0.9, 0.9});
+    auto groundMaterial = make_shared<Lambertian>(checker);
     world.add(make_shared<Sphere>(Vec3{0, -1000, 0}, 1000, groundMaterial));
 
     for (int a = -4; a < 4; ++a) {
@@ -70,6 +72,16 @@ HittableList randomScene() {
     return world;
 }
 
+HittableList twoSpheresScene() {
+    HittableList world;
+
+    auto checker = make_shared<CheckerTexture>(Vec3{0.2, 0.3, 0.1}, Vec3{0.9, 0.9, 0.9});
+
+    world.add(make_shared<Sphere>(Vec3{0, -10, 0}, 10, make_shared<Lambertian>(checker)));
+    world.add(make_shared<Sphere>(Vec3{0, 10, 0}, 10, make_shared<Lambertian>(checker)));
+    return world;
+}
+
 int main() {
     // Image
     const double aspectRatio = 16.0 / 9.0;
@@ -78,17 +90,37 @@ int main() {
     const int samplesPerPixel = 32;
     const int maxDepth = 32;
 
-    // Camera
-    Vec3 lookFrom{13, 2, 3};
-    Vec3 lookAt{0, 0, 0};
-    Vec3 vup{0, 1, 0};
-    auto distToFocus{10.0};
-    auto aperture{0.1};
-    const auto& [t0, t1] = std::make_tuple(0.0, 1.0);
-    Camera cam{lookFrom, lookAt, vup, 20, aspectRatio, aperture, distToFocus, t0, t1};
-
     // Objects
-    HittableList world = randomScene();
+    HittableList world;
+
+    // Camera
+    Vec3 lookFrom;
+    Vec3 lookAt = {0, 0, 0};
+    Vec3 vup = {0, 1, 0};
+    double vFov = 40.0;
+    auto distToFocus = 10.0;
+    auto aperture = 0.0;
+    const auto& [t0, t1] = std::make_tuple(0.0, 1.0);
+
+    switch (0) {
+        case 1:
+            world = randomScene();
+            lookFrom = {13, 2, 3};
+            lookAt = {0, 0, 0};
+            vFov = 20.0;
+            aperture = 0.1;
+            break;
+
+        default:
+        case 2:
+            world = twoSpheresScene();
+            lookFrom = {13, 2, 3};
+            lookAt = {0, 0, 0};
+            vFov = 20.0;
+            break;
+    }
+
+    Camera cam{lookFrom, lookAt, vup, vFov, aspectRatio, aperture, distToFocus, t0, t1};
 
     // Render
     cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";

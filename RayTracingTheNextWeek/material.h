@@ -2,6 +2,7 @@
 
 #include "rtweekend.h"
 #include "hittable.h"
+#include "texture.h"
 
 struct HitRecord;
 
@@ -14,7 +15,8 @@ struct Material {
 };
 
 struct Lambertian : public Material {
-    Lambertian(const Vec3& albedo) : albedo(albedo) {}
+    Lambertian(const Vec3& color) : Lambertian{std::make_shared<SolidColor>(color)} {}
+    Lambertian(std::shared_ptr<Texture> texture) : albedo{std::move(texture)} {}
 
     bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
                  Ray& scattered) const override {
@@ -22,11 +24,11 @@ struct Lambertian : public Material {
         scattered.o = rec.p;
         scattered.d = rec.normal + gen.randomVec3OnUnitSphere();
         if (scattered.d.nearZero()) scattered.d = rec.normal;
-        attenuation = albedo;
+        attenuation = albedo->value(rec.u, rec.v, rec.p);
         return true;
     }
 
-    Vec3 albedo;
+    std::shared_ptr<Texture> albedo;
 };
 
 struct Metal : public Material {

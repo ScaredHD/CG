@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <utility>
+#include <cmath>
 
 #include "vec.h"
 #include "ray.h"
@@ -18,6 +19,9 @@ struct HitRecord {
 
     std::shared_ptr<Material> material;
 
+    double u;
+    double v;
+
     void setFaceNormal(const Ray& r, const Vec3& outwardNormal) {
         front = dot(r.d, outwardNormal) < 0;
         normal = front ? outwardNormal : -outwardNormal;
@@ -29,12 +33,12 @@ struct Hittable {
     virtual bool boundingBox(double time0, double time1, AABB& outBox) const = 0;
 };
 
-
 struct Sphere : public Hittable {
     Sphere(const Vec3& center, double radius, const std::shared_ptr<Material>& material)
         : center{center}, radius{radius}, material{material} {}
 
     bool hit(const Ray& r, double tmin, double tmax, HitRecord& rec) const override {
+        // Check if ray hits this sphere
         auto oc = r.o - center;
         auto a = r.d.lengthSquared();
         auto h = dot(r.d, oc);
@@ -50,12 +54,26 @@ struct Sphere : public Hittable {
             if (t < tmin || t > tmax) return false;
         }
 
+        // Update hit record accordingly
         rec.t = t;
         rec.p = r.at(t);
         auto outwardNormal = (rec.p - center) / radius;
         rec.setFaceNormal(r, outwardNormal);
+        getSphereUV(outwardNormal, rec.u, rec.v);
         rec.material = material;
         return true;
+    }
+
+    static void getSphereUV(const Vec3& p, double& outU, double& outV) {
+        const auto& [x, y, z] = std::make_tuple(p.x(), p.y(), p.z());
+
+        // Cartesian to spherical coordinates
+        auto theta = std::acos(-y);         // polar angle
+        auto phi = std::atan2(-z, x) + pi;  // azimuthal angle
+
+        // Normalized spherical coordinates to get u-v coordinates
+        outU = phi / 2 * pi;
+        outV = theta / pi;
     }
 
     bool boundingBox(double time0, double time1, AABB& outBox) const override {

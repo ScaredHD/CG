@@ -45,3 +45,5 @@ inline bool HittableList::boundingBox(double time0, double time1, AABB& outputBo
     }
     return true;
 }
+
+
