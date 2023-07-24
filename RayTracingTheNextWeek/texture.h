@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "vec.h"
+#include "perlin.h"
 
 class Texture {
   public:
@@ -40,4 +41,18 @@ class CheckerTexture : public Texture {
   private:
     std::shared_ptr<Texture> odd;
     std::shared_ptr<Texture> even;
+};
+
+class NoiseTexture : public Texture {
+  public:
+    NoiseTexture() = default;
+    NoiseTexture(double scale) : scale{scale} {}
+
+    Vec3 value(double u, double v, const Vec3& p) const override {
+        return Vec3{1, 1, 1} * noise.noise(scale * p);
+    }
+
+  private:
+    PerlinNoise noise;
+    double scale{1.0};
 };
