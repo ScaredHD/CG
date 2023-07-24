@@ -49,7 +49,9 @@ class NoiseTexture : public Texture {
     NoiseTexture(double scale) : scale{scale} {}
 
     Vec3 value(double u, double v, const Vec3& p) const override {
-        return Vec3{1, 1, 1} * noise.noise(scale * p);
+        // return Vec3{1, 1, 1} * (1.0 + noise.noise(scale * p)) * 0.5;
+        // return Vec3{1, 1, 1} * noise.turb(scale * p);
+        return Vec3{1, 1, 1} * 0.5 * (1 + std::sin(scale * p.z() + 10 * noise.turb(p)));
     }
 
   private:
