@@ -65,6 +65,7 @@ struct Sphere : public Hittable {
     }
 
     static void getSphereUV(const Vec3& p, double& outU, double& outV) {
+
         const auto& [x, y, z] = std::make_tuple(p.x(), p.y(), p.z());
 
         // Cartesian to spherical coordinates
@@ -72,7 +73,7 @@ struct Sphere : public Hittable {
         auto phi = std::atan2(-z, x) + pi;  // azimuthal angle
 
         // Normalized spherical coordinates to get u-v coordinates
-        outU = phi / 2 * pi;
+        outU = phi / (2 * pi);
         outV = theta / pi;
     }
 
