@@ -116,3 +116,11 @@ HittableList twoPerlinSpheres() {
     world.add(make_shared<Sphere>(Vec3{0, 2, 0}, 2, make_shared<Lambertian>(noiseTexture)));
     return world;
 }
+
+HittableList earthScene() {
+    using std::make_shared;
+    auto earthTexture = make_shared<ImageTexture>("earthmap.jpg");
+    auto earthSurface = make_shared<Lambertian>(earthTexture);
+    auto globe = make_shared<Sphere>(Vec3{0, 0, 0}, 2, earthSurface);
+    return {globe};
+}

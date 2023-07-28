@@ -5,6 +5,7 @@
 
 #include "vec.h"
 #include "perlin.h"
+#include "image.h"
 
 class Texture {
   public:
@@ -57,4 +58,49 @@ class NoiseTexture : public Texture {
   private:
     PerlinNoise noise;
     double scale{1.0};
+};
+
+class ImageTexture : public Texture {
+  public:
+    static const int bytesPerPixel = 3;
+
+  public:
+    ImageTexture(const char* filename) {
+        auto channelInFile = bytesPerPixel;
+        data = stbi_load(filename, &width, &height, &channelInFile, channelInFile);
+
+        if (!data) {
+            std::cerr << "ERROR: could not load texture image file: " << filename << "\n";
+            width = height = 0;
+        }
+
+        bytesPerScanline = bytesPerPixel * width;
+    }
+
+    ~ImageTexture() { delete data; }
+
+  public:
+    Vec3 value(double u, double v, const Vec3& p) const override {
+        if (!data) return {0, 1, 1};
+
+        u = clamp(u, 0.0, 1.0);
+        v = 1.0 - clamp(v, 0.0, 1.0);
+
+        auto i = static_cast<int>(u * width);
+        auto j = static_cast<int>(v * height);
+
+        if (i >= width) i = width - 1;
+        if (j >= height) j = height - 1;
+
+        const auto colorScale = 1.0 / 255.0;
+        auto pixel = data + j * bytesPerScanline + i * bytesPerPixel;
+
+        return {colorScale * pixel[0], colorScale * pixel[1], colorScale * pixel[2]};
+    }
+
+  private:
+    unsigned char* data;
+    int width;
+    int height;
+    int bytesPerScanline;
 };

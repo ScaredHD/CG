@@ -46,7 +46,7 @@ int main() {
     auto aperture = 0.0;
     const auto& [t0, t1] = std::make_tuple(0.0, 1.0);
 
-    switch (3) {
+    switch (0) {
         case 1:
             world = randomScene();
             lookFrom = {13, 2, 3};
@@ -61,9 +61,17 @@ int main() {
             lookAt = {0, 0, 0};
             vFov = 20.0;
             break;
-            
+
         case 3:
             world = twoPerlinSpheres();
+            lookFrom = {13, 2, 3};
+            lookAt = {0, 0, 0};
+            vFov = 20.0;
+            break;
+
+        default:
+        case 4:
+            world = earthScene();
             lookFrom = {13, 2, 3};
             lookAt = {0, 0, 0};
             vFov = 20.0;
