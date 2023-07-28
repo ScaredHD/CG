@@ -1,0 +1,7 @@
+Language:        Cpp
+BasedOnStyle:  Google
+AccessModifierOffset: -2
+ColumnLimit:     100
+IndentWidth:     4
+AllowShortFunctionsOnASingleLine: InlineOnly
+SortIncludes: Never
