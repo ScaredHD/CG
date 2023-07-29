@@ -8,34 +8,33 @@
 
 using namespace std;
 
-Vec3 rayColor(const Ray& r, const HittableList& world, int maxDepth) {
+Vec3 rayColor(const Ray& r, const Vec3& backgroundColor, const HittableList& world, int maxDepth) {
     if (maxDepth <= 0) return {0, 0, 0};
 
     HitRecord rec;
-    if (world.hit(r, 0.001, infinity, rec)) {
-        Ray scattered;
-        Vec3 attenuation;
-        if (rec.material->scatter(r, rec, attenuation, scattered)) {
-            return attenuation * rayColor(scattered, world, maxDepth - 1);
-        }
-        return {0, 0, 0};
-    }
+    if (!world.hit(r, 0.001, infinity, rec)) return backgroundColor;
 
-    auto u = normalized(r.d);
-    auto t = (u.y() + 1.0) * 0.5;
-    return lerp(Vec3{1.0, 1.0, 1.0}, Vec3{0.5, 0.7, 1.0}, t);
+    Ray scattered;
+    Vec3 attenuation;
+    Vec3 emitted = rec.material->emitted(rec.u, rec.v, rec.p);
+    if (rec.material->scatter(r, rec, attenuation, scattered)) {
+        return emitted + attenuation * rayColor(scattered, backgroundColor, world, maxDepth - 1);
+    } else {
+        return emitted;
+    }
 }
 
 int main() {
     // Image
-    const double aspectRatio = 16.0 / 9.0;
-    const int imageWidth = 400;
-    const int imageHeight = static_cast<int>(imageWidth / aspectRatio);
-    const int samplesPerPixel = 32;
-    const int maxDepth = 32;
+    double aspectRatio = 16.0 / 9.0;
+    int imageWidth = 400;
+    int imageHeight = static_cast<int>(imageWidth / aspectRatio);
+    int samplesPerPixel = 32;
+    int maxDepth = 32;
 
     // Objects
     HittableList world;
+    Vec3 backgroundColor = {0, 0, 0};
 
     // Camera
     Vec3 lookFrom;
@@ -53,6 +52,7 @@ int main() {
             lookAt = {0, 0, 0};
             vFov = 20.0;
             aperture = 0.1;
+            backgroundColor = {0.7, 0.8, 1.0};
             break;
 
         case 2:
@@ -60,6 +60,7 @@ int main() {
             lookFrom = {13, 2, 3};
             lookAt = {0, 0, 0};
             vFov = 20.0;
+            backgroundColor = {0.7, 0.8, 1.0};
             break;
 
         case 3:
@@ -67,14 +68,36 @@ int main() {
             lookFrom = {13, 2, 3};
             lookAt = {0, 0, 0};
             vFov = 20.0;
+            backgroundColor = {0.7, 0.8, 1.0};
             break;
 
-        default:
         case 4:
             world = earthScene();
             lookFrom = {13, 2, 3};
             lookAt = {0, 0, 0};
             vFov = 20.0;
+            backgroundColor = {0.7, 0.8, 1.0};
+            break;
+
+        case 5:
+            world = simpleLightScene();
+            lookFrom = {26, 3, 6};
+            lookAt = {0, 2, 0};
+            samplesPerPixel = 200;
+            vFov = 20.0;
+            backgroundColor = {0.0, 0.0, 0.0};
+            break;
+
+        default:
+            world = cornellBox();
+            aspectRatio = 1.0;
+            imageWidth = 600;
+            imageHeight = static_cast<int>(imageWidth / aspectRatio);
+            samplesPerPixel = 200;
+            backgroundColor = {0, 0, 0};
+            lookFrom = {278, 278, -800};
+            lookAt = {278, 278, 0};
+            vFov = 40.0;
             break;
     }
 
@@ -91,7 +114,7 @@ int main() {
                 auto u = (i + gen.randomDouble()) / imageWidth;
                 auto v = (j + gen.randomDouble()) / imageHeight;
                 Ray r = cam.getRay(u, v);
-                color += rayColor(r, world, maxDepth);
+                color += rayColor(r, backgroundColor, world, maxDepth);
             }
 
             writeColor(cout, color, samplesPerPixel, true);

@@ -124,3 +124,36 @@ HittableList earthScene() {
     auto globe = make_shared<Sphere>(Vec3{0, 0, 0}, 2, earthSurface);
     return {globe};
 }
+
+HittableList simpleLightScene() {
+    using std::make_shared;
+    HittableList world;
+
+    auto perlinTexture = make_shared<NoiseTexture>(4);
+    world.add(make_shared<Sphere>(Vec3{0, -1000, 0}, 1000, make_shared<Lambertian>(perlinTexture)));
+    world.add(make_shared<Sphere>(Vec3{0, 2, 0}, 2, make_shared<Lambertian>(perlinTexture)));
+
+    auto diffLight = make_shared<DiffuseLight>(Vec3{4, 4, 4});
+    world.add(make_shared<XYRect>(3, 5, 1, 3, -2, diffLight));
+
+    return world;
+}
+
+HittableList cornellBox() {
+    using std::make_shared;
+    HittableList world;
+
+    auto red = make_shared<Lambertian>(Vec3{0.65, 0.05, 0.05});
+    auto white = make_shared<Lambertian>(Vec3{0.73, 0.73, 0.73});
+    auto green = make_shared<Lambertian>(Vec3{0.12, 0.45, 0.15});
+    auto light = make_shared<DiffuseLight>(Vec3{15, 15, 15});
+
+    world.add(make_shared<YZRect>(0, 555, 0, 555, 555, green));
+    world.add(make_shared<YZRect>(0, 555, 0, 555, 0, red));
+    world.add(make_shared<XZRect>(213, 343, 227, 332, 554, light));
+    world.add(make_shared<XZRect>(0, 555, 0, 555, 0, white));
+    world.add(make_shared<XZRect>(0, 555, 0, 555, 555, white));
+    world.add(make_shared<XYRect>(0, 555, 0, 555, 555, white));
+
+    return world;
+}

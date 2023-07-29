@@ -12,6 +12,7 @@ static Vec3 refract(const Vec3& incidentDirection, const Vec3& normal, double re
 struct Material {
     virtual bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
                          Ray& scattered) const = 0;
+    virtual Vec3 emitted(double u, double v, const Vec3& p) const { return {0, 0, 0}; }
 };
 
 struct Lambertian : public Material {
@@ -78,6 +79,23 @@ struct Dielectric : public Material {
     }
 
     double refractiveIndex;
+};
+
+class DiffuseLight : public Material {
+  public:
+    DiffuseLight(std::shared_ptr<Texture> emit) : emit{std::move(emit)} {}
+    DiffuseLight(const Vec3& color) : emit(std::make_shared<SolidColor>(color)) {}
+
+    bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
+                 Ray& scattered) const override {
+        return false;
+    }
+
+    Vec3 emitted(double u, double v, const Vec3& p) const override { return emit->value(u, v, p); }
+
+
+  private:
+    std::shared_ptr<Texture> emit;
 };
 
 static Vec3 reflect(const Vec3& incident, const Vec3& normal) {
