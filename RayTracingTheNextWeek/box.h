@@ -36,6 +36,7 @@ class Box : public Hittable {
 
 HittableList cornellBox() {
     using std::make_shared;
+    using std::shared_ptr;
     HittableList world;
 
     auto red = make_shared<Lambertian>(Vec3{0.65, 0.05, 0.05});
@@ -50,8 +51,16 @@ HittableList cornellBox() {
     world.add(make_shared<XZRect>(0, 555, 0, 555, 555, white));
     world.add(make_shared<XYRect>(0, 555, 0, 555, 555, white));
 
-    world.add(make_shared<Box>(Vec3{130, 0, 65}, Vec3{295, 165, 230}, white));
-    world.add(make_shared<Box>(Vec3{265, 0, 295}, Vec3{430, 330, 460}, white));
+    shared_ptr<Hittable> box1 = make_shared<Box>(Vec3{0, 0, 0}, Vec3{165, 330, 165}, white);
+    box1 = make_shared<RotateY>(box1, 15);
+    box1 = make_shared<Translate>(box1, Vec3{265, 0, 295});
+    world.add(box1);
+
+    shared_ptr<Hittable> box2 = make_shared<Box>(Vec3{0, 0, 0}, Vec3{165, 165, 165}, white);
+    box2 = make_shared<RotateY>(box2, -18);
+    box2 = make_shared<Translate>(box2, Vec3{130, 0, 65});
+    world.add(box2);
+
 
     return world;
 }

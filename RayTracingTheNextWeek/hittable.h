@@ -246,3 +246,102 @@ class YZRect : public Hittable {
     std::shared_ptr<Material> material;
 };
 
+class Translate : public Hittable {
+  public:
+    Translate(std::shared_ptr<Hittable>& p, const Vec3& offset) : ptr{p}, offset{offset} {}
+
+    bool hit(const Ray& r, double tmin, double tmax, HitRecord& rec) const override {
+        Ray movedRay(r.o - offset, r.d, r.time);
+        if (!ptr->hit(movedRay, tmin, tmax, rec)) return false;
+
+        rec.p += offset;
+        rec.setFaceNormal(movedRay, rec.normal);
+        return true;
+    }
+
+    bool boundingBox(double time0, double time1, AABB& outBox) const override {
+        if (!ptr->boundingBox(time0, time1, outBox)) return false;
+        outBox.a += offset;
+        outBox.b += offset;
+        return true;
+    }
+
+  private:
+    std::shared_ptr<Hittable> ptr;
+    Vec3 offset;
+};
+
+class RotateY : public Hittable {
+  public:
+    RotateY(std::shared_ptr<Hittable>& p, double angle) : ptr{p} {
+        auto rad = toRadian(angle);
+        sinTheta = std::sin(rad);
+        cosTheta = std::cos(rad);
+        hasBox = ptr->boundingBox(0, 1, bbox);
+
+        Vec3 min(infinity, infinity, infinity);
+        Vec3 max(-infinity, -infinity, -infinity);
+
+        for (int i = 0; i < 2; ++i) {
+            for (int j = 0; j < 2; ++j) {
+                for (int k = 0; k < 2; ++k) {
+                    auto x = i * bbox.b.x() + (1 - i) * bbox.a.x();
+                    auto y = j * bbox.b.y() + (1 - j) * bbox.a.y();
+                    auto z = k * bbox.b.z() + (1 - k) * bbox.a.z();
+
+                    auto newx = cosTheta * x + sinTheta * z;
+                    auto newz = -sinTheta * x + cosTheta * z;
+
+                    Vec3 tester(newx, y, newz);
+
+                    for (int c = 0; c < 3; ++c) {
+                        min[c] = std::min(min[c], tester[c]);
+                        max[c] = std::max(max[c], tester[c]);
+                    }
+                }
+            }
+        }
+        bbox = AABB(min, max);
+    }
+
+    bool hit(const Ray& r, double tmin, double tmax, HitRecord& rec) const override {
+        auto origin = r.o;
+        auto direction = r.d;
+
+        origin[0] = cosTheta * r.o[0] - sinTheta * r.o[2];
+        origin[2] = sinTheta * r.o[0] + cosTheta * r.o[2];
+
+        direction[0] = cosTheta * r.d[0] - sinTheta * r.d[2];
+        direction[2] = sinTheta * r.d[0] + cosTheta * r.d[2];
+
+        Ray rotatedRay(origin, direction, r.time);
+
+        if (!ptr->hit(rotatedRay, tmin, tmax, rec)) return false;
+
+        auto p = rec.p;
+        auto normal = rec.normal;
+
+        p[0] = cosTheta * rec.p[0] + sinTheta * rec.p[2];
+        p[2] = -sinTheta * rec.p[0] + cosTheta * rec.p[2];
+
+        normal[0] = cosTheta * rec.normal[0] + sinTheta * rec.normal[2];
+        normal[2] = -sinTheta * rec.normal[0] + cosTheta * rec.normal[2];
+
+        rec.p = p;
+        rec.setFaceNormal(rotatedRay, normal);
+
+        return true;
+    }
+
+    bool boundingBox(double time0, double time1, AABB& outBox) const override {
+        outBox = bbox;
+        return hasBox;
+    }
+
+  private:
+    std::shared_ptr<Hittable> ptr;
+    double sinTheta;
+    double cosTheta;
+    bool hasBox;
+    AABB bbox;
+};
