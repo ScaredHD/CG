@@ -245,3 +245,4 @@ class YZRect : public Hittable {
     double k;
     std::shared_ptr<Material> material;
 };
+

@@ -139,21 +139,3 @@ HittableList simpleLightScene() {
     return world;
 }
 
-HittableList cornellBox() {
-    using std::make_shared;
-    HittableList world;
-
-    auto red = make_shared<Lambertian>(Vec3{0.65, 0.05, 0.05});
-    auto white = make_shared<Lambertian>(Vec3{0.73, 0.73, 0.73});
-    auto green = make_shared<Lambertian>(Vec3{0.12, 0.45, 0.15});
-    auto light = make_shared<DiffuseLight>(Vec3{15, 15, 15});
-
-    world.add(make_shared<YZRect>(0, 555, 0, 555, 555, green));
-    world.add(make_shared<YZRect>(0, 555, 0, 555, 0, red));
-    world.add(make_shared<XZRect>(213, 343, 227, 332, 554, light));
-    world.add(make_shared<XZRect>(0, 555, 0, 555, 0, white));
-    world.add(make_shared<XZRect>(0, 555, 0, 555, 555, white));
-    world.add(make_shared<XYRect>(0, 555, 0, 555, 555, white));
-
-    return world;
-}

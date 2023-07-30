@@ -5,6 +5,7 @@
 #include "hittable.h"
 #include "hittable_list.h"
 #include "camera.h"
+#include "box.h"
 
 using namespace std;
 
