@@ -248,7 +248,7 @@ class YZRect : public Hittable {
 
 class Translate : public Hittable {
   public:
-    Translate(std::shared_ptr<Hittable>& p, const Vec3& offset) : ptr{p}, offset{offset} {}
+    Translate(const std::shared_ptr<Hittable>& p, const Vec3& offset) : ptr{p}, offset{offset} {}
 
     bool hit(const Ray& r, double tmin, double tmax, HitRecord& rec) const override {
         Ray movedRay(r.o - offset, r.d, r.time);
@@ -273,7 +273,7 @@ class Translate : public Hittable {
 
 class RotateY : public Hittable {
   public:
-    RotateY(std::shared_ptr<Hittable>& p, double angle) : ptr{p} {
+    RotateY(const std::shared_ptr<Hittable>& p, double angle) : ptr{p} {
         auto rad = toRadian(angle);
         sinTheta = std::sin(rad);
         cosTheta = std::cos(rad);

@@ -93,9 +93,24 @@ class DiffuseLight : public Material {
 
     Vec3 emitted(double u, double v, const Vec3& p) const override { return emit->value(u, v, p); }
 
-
   private:
     std::shared_ptr<Texture> emit;
+};
+
+class Isotropic : public Material {
+  public:
+    Isotropic(const Vec3& color) : albedo{std::make_shared<SolidColor>(color)} {}
+    Isotropic(const std::shared_ptr<Texture>& a) : albedo{a} {}
+
+    bool scatter(const Ray& incident, const HitRecord& rec, Vec3& attenuation,
+                 Ray& scattered) const override {
+        scattered = Ray(rec.p, gen.randomVec3OnUnitSphere(), incident.time);
+        attenuation = albedo->value(rec.u, rec.v, rec.p);
+        return true;
+    }
+
+  private:
+    std::shared_ptr<Texture> albedo;
 };
 
 static Vec3 reflect(const Vec3& incident, const Vec3& normal) {

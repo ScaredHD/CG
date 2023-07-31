@@ -21,7 +21,7 @@ class BvhNode : public Hittable {
   public:
     BvhNode() = default;
 
-    BvhNode(const HittableList& list, size_t start, size_t end, double t0, double t1);
+    BvhNode(const HittableList& list, double t0, double t1) : BvhNode(list.objects, 0, list.objects.size(), t0, t1) {}
     BvhNode(const std::vector<std::shared_ptr<Hittable>>& srcObjects, size_t start, size_t end,
             double t0, double t1);
 
