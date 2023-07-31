@@ -21,7 +21,8 @@ class BvhNode : public Hittable {
   public:
     BvhNode() = default;
 
-    BvhNode(const HittableList& list, double t0, double t1) : BvhNode(list.objects, 0, list.objects.size(), t0, t1) {}
+    BvhNode(const HittableList& list, double t0, double t1)
+        : BvhNode(list.objects, 0, list.objects.size(), t0, t1) {}
     BvhNode(const std::vector<std::shared_ptr<Hittable>>& srcObjects, size_t start, size_t end,
             double t0, double t1);
 
@@ -51,13 +52,11 @@ BvhNode::BvhNode(const std::vector<std::shared_ptr<Hittable>>& srcObjects, size_
                  double t0, double t1) {
     auto objects = srcObjects;
 
+    auto axis = gen.randomInt(0, 2);
     const auto& objectSpan = end - start;
     if (objectSpan == 1) {
         left = right = objects[start];
-    }
-
-    auto axis = gen.randomInt(0, 2);
-    if (objectSpan == 2) {
+    } else if (objectSpan == 2) {
         if (compareBoxes(objects[start], objects[start + 1], axis)) {
             left = objects[start];
             right = objects[start + 1];
