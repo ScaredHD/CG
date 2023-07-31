@@ -78,7 +78,7 @@ struct Sphere : public Hittable {
 
     bool boundingBox(double time0, double time1, AABB& outBox) const override {
         const auto& v = Vec3(radius, radius, radius);
-        outBox = {center + v, center - v};
+        outBox = {center - v, center + v};
         return true;
     }
 
