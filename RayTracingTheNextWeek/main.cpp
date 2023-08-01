@@ -28,6 +28,8 @@ Vec3 rayColor(const Ray& r, const Vec3& backgroundColor, const HittableList& wor
 }
 
 HittableList final_scene() {
+    HittableList objects;
+
     HittableList boxes1;
     auto ground = make_shared<Lambertian>(Vec3(0.48, 0.83, 0.53));
 
@@ -46,9 +48,7 @@ HittableList final_scene() {
         }
     }
 
-    HittableList objects;
-
-    objects.add(make_shared<BvhNode>(boxes1, 0, 1));
+    objects.add(make_shared<BvhNode>(boxes1, 0.0, 1.0));
 
     auto light = make_shared<DiffuseLight>(Vec3(7, 7, 7));
     objects.add(make_shared<XZRect>(123, 423, 147, 412, 554, light));
@@ -59,8 +59,8 @@ HittableList final_scene() {
     objects.add(make_shared<MovingSphere>(center1, center2, 0, 1, 50, moving_sphere_material));
 
     objects.add(make_shared<Sphere>(Vec3(260, 150, 45), 50, make_shared<Dielectric>(1.5)));
-    objects.add(make_shared<Sphere>(Vec3(0, 150, 145), 50,
-                                    make_shared<Metal>(Vec3(0.8, 0.8, 0.9), 1.0)));
+    objects.add(
+        make_shared<Sphere>(Vec3(0, 150, 145), 50, make_shared<Metal>(Vec3(0.8, 0.8, 0.9), 1.0)));
 
     auto boundary = make_shared<Sphere>(Vec3(360, 150, 145), 70, make_shared<Dielectric>(1.5));
     objects.add(boundary);
@@ -73,15 +73,21 @@ HittableList final_scene() {
     auto pertext = make_shared<NoiseTexture>(0.1);
     objects.add(make_shared<Sphere>(Vec3(220, 280, 300), 80, make_shared<Lambertian>(pertext)));
 
-    HittableList boxes2;
-    auto white = make_shared<Lambertian>(Vec3(.73, .73, .73));
+    HittableList lotsOfSpheres;
+    auto white = make_shared<Lambertian>(Vec3(0.73, 0.73, 0.73));
     int ns = 1000;
     for (int j = 0; j < ns; j++) {
-        boxes2.add(make_shared<Sphere>(gen.randomVec3(0, 165), 10, white));
+        lotsOfSpheres.add(make_shared<Sphere>(gen.randomVec3(0, 165), 10, white));
     }
 
-    objects.add(make_shared<Translate>(
-        make_shared<RotateY>(make_shared<BvhNode>(boxes2, 0.0, 1.0), 15), Vec3(-100, 270, 395)));
+    objects.add(
+        make_shared<Translate>(
+            make_shared<RotateY>(
+                make_shared<BvhNode>(lotsOfSpheres, 0.0, 1.0), 15
+            ), 
+            Vec3(-100, 270, 395)
+        )
+    );
 
     return objects;
 }
@@ -107,7 +113,7 @@ int main() {
     auto aperture = 0.0;
     const auto& [t0, t1] = std::make_tuple(0.0, 1.0);
 
-    switch (0) {
+    switch (8) {
         case 1:
             world = randomScene();
             lookFrom = {13, 2, 3};
@@ -172,8 +178,19 @@ int main() {
             lookFrom = {278, 278, -800};
             lookAt = {278, 278, 0};
             vFov = 40.0;
-            
-        default:
+            break;
+
+        case 8:
+            world = final_scene();
+            aspectRatio = 1.0;
+            imageWidth = 600;
+            imageHeight = static_cast<int>(imageWidth / aspectRatio);
+            samplesPerPixel = 1000;
+            backgroundColor = {0, 0, 0};
+            lookFrom = {478, 278, -600};
+            lookAt = {278, 278, 0};
+            vFov = 40.0;
+            break;
     }
 
     Camera cam{lookFrom, lookAt, vup, vFov, aspectRatio, aperture, distToFocus, t0, t1};

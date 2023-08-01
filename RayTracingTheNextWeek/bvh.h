@@ -65,9 +65,7 @@ BvhNode::BvhNode(const std::vector<std::shared_ptr<Hittable>>& srcObjects, size_
             right = objects[start];
         }
     } else {
-        auto first = objects.begin() + start;
-        auto last = objects.begin() + end;
-        std::sort(first, last,
+        std::sort(objects.begin() + start, objects.begin() + end,
                   [axis](const std::shared_ptr<Hittable>& a, const std::shared_ptr<Hittable>& b) {
                       return compareBoxes(a, b, axis);
                   });
